@@ -3,8 +3,11 @@ import graphqlHTTP from 'express-graphql';
 
 import schema from 'graphql/schema';
 import root from 'graphql/root';
+import db from 'models';
 
 const app = express();
+
+db.sequelize.sync();
 
 app.set('port', process.env.PORT || 8000);
 
