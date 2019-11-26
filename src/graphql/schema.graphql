@@ -1,0 +1,6 @@
+type Query {
+    hello: String
+    quoteOfTheDay: String
+    random: Float!
+    rollThreeDice: [Int]
+}
