@@ -3,7 +3,8 @@ import db from 'models';
 const { User, Post } = db;
 
 const Query = {
-    user: async ({ id }) => {
+    user: async ({ id }, req) => {
+        console.log(req.ip); // second argument is request object
         const user = await User.findByPk(id);
         return user;
     },
