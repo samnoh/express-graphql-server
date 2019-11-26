@@ -24,8 +24,8 @@
     },
     "homepage": "https://github.com/samnoh/express-graphql-server#readme",
     "dependencies": {
+        "apollo-server-express": "2.9.12",
         "express": "4.17.1",
-        "express-graphql": "0.9.0",
         "graphql": "14.5.8",
         "graphql-import": "0.7.1",
         "sequelize": "5.21.2",

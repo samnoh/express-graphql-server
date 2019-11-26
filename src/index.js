@@ -1,12 +1,11 @@
 import express from 'express';
-import graphqlHTTP from 'express-graphql';
+import { ApolloServer } from 'apollo-server-express';
 
-import schema from 'graphql/schema';
-import rootValue from 'graphql/root';
+import typeDefs from 'graphql/typeDefs';
+import resolvers from 'graphql/resolvers';
 import db from 'models';
 
 const app = express();
-
 db.sequelize.sync();
 
 app.set('port', process.env.PORT || 8000);
@@ -14,15 +13,13 @@ app.set('port', process.env.PORT || 8000);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use(
-    '/graphql',
-    graphqlHTTP({
-        schema,
-        rootValue,
-        graphiql: true
-    })
-);
+const server = new ApolloServer({
+    typeDefs,
+    resolvers,
+    playground: true
+});
+server.applyMiddleware({ app });
 
 app.listen(app.get('port'), () => {
-    console.log(`Running a GraphQL API server at port ${app.get('port')}`);
+    console.log(`Running a GraphQL API server at :${app.get('port')}${server.graphqlPath}`);
 });
