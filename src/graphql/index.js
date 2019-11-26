@@ -1,8 +1,10 @@
 import db from 'models';
+import path from 'path';
+import { importSchema } from 'graphql-import';
 
 const { User, Post } = db;
 
-const resolvers = {
+export const resolvers = {
     Query: {
         user: async (_, { id }) => {
             const user = await User.findByPk(id);
@@ -50,4 +52,4 @@ const resolvers = {
     }
 };
 
-export default resolvers;
+export const typeDefs = importSchema(path.join(__dirname, 'schema.graphql'));
