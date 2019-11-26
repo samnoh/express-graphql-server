@@ -8,17 +8,13 @@
         "indent": ["error", 4],
         "semi": ["error", "always"],
         "no-trailing-spaces": 0,
-        "object-curly-newline": [
-            "error",
-            {
-                "ObjectExpression": "always",
-                "ObjectPattern": { "multiline": true },
-                "ImportDeclaration": "never",
-                "ExportDeclaration": { "multiline": true, "minProperties": 3 }
-            }
-        ],
+        "object-curly-newline": "off",
         "comma-dangle": ["error", "never"],
-        "arrow-body-style": ["error", "as-needed"]
+        "arrow-body-style": ["error", "as-needed"],
+        "arrow-parens": ["error", "as-needed"],
+        "implicit-arrow-linebreak": "off",
+        "consistent-return": "off",
+        "function-paren-newline": "off"
     },
     "settings": {
         "import/resolver": {
