@@ -16,7 +16,6 @@ const Query = {
             where: { userId: id },
             order: [['createdAt', 'DESC']]
         });
-
         return posts;
     },
     posts: async () => {
@@ -50,9 +49,9 @@ const Mutation = {
     }
 };
 
-const root = {
+const rootValue = {
     ...Query,
     ...Mutation
 };
 
-export default root;
+export default rootValue;

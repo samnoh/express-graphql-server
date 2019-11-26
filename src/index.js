@@ -2,7 +2,7 @@ import express from 'express';
 import graphqlHTTP from 'express-graphql';
 
 import schema from 'graphql/schema';
-import root from 'graphql/root';
+import rootValue from 'graphql/root';
 import db from 'models';
 
 const app = express();
@@ -15,7 +15,7 @@ app.use(
     '/graphql',
     graphqlHTTP({
         schema,
-        rootValue: root,
+        rootValue,
         graphiql: true
     })
 );
