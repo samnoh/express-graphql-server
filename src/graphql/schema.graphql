@@ -1,6 +1,14 @@
+# import User from 'user.graphql';
+# import Post from 'post.graphql';
+
 type Query {
-    hello: String
-    quoteOfTheDay: String
-    random: Float!
-    rollThreeDice: [Int]
+    user(id: Int!): User
+    users: [User]
+    post(id: Int!): [Post]
+    posts: [Post]
+}
+
+type Mutation {
+    signUp(username: String!, password: String!): Boolean
+    addPost(userId: Int!, title: String!, content: String): Boolean
 }
