@@ -1,8 +1,14 @@
-import db from 'models';
 import path from 'path';
+import jwt from 'jsonwebtoken';
+import { AuthenticationError } from 'apollo-server-express';
 import { importSchema } from 'graphql-import';
 
+import db from 'models';
+import { JWT_SECRET_KEY } from 'config/secret';
+
 const { User, Post } = db;
+
+export const typeDefs = importSchema(path.join(__dirname, 'schema.graphql'));
 
 export const resolvers = {
     Query: {
@@ -10,7 +16,11 @@ export const resolvers = {
             const user = await User.findByPk(id);
             return user;
         },
-        users: async () => {
+        users: async (_, __, context) => {
+            if (!context.user || context.user.roles !== 'admin') {
+                throw new AuthenticationError('You must be admin');
+            }
+
             const users = await User.findAll({});
             return users;
         },
@@ -30,26 +40,60 @@ export const resolvers = {
     },
     Mutation: {
         signUp: async (_, { username, password }) => {
-            const user = await User.findOne({ where: { username } });
-            if (user) {
-                return false;
+            const [user, created] = await User.findOrCreate({
+                where: { username },
+                defaults: { password }
+            });
+
+            if (!created) {
+                throw new AuthenticationError('The username already exists');
             }
-            await User.create({ username, password });
-            return true;
+
+            const token = jwt.sign({ userId: user.id }, JWT_SECRET_KEY);
+            return token;
         },
-        addPost: async (_, { userId, title, content }) => {
-            const user = await User.findByPk(userId);
-            if (!user) {
-                return false;
+        login: async (_, { username, password }, context) => {
+            const user = context.user || (await User.findOne({ where: { username } }));
+
+            if (!user || user.username !== username) {
+                throw new AuthenticationError('The user does not exist');
             }
-            await Post.create({
+
+            return user
+                .comparePassword(password)
+                .then(() => jwt.sign({ userId: user.id }, JWT_SECRET_KEY)) // new token
+                .catch(error => {
+                    throw new AuthenticationError(error || 'The password is invalid');
+                });
+        },
+        addPost: async (_, { title, content }, context) => {
+            if (!context.user) {
+                throw new AuthenticationError('You must be logged in');
+            }
+
+            const post = await Post.create({
                 title,
                 content,
-                userId: user.id
+                userId: context.user.id
             });
-            return true;
+            return post.id;
+        },
+        editPost: async (_, { id, title, content }, context) => {
+            if (!context.user) {
+                throw new AuthenticationError('You must be logged in');
+            }
+
+            const [updated] = await Post.update(
+                { title, content },
+                { where: { id, userId: context.user.id } }
+            );
+
+            if (updated) {
+                const updatedPost = await Post.findOne({ where: { id } });
+                return updatedPost;
+            }
+
+            throw new AuthenticationError('The request was not successful');
         }
     }
 };
-
-export const typeDefs = importSchema(path.join(__dirname, 'schema.graphql'));

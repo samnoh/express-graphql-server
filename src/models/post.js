@@ -1,20 +1,20 @@
-const post = (sequelize, DataTypes) =>
-    sequelize.define(
-        'post',
-        {
-            title: {
-                type: DataTypes.STRING(140),
-                allowNull: false
-            },
-            content: {
-                type: DataTypes.TEXT
-            }
-        },
-        {
-            timestamps: true,
-            paranoid: true,
-            charset: 'utf8'
-        }
-    );
+import Sequelize from 'sequelize';
 
-export default post;
+class Post extends Sequelize.Model {
+    static init(sequelize, DataTypes) {
+        return super.init(
+            {
+                title: {
+                    type: DataTypes.STRING(140),
+                    allowNull: false
+                },
+                content: {
+                    type: DataTypes.TEXT
+                }
+            },
+            { sequelize, tableName: 'post', modelName: 'post' }
+        );
+    }
+}
+
+export default Post;

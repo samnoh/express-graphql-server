@@ -9,6 +9,8 @@ type Query {
 }
 
 type Mutation {
-    signUp(username: String!, password: String!): Boolean
-    addPost(userId: Int!, title: String!, content: String): Boolean
+    signUp(username: String!, password: String!): String!
+    login(username: String!, password: String!): String!
+    addPost(title: String!, content: String): Int!
+    editPost(id: Int!, title: String!, content: String): Post!
 }

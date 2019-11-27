@@ -14,7 +14,8 @@
         "arrow-parens": ["error", "as-needed"],
         "implicit-arrow-linebreak": "off",
         "consistent-return": "off",
-        "function-paren-newline": "off"
+        "function-paren-newline": "off",
+        "prefer-promise-reject-errors": "off"
     },
     "settings": {
         "import/resolver": {

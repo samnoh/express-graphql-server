@@ -1,19 +1,23 @@
 import Sequelize from 'sequelize';
 
 import cf from 'config/config.json';
-import user from './user';
-import post from './post';
+import { NODE_ENV } from 'config/secret';
+import User from './user';
+import Post from './post';
 
-const config = cf[process.env.NODE_ENV || 'development'];
+const config = cf[NODE_ENV];
 
 const sequelize = new Sequelize(config);
 
-const db = {};
+const models = {
+    User: User.init(sequelize, Sequelize),
+    Post: Post.init(sequelize, Sequelize)
+};
 
-db.sequelize = sequelize;
-db.Sequelize = Sequelize;
-db.User = user(sequelize, Sequelize);
-db.Post = post(sequelize, Sequelize);
+const db = {
+    ...models,
+    sequelize
+};
 
 db.User.hasMany(db.Post);
 db.Post.belongsTo(db.User);
