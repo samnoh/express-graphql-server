@@ -12,12 +12,14 @@ const resolvers = {
             const user = await User.findByPk(id);
             return user;
         },
-        users: async (_, __, context) => {
+        users: async (_, { pagination: { offset, limit = 10 } = {} }, context) => {
+            if (limit > 100) return null;
+
             if (!context.user || context.user.roles !== 'admin') {
                 throw new AuthenticationError('You must be admin');
             }
 
-            const users = await User.findAll({});
+            const users = await User.findAll({ offset, limit });
             return users;
         },
         post: async (_, { id }) => {
@@ -27,8 +29,12 @@ const resolvers = {
             });
             return posts;
         },
-        posts: async () => {
+        posts: async (_, { pagination: { offset, limit = 10 } = {} }) => {
+            if (limit > 100) return null;
+
             const posts = await Post.findAll({
+                offset,
+                limit,
                 include: [{ model: User, as: 'user' }],
                 order: [['createdAt', 'DESC']]
             });

@@ -11,19 +11,19 @@ const typeDefs = gql`
         id: Int!
         title: String!
         content: String
-        user: User
+        user: User!
     }
 
     type Query {
         user(id: Int!): User!
-        users: [User]!
+        users(pagination: PaginationInput): [User]
         post(id: Int!): [Post]!
-        posts: [Post]!
+        posts(pagination: PaginationInput): [Post]
     }
 
     type Mutation {
-        signUp(user: UserInput): String!
-        login(user: UserInput): String!
+        signUp(user: UserInput!): String!
+        login(user: UserInput!): String!
         addPost(title: String!, content: String): Int!
         editPost(id: Int!, title: String!, content: String): Post!
         deletePost(id: Int!): Boolean!
@@ -32,6 +32,11 @@ const typeDefs = gql`
     input UserInput {
         username: String!
         password: String!
+    }
+
+    input PaginationInput {
+        offset: Int
+        limit: Int
     }
 `;
 
