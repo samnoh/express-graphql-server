@@ -2,10 +2,10 @@
 # import Post from 'post.graphql';
 
 type Query {
-    user(id: Int!): User
-    users: [User]
-    post(id: Int!): [Post]
-    posts: [Post]
+    user(id: Int!): User!
+    users: [User]!
+    post(id: Int!): [Post]!
+    posts: [Post]!
 }
 
 type Mutation {

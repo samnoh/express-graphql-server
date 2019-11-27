@@ -19,6 +19,7 @@ const verifyAuth = ({ req }) => {
         }
 
         const user = await User.findByPk(payload.userId);
+
         if (!user) {
             throw new AuthenticationError('Your token is invalid');
         }
