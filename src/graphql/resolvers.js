@@ -52,8 +52,7 @@ const resolvers = {
                 throw new AuthenticationError('The username already exists');
             }
 
-            const token = jwt.sign({ userId: user.id }, JWT_SECRET_KEY);
-            return token;
+            return jwt.sign({ userId: user.id }, JWT_SECRET_KEY, { expiresIn: '10d' });
         },
         login: async (_, { user: { username, password } }, context) => {
             const user = context.user || (await User.findOne({ where: { username } }));
@@ -64,7 +63,7 @@ const resolvers = {
 
             return user
                 .comparePassword(password)
-                .then(() => jwt.sign({ userId: user.id }, JWT_SECRET_KEY)) // new token
+                .then(() => jwt.sign({ userId: user.id }, JWT_SECRET_KEY, { expiresIn: '10d' }))
                 .catch(error => {
                     throw new AuthenticationError(error || 'The password is invalid');
                 });
