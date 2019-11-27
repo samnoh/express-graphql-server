@@ -1,5 +1,0 @@
-type User {
-    id: Int!
-    username: String!
-    roles: String!
-}
