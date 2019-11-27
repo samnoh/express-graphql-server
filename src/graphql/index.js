@@ -94,6 +94,17 @@ export const resolvers = {
             }
 
             throw new AuthenticationError('The request was not successful');
+        },
+        deletePost: async (_, { id }, context) => {
+            if (!context.user) {
+                throw new AuthenticationError('You must be logged in');
+            }
+
+            const deleted = await Post.destroy({ where: { id, userId: context.user.id } });
+
+            if (deleted) return true;
+
+            throw new AuthenticationError('The request was not successful');
         }
     }
 };
