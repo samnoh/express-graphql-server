@@ -13,7 +13,7 @@ class User extends Sequelize.Model {
                     type: DataTypes.STRING(100),
                     allowNull: false
                 },
-                roles: {
+                role: {
                     type: DataTypes.ENUM('admin', 'user', 'suspended'),
                     defaultValue: 'user'
                 }

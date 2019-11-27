@@ -29,6 +29,7 @@ const resolvers = {
         },
         posts: async () => {
             const posts = await Post.findAll({
+                include: [{ model: User, as: 'user' }],
                 order: [['createdAt', 'DESC']]
             });
             return posts;
