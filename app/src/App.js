@@ -1,26 +1,59 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useCallback, useState } from 'react';
+import { useQuery, useMutation } from '@apollo/react-hooks';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+import { GET_POSTS, LOGIN, ADD_POST } from 'graphql/queries';
+
+const App = () => {
+    const [loginInputs, setLoginInputs] = useState({ username: '', password: '' });
+    const { loading, error, data: posts } = useQuery(GET_POSTS);
+    const [
+        login,
+        { loading: loginLoading, error: loginError, data: { login: jwt } = {} }
+    ] = useMutation(LOGIN);
+
+    const onChange = useCallback(
+        e => {
+            setLoginInputs({ ...loginInputs, [e.target.name]: e.target.value });
+        },
+        [loginInputs]
+    );
+
+    const onSubmit = useCallback(
+        e => {
+            e.preventDefault();
+            login({ variables: { user: loginInputs } });
+            setLoginInputs({ username: '', password: '' });
+        },
+        [loginInputs]
+    );
+
+    if (loginLoading) return <div>Loading...</div>;
+
+    if (loginError) return <div>Error!</div>;
+
+    return (
+        <div>
+            {jwt ? (
+                jwt
+            ) : (
+                <form onSubmit={onSubmit}>
+                    <input
+                        type="text"
+                        name="username"
+                        value={loginInputs.username}
+                        onChange={onChange}
+                    />
+                    <input
+                        type="password"
+                        name="password"
+                        value={loginInputs.password}
+                        onChange={onChange}
+                    />
+                    <button type="submit">Submit</button>
+                </form>
+            )}
+        </div>
+    );
+};
 
 export default App;
