@@ -1,7 +1,7 @@
 import { gql } from 'apollo-boost';
 
 export const ADD_POST = gql`
-    mutation addPost($title: title, $content: content) {
+    mutation addPost($title: title!, $content: content) {
         addPost(title: $title, content: $content) {
             id
         }
@@ -15,8 +15,8 @@ export const LOGIN = gql`
 `;
 
 export const GET_POSTS = gql`
-    {
-        posts {
+    query Posts($pagination: PaginationInput) {
+        posts(pagination: $pagination) {
             id
             title
             content
