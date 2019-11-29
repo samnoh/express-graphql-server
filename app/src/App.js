@@ -12,10 +12,9 @@ const GlobalStyle = createGlobalStyle`
     * {
         margin: 0;
         padding: 0;
-        box-sizing: initial;
+        box-sizing: border-box;
     }
     body {
-        box-sizing: border-box;
         font-family: 'Roboto', sans-serif;
         min-height: 100vh;
     }

@@ -2,33 +2,26 @@ import React from 'react';
 
 import styled from 'styled-components';
 
-const Title = styled.div``;
-
 const _Form = styled.form`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    padding: 60px 180px;
-    border-radius: 7px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 20px 48px rgba(0, 0, 0, 0.05),
-        0 1px 4px rgba(0, 0, 0, 0.1);
-    transition: 0.2s ease-in;
-    &:focus-within {
-        transform: scale(1.025);
-    }
+    width: 400px;
+    display: block;
 `;
 
 const Input = styled.input`
     display: block;
-    border: 1px solid lightgray;
     border-radius: 5px;
     padding: 10px;
     font-size: 18px;
     margin-bottom: 40px;
+    width: 100%;
+    border: none;
+    background-color: #f5f6f7;
+    box-shadow: inset 0px 2px 3px rgba(0, 0, 0, 0.03);
+    outline: none;
 `;
 
-const ErrorMessage = styled.label`
+const Label = styled.label`
+    color: #444;
     font-weight: 600;
     margin-left: 2px;
     margin-bottom: 8px;
@@ -46,24 +39,28 @@ const SubmitButton = styled.button`
     border-radius: 5px;
 `;
 
-const Form = ({ onSubmit, onChange, inputAttrs, values, buttonText }) => {
+const Form = ({ onSubmit, onChange, inputAttrs, values, buttonText, loading }) => {
     return (
-        <_Form onSubmit={onSubmit}>
-            {inputAttrs.map(item => (
-                <div>
-                    {item.label && <ErrorMessage for={item.name}>{item.label}</ErrorMessage>}
-                    <Input
-                        placeholder={item.placeholder}
-                        type={item.type}
-                        name={item.name}
-                        value={values[item.name]}
-                        id={item.name}
-                        onChange={onChange}
-                    />
-                </div>
-            ))}
-            <SubmitButton type="submit">{buttonText}</SubmitButton>
-        </_Form>
+        <>
+            <_Form onSubmit={onSubmit}>
+                {inputAttrs.map(item => (
+                    <div>
+                        {item.label && <Label for={item.name}>{item.label}</Label>}
+                        <Input
+                            placeholder={item.placeholder}
+                            type={item.type}
+                            name={item.name}
+                            value={values[item.name]}
+                            id={item.name}
+                            onChange={onChange}
+                        />
+                    </div>
+                ))}
+                <SubmitButton type="submit" disabled={loading}>
+                    {buttonText}
+                </SubmitButton>
+            </_Form>
+        </>
     );
 };
 
