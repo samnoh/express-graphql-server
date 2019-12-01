@@ -8,6 +8,13 @@ const { User, Post } = db;
 
 const resolvers = {
     Query: {
+        checkToken: async (_, __, context) => {
+            if (!context.user) {
+                throw new AuthenticationError('You must be logged in');
+            }
+            const user = await User.findByPk(context.user.id);
+            return user;
+        },
         user: async (_, { id }) => {
             const user = await User.findByPk(id);
             return user;
@@ -23,19 +30,25 @@ const resolvers = {
             return users;
         },
         post: async (_, { id }) => {
-            const posts = await Post.findAll({
-                where: { userId: id },
-                order: [['createdAt', 'DESC']]
-            });
+            const posts = await Post.findByPk(id);
             return posts;
         },
-        posts: async (_, { pagination: { offset, limit = 10 } = {} }) => {
+        posts: async (_, { pagination: { offset, limit = 20 } = {} }) => {
             if (limit > 100) return null;
 
             const posts = await Post.findAll({
                 offset,
                 limit,
                 include: [{ model: User, as: 'user' }],
+                order: [['createdAt', 'DESC']]
+            });
+            return posts;
+        },
+        postsByUserId: async (_, { id, pagination: { offset, limit = 5 } = {} }) => {
+            const posts = await Post.findAll({
+                offset,
+                limit,
+                where: { userId: id },
                 order: [['createdAt', 'DESC']]
             });
             return posts;

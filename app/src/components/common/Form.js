@@ -17,6 +17,7 @@ const Input = styled.input`
     background-color: #f5f6f7;
     box-shadow: inset 0px 2px 3px rgba(0, 0, 0, 0.03);
     outline: none;
+    color: #2c3e50;
 `;
 
 const Label = styled.label`
@@ -43,8 +44,8 @@ const Form = ({ onSubmit, onChange, inputAttrs, values, buttonText, loading }) =
         <>
             <_Form onSubmit={onSubmit}>
                 {inputAttrs.map(item => (
-                    <div>
-                        {item.label && <Label for={item.name}>{item.label}</Label>}
+                    <div key={item.name}>
+                        {item.label && <Label htmlFor={item.name}>{item.label}</Label>}
                         <Input
                             placeholder={item.placeholder}
                             type={item.type}

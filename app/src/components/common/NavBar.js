@@ -2,11 +2,12 @@ import React from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import styled from 'styled-components';
 
+import { useSelector } from 'react-redux';
+
 const navItemList = [
     { name: 'Home', path: '/' },
     { name: 'Favourites', path: '/favourites' },
-    { name: 'New Post', path: '/post/new' },
-    { name: 'Profile', path: '/user' }
+    { name: 'New Post', path: '/post/new' }
 ];
 
 const Header = styled.header`
@@ -51,13 +52,22 @@ const NavItem = styled(NavLink)`
     margin-left: 45px;
     display: inline-block;
     line-height: 57px;
+    padding: 0 4px;
 
     &.active {
         border-bottom: 3px solid #2c3e50;
     }
+
+    @media (hover: hover) {
+        &:not(.active):hover {
+            color: #a0aec0;
+        }
+    }
 `;
 
 const NavBar = () => {
+    const auth = useSelector(state => state.auth);
+
     return (
         <Header>
             <Title to="/">S53 Blog</Title>
@@ -68,6 +78,20 @@ const NavBar = () => {
                         {i.name}
                     </NavItem>
                 ))}
+                {auth.token ? (
+                    <>
+                        <NavItem key={'profile'} exact to="/profile" activeClassName="active">
+                            Profile
+                        </NavItem>
+                        <NavItem key={'logout'} to="/logout">
+                            Logout
+                        </NavItem>
+                    </>
+                ) : (
+                    <NavItem key="login" exact to="/login">
+                        Login
+                    </NavItem>
+                )}
             </NavContainer>
         </Header>
     );

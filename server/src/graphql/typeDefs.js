@@ -15,10 +15,12 @@ const typeDefs = gql`
     }
 
     type Query {
+        checkToken: User!
         user(id: Int!): User!
         users(pagination: PaginationInput): [User]
-        post(id: Int!): [Post]!
+        post(id: Int!): Post!
         posts(pagination: PaginationInput): [Post]
+        postsByUserId(id: Int!, pagination: PaginationInput): [Post]!
     }
 
     type Mutation {
