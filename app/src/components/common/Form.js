@@ -4,7 +4,6 @@ import styled from 'styled-components';
 
 const _Form = styled.form`
     width: 400px;
-    display: block;
 `;
 
 const Input = styled.input`

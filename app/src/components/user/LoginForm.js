@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 
 import Form from 'components/common/Form';
 import { GET_POSTS, LOGIN } from 'graphql/queries';
+import media from 'styles/media';
 
 const LoginContainer = styled.div`
     display: flex;
@@ -19,6 +20,10 @@ const LeftSide = styled.div`
     background-repeat: no-repeat;
     background-size: cover;
 
+    ${media.tablet`
+        display: none;
+    `};
+
     & span {
         position: absolute;
         bottom: 15px;
@@ -32,6 +37,7 @@ const LeftSide = styled.div`
 `;
 
 const FormContainer = styled.div`
+    padding: 50px;
     flex-grow: 1;
     display: flex;
     justify-content: center;

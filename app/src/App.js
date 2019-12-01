@@ -39,7 +39,9 @@ const App = () => {
                         <Redirect to="/" />
                     </Route>
                     <Route path="/post/:id" component={PostPage} />
+                    <Route path="/post/new" component={PostPage} />
                     <Route path="/user/:id" component={UserPage} />
+                    <Route path="/user/:id/favourites" component={UserPage} />
                     <Route path="/login" component={LoginPage} />
                     <Route component={NotFoundPage} />
                 </Switch>
