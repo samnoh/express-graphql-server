@@ -3,16 +3,27 @@ export const CLOSE_NOTI = 'CLOSE_NOTI';
 
 const timers = [];
 
+const getColor = theme => {
+    switch (theme) {
+        case 'primary':
+            return { background: '#4295f7', color: '#E2E3E5' };
+        case 'danger':
+            return { background: '#D93D75', color: '#E2E3E5' };
+        default:
+            return theme;
+    }
+};
+
 export const closeNoti = () => ({
     type: CLOSE_NOTI
 });
 
-const showNotiAction = (message, color) => ({
+const showNotiAction = (message, background, color) => ({
     type: SHOW_NOTI,
-    payload: { message, color }
+    payload: { message, background, color }
 });
 
-export const showNoti = (message, color, sec) => (dispatch, getState) => {
+export const showNoti = (message, theme, sec) => (dispatch, getState) => {
     const closeTimers = () => {
         timers.forEach(t => clearTimeout(t));
         timers.length = 0;
@@ -23,10 +34,13 @@ export const showNoti = (message, color, sec) => (dispatch, getState) => {
         });
     };
 
+    const { background, color } = getColor(theme);
+
     closeTimers().then(() => {
         dispatch(
             showNotiAction(
                 message.includes('GraphQL error:') ? message.split(':')[1] : message,
+                background,
                 color
             )
         );

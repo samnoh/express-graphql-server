@@ -14,7 +14,8 @@ const NotiContainer = styled.div`
     right: 0;
     width: 300px;
     min-height: 60px;
-    background-color: ${props => props.bgColor};
+    background-color: ${props => props.background};
+    color: ${props => props.color};
     border-radius: 18px;
     padding: 10px;
     display: flex;
@@ -22,7 +23,6 @@ const NotiContainer = styled.div`
     align-items: center;
     z-index: 999;
     animation: ${fadeIn} 0.3s ease-in forwards;
-    color: #fff;
 `;
 
 const Notification = ({ location }) => {
@@ -35,7 +35,11 @@ const Notification = ({ location }) => {
 
     if (!noti.show) return null;
 
-    return <NotiContainer bgColor={noti.color}>{noti.message}</NotiContainer>;
+    return (
+        <NotiContainer background={noti.background} color={noti.color}>
+            {noti.message}
+        </NotiContainer>
+    );
 };
 
 export default withRouter(Notification);

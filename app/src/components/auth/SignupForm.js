@@ -51,7 +51,7 @@ const SignupForm = ({ history }) => {
     useEffect(() => {
         if (signupError) {
             dispatch(removeToken());
-            dispatch(showNoti(signupError.message, '#D93D75', 3));
+            dispatch(showNoti(signupError.message, 'danger', 3));
         }
     }, [signupError]);
 

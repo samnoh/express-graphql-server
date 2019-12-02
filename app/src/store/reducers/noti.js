@@ -8,11 +8,13 @@ const initialState = {
 const notiReducer = (state = initialState, action) => {
     switch (action.type) {
         case SHOW_NOTI:
+            const { message, color, background } = action.payload;
             return {
                 ...state,
                 show: true,
-                message: action.payload.message,
-                color: action.payload.color
+                message,
+                color,
+                background
             };
         case CLOSE_NOTI:
             return initialState;

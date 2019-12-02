@@ -50,7 +50,7 @@ const LoginForm = ({ history }) => {
     useEffect(() => {
         if (loginError) {
             dispatch(removeToken());
-            dispatch(showNoti(loginError.message, '#D93D75', 3));
+            dispatch(showNoti(loginError.message, 'danger', 3));
         }
     }, [dispatch, loginError]);
 

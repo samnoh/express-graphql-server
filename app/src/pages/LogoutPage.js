@@ -8,9 +8,11 @@ const LogoutPage = ({ history }) => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        history.replace('/login');
+        history.replace('/');
         dispatch(removeToken());
-        dispatch(showNoti('Logged out sucessfully', '#4295f7', 3));
+        setTimeout(() => {
+            dispatch(showNoti('Logged out sucessfully', 'primary', 3));
+        }, 0);
     }, []);
 
     return null;
