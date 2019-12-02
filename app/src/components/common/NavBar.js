@@ -5,9 +5,12 @@ import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 
 const navItemList = [
-    { name: 'Home', path: '/' },
-    { name: 'Favourites', path: '/favourites' },
-    { name: 'New Post', path: '/post/new' }
+    { name: 'Home', path: '/', loginRequired: false },
+    { name: 'Favourites', path: '/favourites', loginRequired: true },
+    { name: 'New Post', path: '/post/new', loginRequired: true },
+    { name: 'Profile', path: '/profile', loginRequired: true },
+    { name: 'Logout', path: '/logout', loginRequired: true },
+    { name: 'Login', path: '/login', loginRequired: false }
 ];
 
 const Header = styled.header`
@@ -73,25 +76,13 @@ const NavBar = () => {
             <Title to="/">S53 Blog</Title>
             <NavContainer>
                 <Input />
-                {navItemList.map(i => (
-                    <NavItem key={i.name} exact to={i.path} activeClassName="active">
-                        {i.name}
-                    </NavItem>
-                ))}
-                {auth.token ? (
-                    <>
-                        <NavItem key={'profile'} exact to="/profile" activeClassName="active">
-                            Profile
+                {navItemList
+                    .filter(i => (auth.token ? i.loginRequired : !i.loginRequired))
+                    .map(i => (
+                        <NavItem key={i.name} exact to={i.path} activeClassName="active">
+                            {i.name}
                         </NavItem>
-                        <NavItem key={'logout'} to="/logout">
-                            Logout
-                        </NavItem>
-                    </>
-                ) : (
-                    <NavItem key="login" exact to="/login">
-                        Login
-                    </NavItem>
-                )}
+                    ))}
             </NavContainer>
         </Header>
     );
