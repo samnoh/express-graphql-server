@@ -4,7 +4,6 @@
 
 -   Sign in
 -   Sign up
--   Add a post
--   Read posts
--   Delete a post
--   Add Favourites
+-   CRUD posts
+-   CRUD comments
+-   CRUD favourites
