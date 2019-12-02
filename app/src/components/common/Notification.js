@@ -30,7 +30,8 @@ const Notification = ({ location }) => {
     const noti = useSelector(state => state.noti);
 
     useEffect(() => {
-        dispatch(closeNoti());
+        if (location.state && location.state.notiOnNextPage) delete location.state.notiOnNextPage;
+        else dispatch(closeNoti());
     }, [location.pathname]);
 
     if (!noti.show) return null;

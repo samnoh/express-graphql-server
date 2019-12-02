@@ -17,10 +17,6 @@ const GlobalStyle = createGlobalStyle`
         box-sizing: border-box;
     }
 
-    html, body {
-        height: 100%;
-    }
-
     body {
         font-family: 'Roboto', sans-serif;
     }

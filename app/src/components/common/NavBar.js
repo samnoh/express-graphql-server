@@ -4,15 +4,6 @@ import styled from 'styled-components';
 
 import { useSelector } from 'react-redux';
 
-const navItems = [
-    { name: 'Home', path: '/', loginRequired: false },
-    { name: 'Favourites', path: '/favourites', loginRequired: true },
-    { name: 'New Post', path: '/post/new', loginRequired: true },
-    { name: 'Profile', path: '/profile', loginRequired: true },
-    { name: 'Logout', path: '/logout', loginRequired: true },
-    { name: 'Login', path: '/login', loginRequired: false }
-];
-
 const Header = styled.header`
     height: 58px;
     border-bottom: 1px solid #eaecef;
@@ -70,6 +61,15 @@ const NavItem = styled(NavLink)`
 
 const NavBar = () => {
     const auth = useSelector(state => state.auth);
+
+    const navItems = [
+        { name: 'Home', path: '/', loginRequired: false },
+        { name: 'New Post', path: '/post/new', loginRequired: true },
+        { name: 'Favourites', path: `/user/${auth.userId}/favourites`, loginRequired: true },
+        { name: 'Profile', path: `/user/${auth.userId}`, loginRequired: true },
+        { name: 'Logout', path: '/logout', loginRequired: true },
+        { name: 'Login', path: '/login', loginRequired: false }
+    ];
 
     return (
         <Header>

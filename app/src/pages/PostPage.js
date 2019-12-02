@@ -1,14 +1,13 @@
 import React from 'react';
 
-import NavBar from 'components/common/NavBar';
-import Post from 'components/post/Post';
+import PageTemplate from 'components/common/PageTemplate';
+import PostDetail from 'components/post/PostDetail';
 
 const PostPage = () => {
     return (
-        <>
-            <NavBar />
-            <Post />
-        </>
+        <PageTemplate>
+            <PostDetail />
+        </PageTemplate>
     );
 };
 

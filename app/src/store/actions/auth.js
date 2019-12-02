@@ -1,14 +1,17 @@
+import jwt from 'jsonwebtoken';
+
 export const SET_TOKEN = 'SET_TOKEN';
 export const REMOVE_TOKEN = 'REMOVE_TOKEN';
 
-const setTokenAction = token => ({
+const setTokenAction = (token, userId) => ({
     type: SET_TOKEN,
-    payload: token
+    payload: { token, userId }
 });
 
-export const setToken = newToken => (dispatch, getState) => {
-    localStorage.setItem('token', newToken);
-    dispatch(setTokenAction(newToken));
+export const setToken = token => (dispatch, getState) => {
+    localStorage.setItem('token', token);
+    const decodedJwt = jwt.decode(token);
+    dispatch(setTokenAction(token, decodedJwt.userId));
 };
 
 const removeTokenAction = () => ({

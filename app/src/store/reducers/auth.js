@@ -1,15 +1,17 @@
 import { SET_TOKEN, REMOVE_TOKEN } from 'store/actions/auth';
 
 const initialState = {
-    token: null
+    token: null,
+    userId: null
 };
 
 const authReducer = (state = initialState, action) => {
     switch (action.type) {
         case SET_TOKEN:
-            return { ...state, token: action.payload };
+            const { token, userId } = action.payload;
+            return { ...state, token, userId };
         case REMOVE_TOKEN:
-            return { ...state, token: null };
+            return initialState;
         default:
             return state;
     }

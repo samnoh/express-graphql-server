@@ -22,10 +22,6 @@ const inputAttrs = [
 ];
 
 const LoginForm = ({ history }) => {
-    // const { loading, error, data: posts, fetchMore } = useQuery(GET_POSTS, {
-    //     variables: { pagination: { offset: 0, limit: 5 } },
-    //     fetchPolicy: 'cache-and-network'
-    // });
     const auth = useSelector(state => state.auth);
     const dispatch = useDispatch();
     const [loginInputs, setLoginInputs] = useState({ username: '', password: '' });
