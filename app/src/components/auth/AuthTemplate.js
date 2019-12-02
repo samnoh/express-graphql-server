@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Helmet from 'react-helmet';
 
+import Notification from 'components/common/Notification';
 import media from 'styles/media';
 
 const LoginContainer = styled.div`
@@ -70,6 +71,7 @@ const AuthTemplate = ({ children, title, message, image: { imageUrl, authorUrl, 
             <Helmet>
                 <title>{title}</title>
             </Helmet>
+            <Notification />
             <LoginContainer>
                 <LeftSide imageUrl={imageUrl}>
                     <span>

@@ -6,6 +6,7 @@ import { withRouter } from 'react-router-dom';
 import Form from 'components/common/Form';
 import { SIGNUP } from 'graphql/queries';
 import { setToken, removeToken } from 'store/actions/auth';
+import { showNoti } from 'store/actions/noti';
 
 const inputAttrs = [
     {
@@ -50,6 +51,7 @@ const SignupForm = ({ history }) => {
     useEffect(() => {
         if (signupError) {
             dispatch(removeToken());
+            dispatch(showNoti(signupError.message, '#D93D75', 3));
         }
     }, [signupError]);
 

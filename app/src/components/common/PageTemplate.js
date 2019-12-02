@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 import NavBar from './NavBar';
 import Footer from './Footer';
+import Notification from './Notification';
 
 const Main = styled.main`
     padding: 28px;
@@ -13,6 +14,7 @@ const PageTemplate = ({ children }) => {
     return (
         <>
             <NavBar />
+            <Notification />
             <Main>{children}</Main>
             <Footer />
         </>

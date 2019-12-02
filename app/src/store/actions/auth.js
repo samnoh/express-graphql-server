@@ -1,7 +1,7 @@
 export const SET_TOKEN = 'SET_TOKEN';
 export const REMOVE_TOKEN = 'REMOVE_TOKEN';
 
-export const setTokenAction = token => ({
+const setTokenAction = token => ({
     type: SET_TOKEN,
     payload: token
 });
@@ -11,7 +11,7 @@ export const setToken = newToken => (dispatch, getState) => {
     dispatch(setTokenAction(newToken));
 };
 
-export const removeTokenAction = () => ({
+const removeTokenAction = () => ({
     type: REMOVE_TOKEN
 });
 
