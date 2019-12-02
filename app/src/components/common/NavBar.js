@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import { useSelector } from 'react-redux';
 
-const navItemList = [
+const navItems = [
     { name: 'Home', path: '/', loginRequired: false },
     { name: 'Favourites', path: '/favourites', loginRequired: true },
     { name: 'New Post', path: '/post/new', loginRequired: true },
@@ -24,7 +24,7 @@ const Header = styled.header`
 `;
 
 const Title = styled(Link)`
-    font-size: 22px;
+    font-size: 24px;
     color: #2c3e50;
     margin-right: 30px;
 `;
@@ -51,7 +51,7 @@ const NavContainer = styled.nav`
 const NavItem = styled(NavLink)`
     font-weight: 300;
     color: #4e6e8e;
-    font-size: 17px;
+    font-size: 18px;
     margin-left: 45px;
     display: inline-block;
     line-height: 57px;
@@ -76,7 +76,7 @@ const NavBar = () => {
             <Title to="/">S53 Blog</Title>
             <NavContainer>
                 <Input />
-                {navItemList
+                {navItems
                     .filter(i => (auth.token ? i.loginRequired : !i.loginRequired))
                     .map(i => (
                         <NavItem key={i.name} exact to={i.path} activeClassName="active">

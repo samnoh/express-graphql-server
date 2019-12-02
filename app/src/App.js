@@ -1,13 +1,13 @@
 import React, { lazy, Suspense } from 'react';
 import { createGlobalStyle } from 'styled-components';
-import { Switch, Route, Redirect } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 
 const PostsPage = lazy(() => import('pages/PostsPage'));
 const PostPage = lazy(() => import('pages/PostPage'));
 const UserPage = lazy(() => import('pages/UserPage'));
 const LoginPage = lazy(() => import('pages/LoginPage'));
 const LogoutPage = lazy(() => import('pages/LogoutPage'));
-const SignUpPage = lazy(() => import('pages/SignUpPage'));
+const SignupPage = lazy(() => import('pages/SignupPage'));
 const NotFoundPage = lazy(() => import('pages/NotFoundPage'));
 
 const GlobalStyle = createGlobalStyle`
@@ -17,9 +17,12 @@ const GlobalStyle = createGlobalStyle`
         box-sizing: border-box;
     }
 
+    html, body {
+        height: 100%;
+    }
+
     body {
         font-family: 'Roboto', sans-serif;
-        min-height: 100vh;
     }
 
     a {
@@ -41,7 +44,7 @@ const App = () => {
                     <Route path="/user/:id/favourites" component={UserPage} />
                     <Route path="/login" component={LoginPage} />
                     <Route path="/logout" component={LogoutPage} />
-                    <Route path="/signup" component={SignUpPage} />
+                    <Route path="/signup" component={SignupPage} />
                     <Route component={NotFoundPage} />
                 </Switch>
             </Suspense>

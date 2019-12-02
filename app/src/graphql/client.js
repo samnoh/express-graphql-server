@@ -1,4 +1,4 @@
-import ApolloClient, { InMemoryCache, HttpLink } from 'apollo-boost';
+import ApolloClient, { InMemoryCache } from 'apollo-boost';
 
 const client = new ApolloClient({
     uri: process.env.REACT_APP_APOLLO_URI || 'http://localhost:8000/graphql',

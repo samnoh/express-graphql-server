@@ -14,6 +14,12 @@ export const LOGIN = gql`
     }
 `;
 
+export const SIGNUP = gql`
+    mutation signup($user: UserInput!) {
+        signup(user: $user)
+    }
+`;
+
 export const GET_POSTS = gql`
     query Posts($pagination: PaginationInput) {
         posts(pagination: $pagination) {

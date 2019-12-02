@@ -24,7 +24,7 @@ const typeDefs = gql`
     }
 
     type Mutation {
-        signUp(user: UserInput!): String!
+        signup(user: UserInput!): String!
         login(user: UserInput!): String!
         addPost(title: String!, content: String): Int!
         editPost(id: Int!, title: String!, content: String): Post!
@@ -34,6 +34,7 @@ const typeDefs = gql`
     input UserInput {
         username: String!
         password: String!
+        password2: String
     }
 
     input PaginationInput {

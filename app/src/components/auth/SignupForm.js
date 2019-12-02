@@ -1,11 +1,11 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useMutation } from '@apollo/react-hooks';
 import { withRouter } from 'react-router-dom';
 
 import Form from 'components/common/Form';
+import { SIGNUP } from 'graphql/queries';
 import { setToken, removeToken } from 'store/actions/auth';
-import { LOGIN } from 'graphql/queries';
 
 const inputAttrs = [
     {
@@ -17,21 +17,22 @@ const inputAttrs = [
         label: 'Password',
         type: 'password',
         name: 'password'
+    },
+    {
+        label: 'Confirm Password',
+        type: 'password',
+        name: 'password2'
     }
 ];
 
-const LoginForm = ({ history }) => {
-    // const { loading, error, data: posts, fetchMore } = useQuery(GET_POSTS, {
-    //     variables: { pagination: { offset: 0, limit: 5 } },
-    //     fetchPolicy: 'cache-and-network'
-    // });
+const SignupForm = ({ history }) => {
     const auth = useSelector(state => state.auth);
     const dispatch = useDispatch();
-    const [loginInputs, setLoginInputs] = useState({ username: '', password: '' });
+    const [signupInputs, setSignupInputs] = useState({ username: '', password: '', password2: '' });
     const [
-        login,
-        { loading: loginLoading, error: loginError, data: { login: jwt } = {} }
-    ] = useMutation(LOGIN);
+        signup,
+        { loading: signupLoading, error: signupError, data: { signup: jwt } = {} }
+    ] = useMutation(SIGNUP);
 
     useEffect(() => {
         if (auth.token) {
@@ -47,26 +48,26 @@ const LoginForm = ({ history }) => {
     }, [dispatch, history, jwt]);
 
     useEffect(() => {
-        if (loginError) {
+        if (signupError) {
             dispatch(removeToken());
         }
-    }, [dispatch, loginError]);
+    }, [signupError]);
 
     const onChange = useCallback(
         e => {
-            setLoginInputs({ ...loginInputs, [e.target.name]: e.target.value });
+            setSignupInputs({ ...signupInputs, [e.target.name]: e.target.value });
         },
-        [setLoginInputs, loginInputs]
+        [setSignupInputs, signupInputs]
     );
 
     const onSubmit = useCallback(
         e => {
             e.preventDefault();
-            login({ variables: { user: loginInputs } });
-            setLoginInputs({ username: '', password: '' });
+            signup({ variables: { user: signupInputs } });
+            setSignupInputs({ username: '', password: '', password2: '' });
             e.target.username.focus();
         },
-        [login, loginInputs]
+        [signup, signupInputs]
     );
 
     return (
@@ -74,11 +75,11 @@ const LoginForm = ({ history }) => {
             onSubmit={onSubmit}
             onChange={onChange}
             inputAttrs={inputAttrs}
-            values={loginInputs}
-            buttonText="Sign in"
-            loading={loginLoading}
+            values={signupInputs}
+            buttonText="Sign up"
+            loading={signupLoading}
         />
     );
 };
 
-export default withRouter(LoginForm);
+export default withRouter(SignupForm);

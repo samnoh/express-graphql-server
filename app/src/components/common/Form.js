@@ -2,7 +2,7 @@ import React from 'react';
 
 import styled from 'styled-components';
 
-const _Form = styled.form`
+const FormContainer = styled.form`
     width: 400px;
 `;
 
@@ -41,26 +41,24 @@ const SubmitButton = styled.button`
 
 const Form = ({ onSubmit, onChange, inputAttrs, values, buttonText, loading }) => {
     return (
-        <>
-            <_Form onSubmit={onSubmit}>
-                {inputAttrs.map(item => (
-                    <div key={item.name}>
-                        {item.label && <Label htmlFor={item.name}>{item.label}</Label>}
-                        <Input
-                            placeholder={item.placeholder}
-                            type={item.type}
-                            name={item.name}
-                            value={values[item.name]}
-                            id={item.name}
-                            onChange={onChange}
-                        />
-                    </div>
-                ))}
-                <SubmitButton type="submit" disabled={loading}>
-                    {buttonText}
-                </SubmitButton>
-            </_Form>
-        </>
+        <FormContainer onSubmit={onSubmit}>
+            {inputAttrs.map(item => (
+                <div key={item.name}>
+                    {item.label && <Label htmlFor={item.name}>{item.label}</Label>}
+                    <Input
+                        placeholder={item.placeholder}
+                        type={item.type}
+                        name={item.name}
+                        value={values[item.name]}
+                        id={item.name}
+                        onChange={onChange}
+                    />
+                </div>
+            ))}
+            <SubmitButton type="submit" disabled={loading}>
+                {buttonText}
+            </SubmitButton>
+        </FormContainer>
     );
 };
 

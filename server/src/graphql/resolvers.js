@@ -55,7 +55,11 @@ const resolvers = {
         }
     },
     Mutation: {
-        signUp: async (_, { user: { username, password } }) => {
+        signup: async (_, { user: { username, password, password2 } }) => {
+            if (password !== password2) {
+                throw new AuthenticationError('Password was not confirmed');
+            }
+
             const [user, created] = await User.findOrCreate({
                 where: { username },
                 defaults: { password }
