@@ -4,7 +4,7 @@ const typeDefs = gql`
     type User {
         id: Int!
         username: String!
-        role: String!
+        role: String
     }
 
     type Post {

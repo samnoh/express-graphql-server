@@ -6,7 +6,7 @@ import { withRouter } from 'react-router-dom';
 import Form from 'components/common/Form';
 import { setToken, removeToken } from 'store/actions/auth';
 import { showNoti } from 'store/actions/noti';
-import { LOGIN } from 'graphql/queries';
+import { LOGIN, SIGNUP } from 'graphql/queries';
 
 const inputAttrs = [
     {
@@ -18,17 +18,21 @@ const inputAttrs = [
         label: 'Password',
         type: 'password',
         name: 'password'
+    },
+    {
+        label: 'Confirm Password',
+        type: 'password',
+        name: 'password2'
     }
 ];
 
-const LoginForm = ({ history }) => {
+const AuthForm = ({ history, signup }) => {
     const auth = useSelector(state => state.auth);
     const dispatch = useDispatch();
-    const [loginInputs, setLoginInputs] = useState({ username: '', password: '' });
-    const [
-        login,
-        { loading: loginLoading, error: loginError, data: { login: jwt } = {} }
-    ] = useMutation(LOGIN);
+    const [values, setValues] = useState({ username: '', password: '', password2: '' });
+    const [fn, { loading, error, data: { [signup ? 'signup' : 'login']: jwt } = {} }] = useMutation(
+        signup ? SIGNUP : LOGIN
+    );
 
     useEffect(() => {
         if (auth.token) {
@@ -44,39 +48,40 @@ const LoginForm = ({ history }) => {
     }, [dispatch, history, jwt]);
 
     useEffect(() => {
-        if (loginError) {
+        if (error) {
             dispatch(removeToken());
-            dispatch(showNoti(loginError.message, 'danger', 3));
+            dispatch(showNoti(error.message, 'danger', 3));
         }
-    }, [dispatch, loginError]);
+    }, [dispatch, error]);
 
     const onChange = useCallback(
         e => {
-            setLoginInputs({ ...loginInputs, [e.target.name]: e.target.value });
+            setValues({ ...values, [e.target.name]: e.target.value });
         },
-        [setLoginInputs, loginInputs]
+        [setValues, values]
     );
 
     const onSubmit = useCallback(
         e => {
             e.preventDefault();
-            login({ variables: { user: loginInputs } });
-            setLoginInputs({ password: '' });
+            fn({ variables: { user: values } });
+            console.log(values);
+            setValues({ password: '', password2: '' });
             e.target.password.focus();
         },
-        [login, loginInputs]
+        [fn, values]
     );
 
     return (
         <Form
             onSubmit={onSubmit}
             onChange={onChange}
-            inputAttrs={inputAttrs}
-            values={loginInputs}
-            buttonText="Sign in"
-            loading={loginLoading}
+            inputAttrs={inputAttrs.slice(0, signup ? 3 : 2)}
+            values={values}
+            buttonText={signup ? 'Sign Up' : 'Sign in'}
+            loading={loading}
         />
     );
 };
 
-export default withRouter(LoginForm);
+export default withRouter(AuthForm);

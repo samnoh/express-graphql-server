@@ -1,14 +1,14 @@
 import React from 'react';
 
 import PageTemplate from 'components/common/PageTemplate';
-import Profile from 'components/user/Profile';
+import Editor from 'components/post/Editor';
 
-const UserPage = () => {
+const EditorPage = () => {
     return (
         <PageTemplate>
-            <Profile />
+            <Editor />
         </PageTemplate>
     );
 };
 
-export default UserPage;
+export default EditorPage;

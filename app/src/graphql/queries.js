@@ -12,16 +12,14 @@ const fragments = {
                 username
             }
         }
+    `,
+    user: gql`
+        fragment userFragment on User {
+            id
+            username
+        }
     `
 };
-
-export const ADD_POST = gql`
-    mutation addPost($title: title!, $content: content) {
-        addPost(title: $title, content: $content) {
-            id
-        }
-    }
-`;
 
 export const LOGIN = gql`
     mutation login($user: UserInput!) {
@@ -33,6 +31,15 @@ export const SIGNUP = gql`
     mutation signup($user: UserInput!) {
         signup(user: $user)
     }
+`;
+
+export const GET_USER = gql`
+    query user($id: Int!) {
+        user(id: $id) {
+            ...userFragment
+        }
+    }
+    ${fragments.user}
 `;
 
 export const GET_POSTS = gql`
@@ -51,4 +58,12 @@ export const GET_POST = gql`
         }
     }
     ${fragments.post}
+`;
+
+export const ADD_POST = gql`
+    mutation addPost($title: title!, $content: content) {
+        addPost(title: $title, content: $content) {
+            id
+        }
+    }
 `;

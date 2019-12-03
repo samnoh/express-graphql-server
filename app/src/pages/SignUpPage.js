@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import AuthTemplate from 'components/auth/AuthTemplate';
-import SignupForm from 'components/auth/SignupForm';
+import AuthForm from 'components/auth/AuthForm';
 
 const imageMeta = {
     imageUrl:
@@ -21,7 +21,7 @@ const SignupPage = () => {
                 </>
             }
             image={imageMeta}>
-            <SignupForm />
+            <AuthForm signup />
         </AuthTemplate>
     );
 };
