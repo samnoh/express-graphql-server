@@ -39,7 +39,7 @@ export const showNoti = (message, theme, sec) => (dispatch, getState) => {
     closeTimers().then(() => {
         dispatch(
             showNotiAction(
-                message.includes('GraphQL error:') ? message.split(':')[1] : message,
+                message.includes('error:') ? message.split(':')[1] : message,
                 background,
                 color
             )

@@ -30,8 +30,8 @@ const resolvers = {
             return users;
         },
         post: async (_, { id }) => {
-            const posts = await Post.findByPk(id);
-            return posts;
+            const post = await Post.findByPk(id, { include: [{ model: User, as: 'user' }] });
+            return post;
         },
         posts: async (_, { pagination: { offset, limit = 20 } = {} }) => {
             if (limit > 100) return null;

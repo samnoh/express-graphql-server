@@ -61,8 +61,8 @@ const LoginForm = ({ history }) => {
         e => {
             e.preventDefault();
             login({ variables: { user: loginInputs } });
-            setLoginInputs({ username: '', password: '' });
-            e.target.username.focus();
+            setLoginInputs({ password: '' });
+            e.target.password.focus();
         },
         [login, loginInputs]
     );

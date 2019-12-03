@@ -53,7 +53,7 @@ const SignupForm = ({ history }) => {
             dispatch(removeToken());
             dispatch(showNoti(signupError.message, 'danger', 3));
         }
-    }, [signupError]);
+    }, [dispatch, signupError]);
 
     const onChange = useCallback(
         e => {
