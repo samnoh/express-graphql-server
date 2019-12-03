@@ -21,7 +21,7 @@ const LoginPage = () => {
                 </>
             }
             image={imageMeta}>
-            <AuthForm mode="signin" />
+            <AuthForm />
         </AuthTemplate>
     );
 };
