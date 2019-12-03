@@ -37,8 +37,8 @@ const App = () => {
                     <Route exact path="/" component={PostsPage} />
                     <Route path="/post/new" component={EditorPage} />
                     <Route path="/post/:id" component={PostPage} />
-                    <Route path="/user/:id/favourites" component={UserPage} />
                     <Route path="/user/:id" component={UserPage} />
+                    <Route path="/user/:id/favourites" component={UserPage} />
                     <Route path="/login" component={LoginPage} />
                     <Route path="/logout" component={LogoutPage} />
                     <Route path="/signup" component={SignupPage} />

@@ -65,7 +65,6 @@ const AuthForm = ({ history, signup }) => {
         e => {
             e.preventDefault();
             fn({ variables: { user: values } });
-            console.log(values);
             setValues({ password: '', password2: '' });
             e.target.password.focus();
         },
