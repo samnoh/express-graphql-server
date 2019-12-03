@@ -40,6 +40,13 @@ const Editor = ({ title = '', body = '' }) => {
     const quillElement = useRef(null);
     const quillInstance = useRef(null);
 
+    const onChange = useCallback(
+        e => {
+            setValues({ ...values, [e.target.name]: e.target.value });
+        },
+        [values, setValues]
+    );
+
     useEffect(() => {
         quillInstance.current = new Quill(quillElement.current, {
             theme: 'bubble',
@@ -59,14 +66,7 @@ const Editor = ({ title = '', body = '' }) => {
                 onChange({ target: { name: 'body', value: quill.root.innerHTML } });
             }
         });
-    }, []);
-
-    const onChange = useCallback(
-        e => {
-            setValues({ ...values, [e.target.name]: e.target.value });
-        },
-        [values, setValues]
-    );
+    }, [onChange]);
 
     return (
         <Container>

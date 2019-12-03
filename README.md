@@ -2,8 +2,7 @@
 
 ## Features
 
--   Sign in
--   Sign up
+-   Sign in & Sign up
 -   CRUD posts
 -   CRUD comments
 -   CRUD favourites
