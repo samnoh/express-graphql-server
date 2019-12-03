@@ -11,6 +11,7 @@ const typeDefs = gql`
         id: Int!
         title: String!
         content: String
+        createdAt: String!
         user: User!
     }
 
@@ -18,7 +19,7 @@ const typeDefs = gql`
         checkToken: User!
         user(id: Int!): User!
         users(pagination: PaginationInput): [User]
-        post(id: Int!): Post!
+        post(id: Int!): Post
         posts(pagination: PaginationInput): [Post]
         postsByUserId(id: Int!, pagination: PaginationInput): [Post]!
     }

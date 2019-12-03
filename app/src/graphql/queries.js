@@ -1,5 +1,20 @@
 import { gql } from 'apollo-boost';
 
+const fragments = {
+    post: gql`
+        fragment postFragment on Post {
+            id
+            title
+            content
+            createdAt
+            user {
+                id
+                username
+            }
+        }
+    `
+};
+
 export const ADD_POST = gql`
     mutation addPost($title: title!, $content: content) {
         addPost(title: $title, content: $content) {
@@ -23,27 +38,17 @@ export const SIGNUP = gql`
 export const GET_POSTS = gql`
     query posts($pagination: PaginationInput) {
         posts(pagination: $pagination) {
-            id
-            title
-            content
-            user {
-                id
-                username
-            }
+            ...postFragment
         }
     }
+    ${fragments.post}
 `;
 
 export const GET_POST = gql`
-    query post($id: id!) {
+    query post($id: Int!) {
         post(id: $id) {
-            id
-            title
-            content
-            user {
-                id
-                username
-            }
+            ...postFragment
         }
     }
+    ${fragments.post}
 `;
