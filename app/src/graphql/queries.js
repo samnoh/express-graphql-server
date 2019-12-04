@@ -61,9 +61,10 @@ export const GET_POST = gql`
 `;
 
 export const ADD_POST = gql`
-    mutation addPost($title: title!, $content: content) {
+    mutation addPost($title: String!, $content: String) {
         addPost(title: $title, content: $content) {
-            id
+            ...postFragment
         }
     }
+    ${fragments.post}
 `;

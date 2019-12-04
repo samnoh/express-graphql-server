@@ -70,7 +70,7 @@ const PostDetail = ({ location }) => {
                     </h1>
                     <Link to={`/user/${user.id}`}>{user.username}</Link>
                 </Title>
-                <Description>{content}</Description>
+                <Description dangerouslySetInnerHTML={{ __html: content }}></Description>
             </PostDetailContainer>
         </>
     );

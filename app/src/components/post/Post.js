@@ -1,24 +1,28 @@
-import React, { memo } from 'react';
+import React, { memo, useMemo } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 const PostContainer = styled.section`
     color: #242424;
-    margin-bottom: 34px;
-    padding: 0 10px 20px 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 48px;
+    padding: 0 6px;
     border-bottom: 1px solid #eaecef;
-
-    @media (hover: hover) {
-        &:hover {
-            opacity: 0.6;
-        }
-    }
 `;
 
 const Title = styled.h2`
     font-weight: 300;
-    font-size: 30px;
+    font-size: 38px;
     margin-bottom: 12px;
+    flex-grow: 1;
+
+    & a {
+        display: block;
+        width: 100%;
+        padding-bottom: 20px;
+    }
 
     & span {
         font-size: 15px;
@@ -26,24 +30,44 @@ const Title = styled.h2`
         margin-left: 8px;
         color: #888;
     }
+
+    @media (hover: hover) {
+        &:hover {
+            opacity: 0.4;
+        }
+    }
 `;
 
-const Description = styled.p`
-    font-size: 16px;
-    margin-left: 2px;
-    color: #555;
+const Username = styled.span`
+    text-align: right;
+    display: block;
+    color: #888;
+    font-weight: 300;
+    align-self: flex-end;
+    margin-bottom: 20px;
+    margin-left: 20px;
+
+    @media (hover: hover) {
+        &:hover {
+            opacity: 0.4;
+        }
+    }
 `;
 
-const Post = memo(({ id, title, content, user: { username, id: userId } }) => {
+const Post = memo(({ id, title, createdAt, user: { username, id: userId } }) => {
+    const datetime = new Date(parseInt(createdAt));
+
     return (
-        <Link to={`/post/${id}`}>
-            <PostContainer>
-                <Title>
-                    {title} <span>{username}</span>
-                </Title>
-                <Description>{content}</Description>
-            </PostContainer>
-        </Link>
+        <PostContainer>
+            <Title>
+                <Link to={`/post/${id}`}>
+                    {title} <span>{datetime.toLocaleDateString('en')}</span>
+                </Link>
+            </Title>
+            <Username>
+                <Link to={`/user/${userId}`}>{username}</Link>
+            </Username>
+        </PostContainer>
     );
 });
 
