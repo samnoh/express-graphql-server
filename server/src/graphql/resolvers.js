@@ -86,6 +86,7 @@ const resolvers = {
                 });
         },
         addPost: async (_, { title, content }, context) => {
+            console.log('addPost');
             if (!context.user) {
                 throw new AuthenticationError('You must be logged in');
             }
@@ -95,7 +96,7 @@ const resolvers = {
                 content,
                 userId: context.user.id
             });
-            return post.id;
+            return post;
         },
         editPost: async (_, { id, title, content }, context) => {
             if (!context.user) {

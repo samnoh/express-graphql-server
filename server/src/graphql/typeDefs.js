@@ -12,7 +12,7 @@ const typeDefs = gql`
         title: String!
         content: String
         createdAt: String!
-        user: User!
+        user: User
     }
 
     type Query {
@@ -27,7 +27,7 @@ const typeDefs = gql`
     type Mutation {
         signup(user: UserInput!): String!
         login(user: UserInput!): String!
-        addPost(title: String!, content: String): Int!
+        addPost(title: String!, content: String): Post!
         editPost(id: Int!, title: String!, content: String): Post!
         deletePost(id: Int!): Boolean!
     }
