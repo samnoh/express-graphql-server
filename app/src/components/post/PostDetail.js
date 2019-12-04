@@ -45,10 +45,10 @@ const Description = styled.p`
     font-size: 17px;
 `;
 
-const PostDetail = ({ location }) => {
-    const postId = parseInt(location.pathname.split('/')[2]);
+const PostDetail = ({ match }) => {
+    const { id } = match.params;
     const { loading, error, data } = useQuery(GET_POST, {
-        variables: { id: postId }
+        variables: { id: parseInt(id) }
     });
 
     if (error) return <div>Error!</div>;

@@ -44,6 +44,10 @@ const resolvers = {
             });
             return posts;
         },
+        postsCount: async () => {
+            const total = await Post.count({});
+            return total;
+        },
         postsByUserId: async (_, { id, pagination: { offset, limit = 5 } = {} }) => {
             const posts = await Post.findAll({
                 offset,
@@ -78,12 +82,12 @@ const resolvers = {
                 throw new AuthenticationError('The user does not exist');
             }
 
-            return user
-                .comparePassword(password)
-                .then(() => jwt.sign({ userId: user.id }, JWT_SECRET_KEY, { expiresIn: '10d' }))
-                .catch(error => {
-                    throw new AuthenticationError(error || 'The password is invalid');
-                });
+            try {
+                await user.comparePassword(password);
+                return jwt.sign({ userId: user.id }, JWT_SECRET_KEY, { expiresIn: '10d' });
+            } catch (error) {
+                throw new AuthenticationError(error || 'The password is invalid');
+            }
         },
         addPost: async (_, { title, content }, context) => {
             console.log('addPost');

@@ -47,6 +47,7 @@ export const GET_POSTS = gql`
         posts(pagination: $pagination) {
             ...postFragment
         }
+        postsCount
     }
     ${fragments.post}
 `;

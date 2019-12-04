@@ -21,10 +21,10 @@ const Username = styled.h1`
     text-align: center;
 `;
 
-const Profile = ({ location }) => {
-    const id = parseInt(location.pathname.split('/')[2]);
+const Profile = ({ match }) => {
+    const { id } = match.params;
     const { loading, error, data } = useQuery(GET_USER, {
-        variables: { id }
+        variables: { id: parseInt(id) }
     });
 
     if (error) return <div>Error!</div>;

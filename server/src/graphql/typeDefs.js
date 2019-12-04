@@ -21,6 +21,7 @@ const typeDefs = gql`
         users(pagination: PaginationInput): [User]
         post(id: Int!): Post
         posts(pagination: PaginationInput): [Post]
+        postsCount: Int!
         postsByUserId(id: Int!, pagination: PaginationInput): [Post]!
     }
 

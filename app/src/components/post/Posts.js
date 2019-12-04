@@ -1,17 +1,22 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import { useQuery } from '@apollo/react-hooks';
-import styled from 'styled-components';
+import qs from 'qs';
+import { withRouter } from 'react-router-dom';
 import Helmet from 'react-helmet';
 
 import { GET_POSTS } from 'graphql/queries';
 import Post from './Post';
+import Pagination from './Pagination';
 
-const PostsContainer = styled.div``;
+const NumPostOnPage = 10;
 
-const Posts = () => {
-    const [offset, setOffset] = useState(0);
+const Posts = ({ location, history }) => {
+    const query = qs.parse(location.search, { ignoreQueryPrefix: true });
+
     const { loading, error, data } = useQuery(GET_POSTS, {
-        variables: { pagination: { offset, limit: 15 } }
+        variables: {
+            pagination: { offset: query.page * NumPostOnPage - NumPostOnPage, limit: NumPostOnPage }
+        }
     });
 
     if (error) return <div>Error!</div>;
@@ -21,15 +26,18 @@ const Posts = () => {
     return (
         <>
             <Helmet>
-                <title>Posts ({String(data.posts.length)})</title>
+                <title>Posts ({String(data.postsCount)})</title>
             </Helmet>
-            <PostsContainer>
-                {data.posts.map(post => (
-                    <Post {...post} key={post.id} />
-                ))}
-            </PostsContainer>
+            {data.posts.map(post => (
+                <Post {...post} key={post.id} />
+            ))}
+            <Pagination
+                currPage={query.page ? Math.abs(query.page) : 1}
+                total={data.postsCount}
+                nPostOnPage={NumPostOnPage}
+            />
         </>
     );
 };
 
-export default Posts;
+export default withRouter(Posts);
