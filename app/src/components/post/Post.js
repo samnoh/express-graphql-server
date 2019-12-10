@@ -54,7 +54,7 @@ const Username = styled.span`
     }
 `;
 
-const Post = memo(({ id, title, createdAt, user: { username, id: userId } }) => {
+const Post = memo(({ id, title, createdAt, simple, user }) => {
     const datetime = new Date(parseInt(createdAt));
 
     return (
@@ -64,9 +64,11 @@ const Post = memo(({ id, title, createdAt, user: { username, id: userId } }) => 
                     {title} <span>{datetime.toLocaleDateString('en')}</span>
                 </Link>
             </Title>
-            <Username>
-                <Link to={`/user/${userId}`}>{username}</Link>
-            </Username>
+            {!simple && (
+                <Username>
+                    <Link to={`/user/${user.id}`}>{user.username}</Link>
+                </Username>
+            )}
         </PostContainer>
     );
 });

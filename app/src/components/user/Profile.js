@@ -1,10 +1,10 @@
 import React from 'react';
 import { useQuery } from '@apollo/react-hooks';
-import { withRouter, Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Helmet from 'react-helmet';
 
 import { GET_USER } from 'graphql/queries';
+import Post from 'components/post/Post';
 
 const Container = styled.section`
     width: 600px;
@@ -21,10 +21,9 @@ const Username = styled.h1`
     text-align: center;
 `;
 
-const Profile = ({ match }) => {
-    const { id } = match.params;
+const Profile = ({ id }) => {
     const { loading, error, data } = useQuery(GET_USER, {
-        variables: { id: parseInt(id) }
+        variables: { id }
     });
 
     if (error) return <div>Error!</div>;
@@ -32,6 +31,7 @@ const Profile = ({ match }) => {
     if (loading) return <div>Loading...</div>;
 
     const { username } = data.user;
+    const posts = data.postsByUserId;
 
     return (
         <>
@@ -41,8 +41,12 @@ const Profile = ({ match }) => {
             <Container>
                 <Username>{username}</Username>
             </Container>
+            <h2>Recent Posts</h2>
+            {posts.map(post => (
+                <Post {...post} simple />
+            ))}
         </>
     );
 };
 
-export default withRouter(Profile);
+export default Profile;

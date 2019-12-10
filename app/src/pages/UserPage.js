@@ -3,10 +3,12 @@ import React from 'react';
 import PageTemplate from 'components/common/PageTemplate';
 import Profile from 'components/user/Profile';
 
-const UserPage = () => {
+const UserPage = ({ match }) => {
+    const { id } = match.params;
+
     return (
         <PageTemplate>
-            <Profile />
+            <Profile id={parseInt(id)} />
         </PageTemplate>
     );
 };

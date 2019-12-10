@@ -18,8 +18,6 @@ const LeftSide = styled.div`
     background-repeat: no-repeat;
     background-size: cover;
 
-    ${props => {}}
-
     ${media.tablet`
         display: none;
     `};

@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import { withRouter, Link } from 'react-router-dom';
 import styled from 'styled-components';
@@ -43,8 +43,13 @@ const Title = styled.div`
     }
 `;
 
-const EditButton = styled.button`
+const ButtonContainer = styled.div`
     position: absolute;
+    right: 0;
+    bottom: -46px;
+`;
+
+const Button = styled.button`
     cursor: pointer;
     border: none;
     padding: 8px 20px;
@@ -52,10 +57,16 @@ const EditButton = styled.button`
     border-radius: 4px;
     color: #fff;
     font-weight: 700;
-    background-color: #61ceb3;
     outline: none;
-    right: 0;
-    bottom: -46px;
+`;
+
+const EditButton = styled(Button)`
+    background-color: #4295f7;
+    margin-left: 12px;
+`;
+
+const FavButton = styled(Button)`
+    background-color: ${props => (props.saved ? '#D93D75' : '#61ceb3')};
 `;
 
 const Description = styled.p`
@@ -63,20 +74,25 @@ const Description = styled.p`
     font-size: 17px;
 `;
 
-const PostDetail = ({ match, history }) => {
+const PostDetail = ({ history, id }) => {
+    const [saved, setSaved] = useState(false);
     const auth = useSelector(state => state.auth);
-    const { id } = match.params;
     const { loading, error, data } = useQuery(GET_POST, {
-        variables: { id: parseInt(id) }
+        variables: { id }
     });
 
-    const onClick = useCallback(() => {
+    const onEditClick = useCallback(() => {
         history.push(`/post/${id}/edit`, {
             id,
             title: data.post.title,
             content: data.post.content
         });
-    }, [data]);
+    }, [data, id]);
+
+    const onFavClick = useCallback(() => {
+        alert(saved ? 'deleted' : 'added');
+        setSaved(!saved);
+    }, [data, id, saved, setSaved]);
 
     if (error) return <div>Error!</div>;
 
@@ -96,7 +112,14 @@ const PostDetail = ({ match, history }) => {
                         {title} <span>{datetime.toLocaleDateString('en')}</span>
                     </h1>
                     <Link to={`/user/${user.id}`}>{user.username}</Link>
-                    {user.id === auth.userId && <EditButton onClick={onClick}>Edit</EditButton>}
+                    <ButtonContainer>
+                        <FavButton onClick={onFavClick} saved={saved}>
+                            {saved ? 'Delete' : 'Add to'} favourites
+                        </FavButton>
+                        {user.id === auth.userId && (
+                            <EditButton onClick={onEditClick}>Edit</EditButton>
+                        )}
+                    </ButtonContainer>
                 </Title>
                 <Description dangerouslySetInnerHTML={{ __html: content }} />
             </PostDetailContainer>

@@ -3,10 +3,12 @@ import React from 'react';
 import PageTemplate from 'components/common/PageTemplate';
 import PostDetail from 'components/post/PostDetail';
 
-const PostPage = () => {
+const PostPage = ({ match }) => {
+    const { id } = match.params;
+
     return (
         <PageTemplate>
-            <PostDetail />
+            <PostDetail id={parseInt(id)} />
         </PageTemplate>
     );
 };

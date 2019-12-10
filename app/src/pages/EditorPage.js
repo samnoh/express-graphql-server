@@ -10,7 +10,7 @@ const EditorPage = ({ location }) => {
                 <Editor
                     title={location.state.title}
                     content={location.state.content}
-                    id={location.state.id}
+                    id={parseInt(location.state.id)}
                     editor
                 />
             ) : (

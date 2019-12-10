@@ -95,7 +95,7 @@ const Editor = ({
             title,
             content
         };
-        if (editor) variables.id = parseInt(id);
+        if (editor) variables.id = id;
 
         fn({ variables });
     }, [fn, title, content]);

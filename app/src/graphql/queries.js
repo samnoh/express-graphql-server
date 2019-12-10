@@ -38,8 +38,12 @@ export const GET_USER = gql`
         user(id: $id) {
             ...userFragment
         }
+        postsByUserId(id: $id) {
+            ...postFragment
+        }
     }
     ${fragments.user}
+    ${fragments.post}
 `;
 
 export const GET_POSTS = gql`
