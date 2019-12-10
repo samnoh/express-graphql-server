@@ -53,6 +53,7 @@ const resolvers = {
                 offset,
                 limit,
                 where: { userId: id },
+                include: [{ model: User, as: 'user' }],
                 order: [['createdAt', 'DESC']]
             });
             return posts;
@@ -113,7 +114,10 @@ const resolvers = {
             );
 
             if (updated) {
-                const updatedPost = await Post.findOne({ where: { id } });
+                const updatedPost = await Post.findOne({
+                    where: { id },
+                    include: [{ model: User, as: 'user' }]
+                });
                 return updatedPost;
             }
 

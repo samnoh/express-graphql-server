@@ -22,7 +22,7 @@ const typeDefs = gql`
         post(id: Int!): Post
         posts(pagination: PaginationInput): [Post]
         postsCount: Int!
-        postsByUserId(id: Int!, pagination: PaginationInput): [Post]!
+        postsByUserId(id: Int!, pagination: PaginationInput): [Post]
     }
 
     type Mutation {
