@@ -5,7 +5,7 @@ import 'quill/dist/quill.bubble.css';
 import styled from 'styled-components';
 import { withRouter } from 'react-router-dom';
 
-import { ADD_POST } from 'graphql/queries';
+import { ADD_POST, EDIT_POST } from 'graphql/queries';
 
 const Container = styled.section`
     position: relative;
@@ -19,8 +19,8 @@ const TitleInput = styled.input`
     border: none;
     border-top: 1px solid #eaecef;
     border-left: 1px solid #eaecef;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
     padding: 10px 15px;
     width: 100%;
 
@@ -44,7 +44,7 @@ const SubmitButtom = styled.button`
     border-top: 1px solid #eaecef;
     border-left: 1px solid #eaecef;
     border-right: 1px solid #eaecef;
-    border-top-right-radius: 10px;
+    border-top-right-radius: 5px;
     transition: all 0.4s ease-in-out;
 
     @media (hover: hover) {
@@ -62,8 +62,8 @@ const QuillWrapper = styled.div`
         font-size: 17px;
         line-height: 1.5;
         border: 1px solid #eaecef;
-        border-bottom-left-radius: 10px;
-        border-bottom-right-radius: 10px;
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
         padding: 15px;
     }
     .ql-editor.ql-blank::before {
@@ -72,22 +72,46 @@ const QuillWrapper = styled.div`
     }
 `;
 
-const Editor = ({ title: initialTitle, content: initialContent, history }) => {
+const Editor = ({
+    title: initialTitle,
+    content: initialContent,
+    id,
+    editor,
+    history,
+    location
+}) => {
     const quillElement = useRef(null);
     const quillInstance = useRef(null);
+    const titleElement = useRef(null);
     const [title, setTitle] = useState(initialTitle);
     const [content, setContent] = useState(initialContent);
-    const [addPost, { loading, error, data }] = useMutation(ADD_POST);
+    const [
+        fn,
+        { loading, error, data: { [editor ? 'editPost' : 'addPost']: post } = {} }
+    ] = useMutation(editor ? EDIT_POST : ADD_POST);
 
     const onSubmit = useCallback(() => {
-        addPost({ variables: { title, content } });
-    }, [addPost, title, content]);
+        const variables = {
+            title,
+            content
+        };
+        if (editor) variables.id = parseInt(id);
+
+        fn({ variables });
+    }, [fn, title, content]);
 
     useEffect(() => {
-        if (data) {
-            history.push(`/post/${data.addPost.id}`);
+        if (post) {
+            history.push(`/post/${post.id}`);
         }
-    }, [data]);
+    }, [post]);
+
+    useEffect(() => {
+        if (editor) return;
+        setTitle('');
+        setContent('');
+        titleElement.current.focus();
+    }, [location.pathname]);
 
     useEffect(() => {
         quillInstance.current = new Quill(quillElement.current, {
@@ -103,12 +127,12 @@ const Editor = ({ title: initialTitle, content: initialContent, history }) => {
         });
 
         const quill = quillInstance.current;
-        if (content) quill.root.innerHTML = initialContent;
+        quill.root.innerHTML = editor ? content : '';
 
         quill.on('text-change', (delta, oldDelta, source) => {
             if (source === 'user') setContent(quill.root.innerHTML);
         });
-    }, [setContent]);
+    }, [setContent, location.pathname]);
 
     return (
         <Container>
@@ -118,6 +142,7 @@ const Editor = ({ title: initialTitle, content: initialContent, history }) => {
                 name="title"
                 value={title}
                 autoFocus
+                ref={titleElement}
             />
             <SubmitButtom onClick={onSubmit} disabled={loading} tabIndex="-1">
                 +

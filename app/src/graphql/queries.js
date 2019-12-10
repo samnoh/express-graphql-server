@@ -69,3 +69,12 @@ export const ADD_POST = gql`
     }
     ${fragments.post}
 `;
+
+export const EDIT_POST = gql`
+    mutation editPost($id: Int!, $title: String!, $content: String) {
+        editPost(id: $id, title: $title, content: $content) {
+            ...postFragment
+        }
+    }
+    ${fragments.post}
+`;
