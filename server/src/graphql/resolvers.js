@@ -4,7 +4,7 @@ import { AuthenticationError } from 'apollo-server-express';
 import db from 'models';
 import { JWT_SECRET_KEY } from 'config/secret';
 
-const { User, Post } = db;
+const { User, Post, Comment } = db;
 
 const resolvers = {
     Query: {
@@ -57,6 +57,16 @@ const resolvers = {
                 order: [['createdAt', 'DESC']]
             });
             return posts;
+        },
+        favourites: async () => {},
+        comments: async (_, { id: userId }) => {
+            const comments = await Comment.findAll({
+                limit: 5,
+                where: { userId },
+                include: [{ model: User, as: 'user' }],
+                order: [['createdAt', 'DESC']]
+            });
+            return comments;
         }
     },
     Mutation: {
@@ -128,7 +138,47 @@ const resolvers = {
                 throw new AuthenticationError('You must be logged in');
             }
 
-            const deleted = await Post.destroy({ where: { id, userId: context.user.id } });
+            const deleted = await Post.destroy({ where: { id } });
+
+            if (deleted) return true;
+
+            throw new AuthenticationError('The request was not successful');
+        },
+        addComment: async (_, { id: postId, content }, context) => {
+            if (!context.user) {
+                throw new AuthenticationError('You must be logged in');
+            }
+
+            const comment = await Comment.create({
+                content,
+                postId,
+                userId: context.user.id
+            });
+            return comment;
+        },
+        editComment: async (_, { id, content }, context) => {
+            if (!context.user) {
+                throw new AuthenticationError('You must be logged in');
+            }
+
+            const [updated] = await Comment.update({ content }, { where: { id } });
+
+            if (updated) {
+                const updatedComment = await Comment.findOne({
+                    where: { id },
+                    include: [{ model: User, as: 'user' }]
+                });
+                return updatedComment;
+            }
+
+            throw new AuthenticationError('The request was not successful');
+        },
+        deleteComment: async (_, { id }, context) => {
+            if (!context.user) {
+                throw new AuthenticationError('You must be logged in');
+            }
+
+            const deleted = await Comment.destroy({ where: { id } });
 
             if (deleted) return true;
 

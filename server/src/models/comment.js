@@ -1,21 +1,18 @@
 import Sequelize from 'sequelize';
 
-class Post extends Sequelize.Model {
+class Comment extends Sequelize.Model {
     static init(sequelize, DataTypes) {
         return super.init(
             {
-                title: {
-                    type: DataTypes.STRING(140),
-                    allowNull: false
-                },
                 content: {
-                    type: DataTypes.TEXT
+                    type: DataTypes.TEXT,
+                    allowNull: false
                 }
             },
             {
                 sequelize,
-                tableName: 'post',
-                modelName: 'post',
+                tableName: 'comment',
+                modelName: 'comment',
                 charset: 'utf8',
                 collate: 'utf8_general_ci'
             }
@@ -23,4 +20,4 @@ class Post extends Sequelize.Model {
     }
 }
 
-export default Post;
+export default Comment;
