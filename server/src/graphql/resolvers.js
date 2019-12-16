@@ -6,12 +6,16 @@ import { JWT_SECRET_KEY } from 'config/secret';
 
 const { User, Post, Comment } = db;
 
+const isLoggedIn = context => {
+    if (!context.user) {
+        throw new AuthenticationError('You must be logged in');
+    }
+};
+
 const resolvers = {
     Query: {
         checkToken: async (_, __, context) => {
-            if (!context.user) {
-                throw new AuthenticationError('You must be logged in');
-            }
+            isLoggedIn(context);
             const user = await User.findByPk(context.user.id);
             return user;
         },
@@ -101,10 +105,7 @@ const resolvers = {
             }
         },
         addPost: async (_, { title, content }, context) => {
-            console.log('addPost');
-            if (!context.user) {
-                throw new AuthenticationError('You must be logged in');
-            }
+            isLoggedIn(context);
 
             const post = await Post.create({
                 title,
@@ -114,9 +115,7 @@ const resolvers = {
             return post;
         },
         editPost: async (_, { id, title, content }, context) => {
-            if (!context.user) {
-                throw new AuthenticationError('You must be logged in');
-            }
+            isLoggedIn(context);
 
             const [updated] = await Post.update(
                 { title, content },
@@ -134,21 +133,16 @@ const resolvers = {
             throw new AuthenticationError('The request was not successful');
         },
         deletePost: async (_, { id }, context) => {
-            if (!context.user) {
-                throw new AuthenticationError('You must be logged in');
-            }
+            isLoggedIn(context);
 
-            const deleted = await Post.destroy({ where: { id } });
+            const deleted = await Post.destroy({ where: { id, userId: context.user.id } });
 
             if (deleted) return true;
 
             throw new AuthenticationError('The request was not successful');
         },
         addComment: async (_, { id: postId, content }, context) => {
-            if (!context.user) {
-                throw new AuthenticationError('You must be logged in');
-            }
-
+            isLoggedIn(context);
             const comment = await Comment.create({
                 content,
                 postId,
@@ -157,11 +151,12 @@ const resolvers = {
             return comment;
         },
         editComment: async (_, { id, content }, context) => {
-            if (!context.user) {
-                throw new AuthenticationError('You must be logged in');
-            }
+            isLoggedIn(context);
 
-            const [updated] = await Comment.update({ content }, { where: { id } });
+            const [updated] = await Comment.update(
+                { content },
+                { where: { id, userId: context.user.id } }
+            );
 
             if (updated) {
                 const updatedComment = await Comment.findOne({
@@ -174,15 +169,19 @@ const resolvers = {
             throw new AuthenticationError('The request was not successful');
         },
         deleteComment: async (_, { id }, context) => {
-            if (!context.user) {
-                throw new AuthenticationError('You must be logged in');
-            }
+            isLoggedIn(context);
 
-            const deleted = await Comment.destroy({ where: { id } });
+            const deleted = await Comment.destroy({ where: { id, userId: context.user.id } });
 
             if (deleted) return true;
 
             throw new AuthenticationError('The request was not successful');
+        },
+        addFavourite: async (_, { id }, context) => {
+            isLoggedIn(context);
+        },
+        deleteFavourite: async (_, { id }, context) => {
+            isLoggedIn(context);
         }
     }
 };
