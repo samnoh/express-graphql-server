@@ -122,27 +122,29 @@ const resolvers = {
                 { where: { id, userId: context.user.id } }
             );
 
-            if (updated) {
-                const updatedPost = await Post.findOne({
-                    where: { id },
-                    include: [{ model: User, as: 'user' }]
-                });
-                return updatedPost;
+            if (!updated) {
+                throw new AuthenticationError('The request was not successful');
             }
 
-            throw new AuthenticationError('The request was not successful');
+            const updatedPost = await Post.findOne({
+                where: { id },
+                include: [{ model: User, as: 'user' }]
+            });
+            return updatedPost;
         },
         deletePost: async (_, { id }, context) => {
             isLoggedIn(context);
 
             const deleted = await Post.destroy({ where: { id, userId: context.user.id } });
 
-            if (deleted) return true;
-
-            throw new AuthenticationError('The request was not successful');
+            if (!deleted) {
+                throw new AuthenticationError('The request was not successful');
+            }
+            return true;
         },
         addComment: async (_, { id: postId, content }, context) => {
             isLoggedIn(context);
+
             const comment = await Comment.create({
                 content,
                 postId,
@@ -158,24 +160,25 @@ const resolvers = {
                 { where: { id, userId: context.user.id } }
             );
 
-            if (updated) {
-                const updatedComment = await Comment.findOne({
-                    where: { id },
-                    include: [{ model: User, as: 'user' }]
-                });
-                return updatedComment;
+            if (!updated) {
+                throw new AuthenticationError('The request was not successful');
             }
 
-            throw new AuthenticationError('The request was not successful');
+            const updatedComment = await Comment.findOne({
+                where: { id },
+                include: [{ model: User, as: 'user' }]
+            });
+            return updatedComment;
         },
         deleteComment: async (_, { id }, context) => {
             isLoggedIn(context);
 
             const deleted = await Comment.destroy({ where: { id, userId: context.user.id } });
 
-            if (deleted) return true;
-
-            throw new AuthenticationError('The request was not successful');
+            if (!deleted) {
+                throw new AuthenticationError('The request was not successful');
+            }
+            return true;
         },
         addFavourite: async (_, { id }, context) => {
             isLoggedIn(context);
