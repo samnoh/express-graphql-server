@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react';
+import { useDispatch } from 'react-redux';
 import { useMutation } from '@apollo/react-hooks';
 import Quill from 'quill';
 import 'quill/dist/quill.bubble.css';
@@ -6,6 +7,7 @@ import styled from 'styled-components';
 import { withRouter } from 'react-router-dom';
 
 import { ADD_POST, EDIT_POST } from 'graphql/queries';
+import { showNoti } from 'store/actions/noti';
 
 const Container = styled.section`
     position: relative;
@@ -80,6 +82,7 @@ const Editor = ({
     history,
     location
 }) => {
+    const dispatch = useDispatch();
     const quillElement = useRef(null);
     const quillInstance = useRef(null);
     const titleElement = useRef(null);
@@ -133,6 +136,12 @@ const Editor = ({
             if (source === 'user') setContent(quill.root.innerHTML);
         });
     }, [setContent, location.pathname]);
+
+    useEffect(() => {
+        if (error) {
+            dispatch(showNoti(error.message, 'danger', 3));
+        }
+    }, [error]);
 
     return (
         <Container>

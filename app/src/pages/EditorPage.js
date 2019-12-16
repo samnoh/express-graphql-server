@@ -14,7 +14,7 @@ const EditorPage = ({ location }) => {
                     editor
                 />
             ) : (
-                <Editor />
+                <Editor editor={false} />
             )}
         </PageTemplate>
     );

@@ -117,6 +117,13 @@ const resolvers = {
         editPost: async (_, { id, title, content }, context) => {
             isLoggedIn(context);
 
+            const post = Post.findOne({ where: { id, userId: context.user.id } });
+
+            console.log('post');
+            if (!post) {
+                throw new AuthenticationError('The request was not successful');
+            }
+
             const [updated] = await Post.update(
                 { title, content },
                 { where: { id, userId: context.user.id } }
