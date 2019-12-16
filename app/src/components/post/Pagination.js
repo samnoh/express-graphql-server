@@ -58,6 +58,7 @@ const Pagination = ({ currPage = 1, total, nPostOnPage }) => {
                 .map(e => {
                     return e - 1 >= counts ? null : (
                         <PageNum
+                            key={e}
                             to={`?page=${e}`}
                             onClick={onClick}
                             className={currPage === e && 'active'}>

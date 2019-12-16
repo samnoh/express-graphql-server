@@ -5,6 +5,8 @@ import Helmet from 'react-helmet';
 import { GET_POSTS } from 'graphql/queries';
 import Post from './Post';
 import Pagination from './Pagination';
+import ErrorPage from 'pages/ErrorPage';
+import LoadingPage from 'pages/LoadingPage';
 
 const Posts = ({ page }) => {
     const [numPostOnPage, setNumPostOnPage] = useState(10);
@@ -14,9 +16,9 @@ const Posts = ({ page }) => {
         }
     });
 
-    if (error) return <div>Error!</div>;
+    if (error) return <ErrorPage />;
 
-    if (loading) return <div>Loading...</div>;
+    if (loading) return <LoadingPage />;
 
     return (
         <>

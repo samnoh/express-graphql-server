@@ -5,6 +5,8 @@ import Helmet from 'react-helmet';
 
 import { GET_USER } from 'graphql/queries';
 import Post from 'components/post/Post';
+import ErrorPage from 'pages/ErrorPage';
+import LoadingPage from 'pages/LoadingPage';
 
 const Container = styled.section`
     width: 600px;
@@ -26,9 +28,9 @@ const Profile = ({ id }) => {
         variables: { id }
     });
 
-    if (error) return <div>Error!</div>;
+    if (error) return <ErrorPage />;
 
-    if (loading) return <div>Loading...</div>;
+    if (loading) return <LoadingPage />;
 
     const { username } = data.user;
     const posts = data.postsByUserId;

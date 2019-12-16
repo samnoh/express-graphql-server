@@ -10,6 +10,7 @@ const typeDefs = gql`
     type Comment {
         id: Int!
         content: String!
+        user: User!
     }
 
     type Post {
@@ -18,7 +19,7 @@ const typeDefs = gql`
         content: String
         createdAt: String!
         user: User
-        comment: Comment
+        comment: [Comment]
     }
 
     type Query {

@@ -34,7 +34,14 @@ const resolvers = {
             return users;
         },
         post: async (_, { id }) => {
-            const post = await Post.findByPk(id, { include: [{ model: User, as: 'user' }] });
+            const post = await Post.findByPk(id, {
+                include: [{ model: User, as: 'user' }]
+            });
+            const comment = await Comment.findAll({
+                where: { postId: id },
+                include: [{ model: User, as: 'user' }]
+            });
+            post.comment = comment;
             return post;
         },
         posts: async (_, { pagination: { offset, limit = 20 } = {} }) => {
@@ -119,7 +126,6 @@ const resolvers = {
 
             const post = Post.findOne({ where: { id, userId: context.user.id } });
 
-            console.log('post');
             if (!post) {
                 throw new AuthenticationError('The request was not successful');
             }

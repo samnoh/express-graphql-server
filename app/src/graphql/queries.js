@@ -60,6 +60,14 @@ export const GET_POST = gql`
     query post($id: Int!) {
         post(id: $id) {
             ...postFragment
+            comment {
+                id
+                content
+                user {
+                    id
+                    username
+                }
+            }
         }
     }
     ${fragments.post}
@@ -81,4 +89,13 @@ export const EDIT_POST = gql`
         }
     }
     ${fragments.post}
+`;
+
+export const ADD_COMMENT = gql`
+    mutation addComment($id: Int!, $content: String!) {
+        addComment(id: $id, content: $content) {
+            id
+            content
+        }
+    }
 `;
