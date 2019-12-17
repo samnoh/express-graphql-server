@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
@@ -59,7 +59,7 @@ const DeleteButton = styled(Button)`
     color: #d93d75;
 `;
 
-const Comment = ({ id, content, user, createdAt, onEdit, onDelete }) => {
+const Comment = memo(({ id, content, user, createdAt, onEdit, onDelete }) => {
     const auth = useSelector(state => state.auth);
     const isMyComment = auth.userId === user.id;
     const datetime = new Date(parseInt(createdAt));
@@ -84,6 +84,6 @@ const Comment = ({ id, content, user, createdAt, onEdit, onDelete }) => {
             </RightContainer>
         </Container>
     );
-};
+});
 
 export default Comment;

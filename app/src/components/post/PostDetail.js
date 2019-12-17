@@ -10,7 +10,7 @@ import { GET_POST, DELETE_POST, ADD_COMMENT } from 'graphql/queries';
 import { showNoti } from 'store/actions/noti';
 import ErrorPage from 'pages/ErrorPage';
 import LoadingPage from 'pages/LoadingPage';
-import Comment from 'components/common/Comment';
+import Comments from 'components/post/Comments';
 
 const PostDetailContainer = styled.section`
     padding-bottom: 40px;
@@ -85,41 +85,9 @@ const Description = styled.p`
     font-size: 17px;
 `;
 
-const CommentTitle = styled.h2`
-    font-size: 26px;
-    margin: 40px 0;
-    color: #333;
-`;
-
-const CommentInput = styled.textarea`
-    outline: none;
-    width: 100%;
-    font-size: 17px;
-    border-radius: 8px;
-    padding: 18px 12px;
-    background: #f9fafc;
-    border: 1px solid #dae1e7;
-    margin-top: 20px;
-    margin-bottom: 10px;
-`;
-
-const CommentButton = styled(Button)`
-    background-color: #4295f7;
-    float: right;
-`;
-
-const NoComment = styled.div`
-    color: #aaa;
-    margin-top: 60px;
-    text-align: center;
-    user-select: none;
-    font-size: 17px;
-`;
-
 const PostDetail = ({ history, id }) => {
     const dispatch = useDispatch();
     const [saved, setSaved] = useState(false);
-    const [value, setValue] = useState('');
     const auth = useSelector(state => state.auth);
     const [getPost, { called, loading, error, data: { post } = {} }] = useLazyQuery(GET_POST, {
         variables: { id },
@@ -144,15 +112,6 @@ const PostDetail = ({ history, id }) => {
         alert(saved ? 'deleted' : 'added');
         setSaved(!saved);
     }, [post, id, saved, setSaved]);
-
-    const onChange = useCallback(e => {
-        setValue(e.target.value);
-    }, []);
-
-    const onClick = useCallback(() => {
-        addComment({ variables: { id, content: value } });
-        setValue('');
-    }, [value]);
 
     useEffect(() => {
         getPost();
@@ -199,13 +158,7 @@ const PostDetail = ({ history, id }) => {
                 </Title>
                 <Description dangerouslySetInnerHTML={{ __html: content }} />
             </PostDetailContainer>
-            <CommentTitle>Comments</CommentTitle>
-            {!post.comment.length && <NoComment>No Comment</NoComment>}
-            {post.comment.map(c => (
-                <Comment key={c.id} {...c}></Comment>
-            ))}
-            <CommentInput value={value} onChange={onChange} placeholder="Add a comment" />
-            <CommentButton onClick={onClick}>Add Comment</CommentButton>
+            <Comments post={post} addComment={addComment} id={id} />
         </>
     );
 };
