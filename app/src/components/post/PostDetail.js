@@ -158,7 +158,7 @@ const PostDetail = ({ history, id }) => {
 
     useEffect(() => {
         if (isDeleted) {
-            history.goBack();
+            history.push('/');
         }
     }, [isDeleted]);
 

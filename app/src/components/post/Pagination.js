@@ -23,7 +23,7 @@ const PageNum = styled(Link)`
 
 const Pagination = ({ currPage = 1, total, nPostOnPage }) => {
     const nPagination = 5;
-    const counts = parseInt(total / nPostOnPage) + 1;
+    const counts = Math.ceil(total / nPostOnPage);
     const nextPage = useMemo(() => {
         return Math.ceil(currPage / 5) * 5 + 1;
     }, [currPage]);
