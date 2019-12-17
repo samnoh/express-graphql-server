@@ -63,6 +63,7 @@ export const GET_POST = gql`
             comment {
                 id
                 content
+                createdAt
                 user {
                     id
                     username

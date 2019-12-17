@@ -9,18 +9,24 @@ import ErrorPage from 'pages/ErrorPage';
 import LoadingPage from 'pages/LoadingPage';
 
 const Container = styled.section`
-    width: 600px;
-    height: 300px;
     margin: 0 auto;
     border: 1px solid lightgray;
     border-radius: 8px;
-    padding: 12px;
+    padding: 16px;
+    background: #4e6e8e;
+    color: #fff;
 `;
 
 const Username = styled.h1`
     font-weight: 300;
     font-size: 42px;
     text-align: center;
+`;
+
+const RecentPosts = styled.h2`
+    font-size: 26px;
+    margin: 40px 0;
+    color: #333;
 `;
 
 const Profile = ({ id }) => {
@@ -41,9 +47,9 @@ const Profile = ({ id }) => {
                 <title>{username}</title>
             </Helmet>
             <Container>
-                <Username>{username}</Username>
+                <Username>{username}'s Profile</Username>
             </Container>
-            <h2>Recent Posts</h2>
+            <RecentPosts>Recent Posts</RecentPosts>
             {posts.map(post => (
                 <Post {...post} simple />
             ))}

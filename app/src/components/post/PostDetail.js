@@ -15,7 +15,6 @@ import Comment from 'components/common/Comment';
 const PostDetailContainer = styled.section`
     padding-bottom: 40px;
     margin-bottom: 60px;
-    border-bottom: 1px solid #eaecef;
 `;
 
 const Title = styled.div`
@@ -86,17 +85,22 @@ const Description = styled.p`
     font-size: 17px;
 `;
 
+const CommentTitle = styled.h2`
+    font-size: 26px;
+    margin: 40px 0;
+    color: #333;
+`;
+
 const CommentInput = styled.textarea`
     outline: none;
     width: 100%;
     font-size: 17px;
     border-radius: 8px;
     padding: 18px 12px;
-    border: none;
     background: #f9fafc;
     border: 1px solid #dae1e7;
-    margin-top: 60px;
-    margin-bottom: 12px;
+    margin-top: 20px;
+    margin-bottom: 10px;
 `;
 
 const CommentButton = styled(Button)`
@@ -121,10 +125,7 @@ const PostDetail = ({ history, id }) => {
         variables: { id },
         fetchPolicy: 'no-cache'
     });
-    const [
-        addComment,
-        { loading: commentLoading, error: commentError, data: { addComment: comment } = {} }
-    ] = useMutation(ADD_COMMENT);
+    const [addComment, { data: { addComment: comment } = {} }] = useMutation(ADD_COMMENT);
     const [deletePost, { data: isDeleted }] = useMutation(DELETE_POST);
 
     const onEditClick = useCallback(() => {
@@ -198,7 +199,7 @@ const PostDetail = ({ history, id }) => {
                 </Title>
                 <Description dangerouslySetInnerHTML={{ __html: content }} />
             </PostDetailContainer>
-            <h2>Comments</h2>
+            <CommentTitle>Comments</CommentTitle>
             {!post.comment.length && <NoComment>No Comment</NoComment>}
             {post.comment.map(c => (
                 <Comment key={c.id} {...c}></Comment>

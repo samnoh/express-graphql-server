@@ -11,6 +11,7 @@ const typeDefs = gql`
         id: Int!
         content: String!
         user: User!
+        createdAt: String!
     }
 
     type Post {
