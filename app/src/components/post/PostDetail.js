@@ -1,6 +1,6 @@
 import React, { useCallback, useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { useQuery, useMutation } from '@apollo/react-hooks';
+import { useLazyQuery, useMutation } from '@apollo/react-hooks';
 import { withRouter, Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Helmet from 'react-helmet';
@@ -95,7 +95,8 @@ const CommentInput = styled.textarea`
     border: none;
     background: #f9fafc;
     border: 1px solid #dae1e7;
-    margin-bottom: 10px;
+    margin-top: 60px;
+    margin-bottom: 12px;
 `;
 
 const CommentButton = styled(Button)`
@@ -105,9 +106,10 @@ const CommentButton = styled(Button)`
 
 const NoComment = styled.div`
     color: #aaa;
-    margin: 26px 0 60px;
+    margin-top: 60px;
     text-align: center;
     user-select: none;
+    font-size: 17px;
 `;
 
 const PostDetail = ({ history, id }) => {
@@ -115,12 +117,13 @@ const PostDetail = ({ history, id }) => {
     const [saved, setSaved] = useState(false);
     const [value, setValue] = useState('');
     const auth = useSelector(state => state.auth);
-    const { loading, error, data: { post } = {} } = useQuery(GET_POST, {
-        variables: { id }
+    const [getPost, { called, loading, error, data: { post } = {} }] = useLazyQuery(GET_POST, {
+        variables: { id },
+        fetchPolicy: 'no-cache'
     });
     const [
         addComment,
-        { loading: commentLoading, error: commentError, data: { comment } = {} }
+        { loading: commentLoading, error: commentError, data: { addComment: comment } = {} }
     ] = useMutation(ADD_COMMENT);
     const [deletePost, { data: isDeleted }] = useMutation(DELETE_POST);
 
@@ -151,10 +154,11 @@ const PostDetail = ({ history, id }) => {
     }, [value]);
 
     useEffect(() => {
-        if (commentLoading) {
+        getPost();
+        if (comment && comment.content) {
             dispatch(showNoti('Successfully added', 'primary', 3));
         }
-    }, [commentLoading]);
+    }, [comment]);
 
     useEffect(() => {
         if (isDeleted) {
@@ -164,7 +168,7 @@ const PostDetail = ({ history, id }) => {
 
     if (error) return <ErrorPage />;
 
-    if (loading) return <LoadingPage />;
+    if (!called || loading) return <LoadingPage />;
 
     const { title, content, createdAt, user } = post;
     const datetime = new Date(parseInt(createdAt));

@@ -33,9 +33,7 @@ const Posts = ({ page }) => {
 
     if (error) return <ErrorPage />;
 
-    if (called && loading) return <LoadingPage />;
-
-    if (!called) return <LoadingPage />;
+    if (!called || loading) return <LoadingPage />;
 
     return (
         <>
