@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import Helmet from 'react-helmet';
 import { useSelector } from 'react-redux';
 
-import { GET_POST, ADD_COMMENT } from 'graphql/queries';
+import { GET_POST, DELETE_POST, ADD_COMMENT } from 'graphql/queries';
 import { showNoti } from 'store/actions/noti';
 import ErrorPage from 'pages/ErrorPage';
 import LoadingPage from 'pages/LoadingPage';
@@ -66,11 +66,15 @@ const Button = styled.button`
     color: #fff;
     font-weight: 700;
     outline: none;
+    margin-left: 12px;
 `;
 
 const EditButton = styled(Button)`
     background-color: #4295f7;
-    margin-left: 12px;
+`;
+
+const DeleteButton = styled(Button)`
+    background-color: #d93d75;
 `;
 
 const FavButton = styled(Button)`
@@ -118,6 +122,7 @@ const PostDetail = ({ history, id }) => {
         addComment,
         { loading: commentLoading, error: commentError, data: { comment } = {} }
     ] = useMutation(ADD_COMMENT);
+    const [deletePost, { data: isDeleted }] = useMutation(DELETE_POST);
 
     const onEditClick = useCallback(() => {
         history.push(`/post/${id}/edit`, {
@@ -126,6 +131,10 @@ const PostDetail = ({ history, id }) => {
             content: post.content
         });
     }, [post, id]);
+
+    const onDeleteClick = useCallback(() => {
+        deletePost({ variables: { id } });
+    }, [id]);
 
     const onFavClick = useCallback(() => {
         alert(saved ? 'deleted' : 'added');
@@ -147,13 +156,19 @@ const PostDetail = ({ history, id }) => {
         }
     }, [commentLoading]);
 
+    useEffect(() => {
+        if (isDeleted) {
+            history.goBack();
+        }
+    }, [isDeleted]);
+
     if (error) return <ErrorPage />;
 
     if (loading) return <LoadingPage />;
 
     const { title, content, createdAt, user } = post;
     const datetime = new Date(parseInt(createdAt));
-    console.log(commentLoading);
+
     return (
         <>
             <Helmet>
@@ -170,7 +185,10 @@ const PostDetail = ({ history, id }) => {
                             {saved ? 'Delete' : 'Add to'} favourites
                         </FavButton>
                         {user.id === auth.userId && (
-                            <EditButton onClick={onEditClick}>Edit</EditButton>
+                            <>
+                                <EditButton onClick={onEditClick}>Edit</EditButton>
+                                <DeleteButton onClick={onDeleteClick}>Delete</DeleteButton>
+                            </>
                         )}
                     </ButtonContainer>
                 </Title>

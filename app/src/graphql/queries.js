@@ -91,6 +91,12 @@ export const EDIT_POST = gql`
     ${fragments.post}
 `;
 
+export const DELETE_POST = gql`
+    mutation deletePost($id: Int!) {
+        deletePost(id: $id)
+    }
+`;
+
 export const ADD_COMMENT = gql`
     mutation addComment($id: Int!, $content: String!) {
         addComment(id: $id, content: $content) {

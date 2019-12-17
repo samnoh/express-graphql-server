@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useQuery } from '@apollo/react-hooks';
+import React, { useState, useEffect } from 'react';
+import { useLazyQuery } from '@apollo/react-hooks';
 import Helmet from 'react-helmet';
 
 import { GET_POSTS } from 'graphql/queries';
@@ -10,15 +10,22 @@ import LoadingPage from 'pages/LoadingPage';
 
 const Posts = ({ page }) => {
     const [numPostOnPage, setNumPostOnPage] = useState(10);
-    const { loading, error, data } = useQuery(GET_POSTS, {
+    const [getData, { called, loading, error, data }] = useLazyQuery(GET_POSTS, {
         variables: {
             pagination: { offset: page * numPostOnPage - numPostOnPage, limit: numPostOnPage }
-        }
+        },
+        fetchPolicy: 'no-cache'
     });
+
+    useEffect(() => {
+        getData();
+    }, []);
 
     if (error) return <ErrorPage />;
 
-    if (loading) return <LoadingPage />;
+    if (called && loading) return <LoadingPage />;
+
+    if (!called) return <LoadingPage />;
 
     return (
         <>
