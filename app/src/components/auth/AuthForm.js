@@ -51,6 +51,7 @@ const AuthForm = ({ history, signup }) => {
         if (error) {
             dispatch(removeToken());
             dispatch(showNoti(error.message, 'danger', 3));
+            setValues({ ...values, password: '', password2: '' });
         }
     }, [dispatch, error]);
 
@@ -65,7 +66,6 @@ const AuthForm = ({ history, signup }) => {
         e => {
             e.preventDefault();
             fn({ variables: { user: values } });
-            setValues({ ...values, password: '', password2: '' });
             e.target.password.focus();
         },
         [fn, values]
