@@ -15,6 +15,7 @@ import Comments from 'components/post/Comments';
 const PostDetailContainer = styled.section`
     padding-bottom: 40px;
     margin-bottom: 60px;
+    min-height: calc(100vh - 568px);
 `;
 
 const Title = styled.div`

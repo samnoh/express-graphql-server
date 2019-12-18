@@ -12,7 +12,7 @@ const Container = styled.section`
     margin: 0 auto;
     border: 1px solid lightgray;
     border-radius: 8px;
-    padding: 16px;
+    padding: 24px 0;
     background: #4e6e8e;
     color: #fff;
 `;
@@ -25,8 +25,16 @@ const Username = styled.h1`
 
 const RecentPosts = styled.h2`
     font-size: 26px;
-    margin: 40px 0;
+    margin: 100px 0 40px 6px;
     color: #333;
+`;
+
+const NoItem = styled.div`
+    font-size: 24px;
+    padding: 62px 0 120px;
+    text-align: center;
+    color: #aaa;
+    user-select: none;
 `;
 
 const Profile = ({ id }) => {
@@ -50,9 +58,7 @@ const Profile = ({ id }) => {
                 <Username>{username}'s Profile</Username>
             </Container>
             <RecentPosts>Recent Posts</RecentPosts>
-            {posts.map(post => (
-                <Post {...post} simple />
-            ))}
+            {posts.length ? posts.map(post => <Post {...post} simple />) : <NoItem>No Post</NoItem>}
         </>
     );
 };

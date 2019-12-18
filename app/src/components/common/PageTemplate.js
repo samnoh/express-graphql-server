@@ -6,7 +6,7 @@ import Footer from './Footer';
 import Notification from './Notification';
 
 const Main = styled.main`
-    padding: 58px 0 120px;
+    padding: 58px 0 90px;
     width: 1000px;
     margin: 0 auto;
     min-height: calc(100vh - 138px);

@@ -38,9 +38,9 @@ const CommentButton = styled(Button)`
     float: right;
 `;
 
-const NoComment = styled.div`
+const NoItem = styled.div`
     color: #aaa;
-    margin-top: 60px;
+    margin: 60px 0;
     text-align: center;
     user-select: none;
     font-size: 17px;
@@ -61,11 +61,16 @@ const Comments = ({ post, id, addComment }) => {
     return (
         <>
             <CommentTitle>Comments</CommentTitle>
-            {!post.comment.length && <NoComment>No Comment</NoComment>}
+            {!post.comment.length && <NoItem>No Comment</NoItem>}
             {post.comment.map(c => (
                 <Comment key={c.id} {...c}></Comment>
             ))}
-            <CommentInput value={value} onChange={onChange} placeholder="Add a comment" />
+            <CommentInput
+                multiline
+                defaultValue={value}
+                onChange={onChange}
+                placeholder="Add a comment"
+            />
             <CommentButton onClick={onClick}>Add Comment</CommentButton>
         </>
     );

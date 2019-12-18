@@ -19,6 +19,7 @@ const LeftContainer = styled.div``;
 
 const Content = styled.div`
     font-size: 22px;
+    white-space: pre-line;
 `;
 
 const DateTime = styled.div`
