@@ -22,8 +22,28 @@ const db = {
 };
 
 db.User.hasMany(db.Post);
-db.Post.belongsTo(db.User);
-db.Comment.belongsTo(db.User);
-db.Comment.belongsTo(db.Post);
-
+db.Post.belongsTo(db.User, {
+    onDelete: 'CASCADE',
+    hooks: true
+});
+db.User.hasMany(db.Comment, {
+    foreignKey: {
+        name: 'userId',
+        allowNull: false
+    }
+});
+db.Comment.belongsTo(db.User, {
+    onDelete: 'CASCADE',
+    hooks: true
+});
+db.Post.hasMany(db.Comment, {
+    foreignKey: {
+        name: 'postId',
+        allowNull: false
+    }
+});
+db.Comment.belongsTo(db.Post, {
+    onDelete: 'CASCADE',
+    hooks: true
+});
 export default db;
