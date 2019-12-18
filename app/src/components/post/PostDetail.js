@@ -3,8 +3,9 @@ import { useMutation, useQuery } from '@apollo/react-hooks';
 import { withRouter, Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Helmet from 'react-helmet';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
+import { showNoti } from 'store/actions/noti';
 import { GET_POST, DELETE_POST } from 'graphql/queries';
 import ErrorPage from 'pages/ErrorPage';
 import LoadingPage from 'pages/LoadingPage';
@@ -93,6 +94,7 @@ const Description = styled.p`
 `;
 
 const PostDetail = ({ history, id }) => {
+    const dispatch = useDispatch();
     const [saved, setSaved] = useState(false);
     const auth = useSelector(state => state.auth);
     const { called, loading, error, data: { post } = {}, refetch } = useQuery(GET_POST, {
@@ -119,7 +121,8 @@ const PostDetail = ({ history, id }) => {
 
     useEffect(() => {
         if (isDeleted) {
-            history.push('/');
+            history.push('/', { notiOnNextPage: true });
+            dispatch(showNoti('Successfully deleted', 'primary', 3));
         }
     }, [isDeleted]);
 
