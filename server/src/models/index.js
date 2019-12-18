@@ -21,7 +21,12 @@ const db = {
     sequelize
 };
 
-db.User.hasMany(db.Post);
+db.User.hasMany(db.Post, {
+    foreignKey: {
+        name: 'userId',
+        allowNull: false
+    }
+});
 db.Post.belongsTo(db.User, {
     onDelete: 'CASCADE',
     hooks: true
