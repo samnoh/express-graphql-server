@@ -106,3 +106,9 @@ export const ADD_COMMENT = gql`
         }
     }
 `;
+
+export const DELETE_COMMENT = gql`
+    mutation deleteComment($id: Int!) {
+        deleteComment(id: $id)
+    }
+`;

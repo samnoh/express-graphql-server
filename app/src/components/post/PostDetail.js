@@ -1,21 +1,25 @@
 import React, { useCallback, useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { useLazyQuery, useMutation } from '@apollo/react-hooks';
+import { useMutation, useQuery } from '@apollo/react-hooks';
 import { withRouter, Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Helmet from 'react-helmet';
 import { useSelector } from 'react-redux';
 
-import { GET_POST, DELETE_POST, ADD_COMMENT } from 'graphql/queries';
-import { showNoti } from 'store/actions/noti';
+import { GET_POST, DELETE_POST } from 'graphql/queries';
 import ErrorPage from 'pages/ErrorPage';
 import LoadingPage from 'pages/LoadingPage';
 import Comments from 'components/post/Comments';
 
+const Container = styled.div`
+    display: flex;
+    flex-direction: column;
+    min-height: calc(100vh - 276px);
+`;
+
 const PostDetailContainer = styled.section`
     padding-bottom: 40px;
-    margin-bottom: 60px;
-    min-height: calc(100vh - 568px);
+    margin-bottom: 40px;
+    flex-grow: 1;
 `;
 
 const Title = styled.div`
@@ -87,14 +91,12 @@ const Description = styled.p`
 `;
 
 const PostDetail = ({ history, id }) => {
-    const dispatch = useDispatch();
     const [saved, setSaved] = useState(false);
     const auth = useSelector(state => state.auth);
-    const [getPost, { called, loading, error, data: { post } = {} }] = useLazyQuery(GET_POST, {
+    const { called, loading, error, data: { post } = {}, refetch } = useQuery(GET_POST, {
         variables: { id },
         fetchPolicy: 'no-cache'
     });
-    const [addComment, { data: { addComment: comment } = {} }] = useMutation(ADD_COMMENT);
     const [deletePost, { data: isDeleted }] = useMutation(DELETE_POST);
 
     const onEditClick = useCallback(() => {
@@ -115,13 +117,6 @@ const PostDetail = ({ history, id }) => {
     }, [post, id, saved, setSaved]);
 
     useEffect(() => {
-        getPost();
-        if (comment && comment.content) {
-            dispatch(showNoti('Successfully added', 'primary', 3));
-        }
-    }, [comment]);
-
-    useEffect(() => {
         if (isDeleted) {
             history.push('/');
         }
@@ -135,7 +130,7 @@ const PostDetail = ({ history, id }) => {
     const datetime = new Date(parseInt(createdAt));
 
     return (
-        <>
+        <Container>
             <Helmet>
                 <title>{title}</title>
             </Helmet>
@@ -159,8 +154,8 @@ const PostDetail = ({ history, id }) => {
                 </Title>
                 <Description dangerouslySetInnerHTML={{ __html: content }} />
             </PostDetailContainer>
-            <Comments post={post} addComment={addComment} id={id} />
-        </>
+            <Comments post={post} id={id} refetch={refetch} />
+        </Container>
     );
 };
 

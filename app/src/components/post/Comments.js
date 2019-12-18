@@ -1,7 +1,11 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
+import { useMutation } from '@apollo/react-hooks';
 
+import { ADD_COMMENT } from 'graphql/queries';
 import Comment from 'components/post/Comment';
+import { showNoti } from 'store/actions/noti';
 
 const Button = styled.button`
     cursor: pointer;
@@ -11,31 +15,28 @@ const Button = styled.button`
     border-radius: 4px;
     color: #fff;
     font-weight: 700;
-    outline: none;
-    margin-left: 12px;
 `;
 
 const CommentTitle = styled.h2`
     font-size: 26px;
-    margin: 40px 0;
-    color: #333;
+    color: #444;
 `;
 
 const CommentInput = styled.textarea`
     outline: none;
     width: 100%;
-    font-size: 17px;
+    font-size: 20px;
     border-radius: 8px;
-    padding: 18px 12px;
+    padding: 22px 18px;
     background: #f9fafc;
     border: 1px solid #dae1e7;
-    margin-top: 20px;
-    margin-bottom: 10px;
+    margin: 24px 0;
 `;
 
 const CommentButton = styled(Button)`
     background-color: #4295f7;
-    float: right;
+    width: 160px;
+    align-self: flex-end;
 `;
 
 const NoItem = styled.div`
@@ -46,17 +47,30 @@ const NoItem = styled.div`
     font-size: 17px;
 `;
 
-const Comments = ({ post, id, addComment }) => {
+const Comments = ({ post, id, refetch }) => {
+    const dispatch = useDispatch();
     const [value, setValue] = useState('');
+
+    const [addComment, { error, loading, data: { addComment: comment } = {} }] = useMutation(
+        ADD_COMMENT
+    );
 
     const onClick = useCallback(() => {
         addComment({ variables: { id, content: value } });
         setValue('');
+        refetch();
+        dispatch(showNoti('Successfully added', 'primary', 3));
     }, [value]);
 
     const onChange = useCallback(e => {
         setValue(e.target.value);
     }, []);
+
+    useEffect(() => {
+        if (error) {
+            dispatch(showNoti('Error', 'danger', 3));
+        }
+    }, [error]);
 
     return (
         <>
@@ -65,13 +79,10 @@ const Comments = ({ post, id, addComment }) => {
             {post.comment.map(c => (
                 <Comment key={c.id} {...c}></Comment>
             ))}
-            <CommentInput
-                multiline
-                defaultValue={value}
-                onChange={onChange}
-                placeholder="Add a comment"
-            />
-            <CommentButton onClick={onClick}>Add Comment</CommentButton>
+            <CommentInput multiline value={value} onChange={onChange} placeholder="Add a comment" />
+            <CommentButton onClick={onClick} disabled={loading}>
+                Add Comment
+            </CommentButton>
         </>
     );
 };

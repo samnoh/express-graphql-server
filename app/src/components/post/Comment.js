@@ -5,11 +5,11 @@ import styled from 'styled-components';
 
 const Container = styled.div`
     position: relative;
-    margin: 30px 0 10px;
+    margin: 24px 0 0;
     background: #f9fafc;
-    border: 1px solid ${props => (props.isMyComment ? '#61ceb3' : '#dae1e7')};
+    border: 1px solid ${props => (props.isMyComment ? '#4295f7' : '#dae1e7')};
     border-radius: 8px;
-    padding: 18px 18px 30px;
+    padding: 22px 18px 40px;
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
@@ -26,13 +26,13 @@ const DateTime = styled.div`
     font-size: 14px;
     color: #aaa;
     position: absolute;
-    bottom: 8px;
+    bottom: 12px;
 `;
 
 const RightContainer = styled.div`
     display: flex;
     justify-content: space-between;
-    margin-bottom: -20px;
+    margin-bottom: -30px;
     margin-left: 12px;
 `;
 
