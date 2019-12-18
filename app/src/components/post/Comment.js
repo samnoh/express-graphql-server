@@ -63,7 +63,7 @@ const DeleteButton = styled(Button)`
     color: #d93d75;
 `;
 
-const Comment = memo(({ id, content, user, createdAt, onEdit, onDelete }) => {
+const Comment = memo(({ id, content, user, createdAt, onEdit, onDelete, profile }) => {
     const auth = useSelector(state => state.auth);
     const isMyComment = auth.userId === user.id;
     const datetime = new Date(parseInt(createdAt));
@@ -74,18 +74,20 @@ const Comment = memo(({ id, content, user, createdAt, onEdit, onDelete }) => {
                 <Content>{content}</Content>
                 <DateTime>{datetime.toLocaleDateString('en')}</DateTime>
             </LeftContainer>
-            <RightContainer>
-                {isMyComment ? (
-                    <>
-                        <EditButton>Edit</EditButton>
-                        <DeleteButton onClick={() => onDelete(id)}>Delete</DeleteButton>
-                    </>
-                ) : (
-                    <Username>
-                        <Link to={`/user/${user.id}`}>{user.username}</Link>
-                    </Username>
-                )}
-            </RightContainer>
+            {!profile && (
+                <RightContainer>
+                    {isMyComment ? (
+                        <>
+                            <EditButton>Edit</EditButton>
+                            <DeleteButton onClick={() => onDelete(id)}>Delete</DeleteButton>
+                        </>
+                    ) : (
+                        <Username>
+                            <Link to={`/user/${user.id}`}>{user.username}</Link>
+                        </Username>
+                    )}
+                </RightContainer>
+            )}
         </Container>
     );
 });
