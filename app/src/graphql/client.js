@@ -10,7 +10,8 @@ const client = new ApolloClient({
             }
         });
     },
-    cache: new InMemoryCache({})
+    cache: new InMemoryCache({}),
+    credentials: 'include'
 });
 
 export default client;

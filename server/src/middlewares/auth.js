@@ -9,7 +9,7 @@ const { User } = db;
 const verifyAuth = ({ req }) => {
     const { authorization } = req.headers;
 
-    if (!authorization) return {};
+    if (!authorization) return { cookies: req.cookies };
 
     const token = authorization.replace('Bearer ', '');
 
@@ -24,7 +24,7 @@ const verifyAuth = ({ req }) => {
             throw new AuthenticationError('Your token is invalid');
         }
 
-        return { user };
+        return { user, cookies: req.cookies };
     });
 };
 
