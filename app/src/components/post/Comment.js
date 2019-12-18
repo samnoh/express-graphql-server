@@ -1,4 +1,4 @@
-import React, { memo, useState, useEffect } from 'react';
+import React, { memo, useState, useEffect, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
@@ -73,11 +73,18 @@ const Comment = memo(({ id, content, user, createdAt, updatedAt, onEdit, onDelet
     const isMyComment = auth.userId === user.id;
     const datetime = new Date(parseInt(createdAt));
 
+    const onCancel = useCallback(() => {
+        setIsEditing(false);
+    }, []);
+
     useEffect(() => {
         setIsEditing(false);
     }, [updatedAt]);
 
-    if (isEditing) return <CommentInput initialValue={content} addComment={onEdit} id={id} />;
+    if (isEditing)
+        return (
+            <CommentInput initialValue={content} addComment={onEdit} id={id} onCancel={onCancel} />
+        );
 
     return (
         <Container isMyComment={isMyComment}>

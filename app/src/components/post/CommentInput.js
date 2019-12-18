@@ -1,6 +1,11 @@
 import React, { useState, useCallback } from 'react';
 import styled from 'styled-components';
 
+const ButtonContainer = styled.div`
+    display: flex;
+    justify-content: flex-end;
+`;
+
 const Button = styled.button`
     cursor: pointer;
     border: none;
@@ -19,16 +24,22 @@ const CommentTextarea = styled.textarea`
     padding: 22px 18px;
     background: #f9fafc;
     border: 1px solid #dae1e7;
-    margin: 24px 0;
+    margin: 24px 0 12px;
 `;
 
 const CommentButton = styled(Button)`
-    background-color: #4295f7;
+    background-color: ${props => (props.isUpdate ? '#4295f7' : '#61ceb3')};
     width: 180px;
-    align-self: flex-end;
+    margin-left: 12px;
 `;
 
-const CommentInput = ({ id, addComment, initialValue = '' }) => {
+const CancelButton = styled(Button)`
+    border: 1px solid #444;
+    color: #444;
+    width: 180px;
+`;
+
+const CommentInput = ({ id, addComment, onCancel, initialValue = '' }) => {
     const [value, setValue] = useState(initialValue);
 
     const onChange = useCallback(e => {
@@ -43,9 +54,12 @@ const CommentInput = ({ id, addComment, initialValue = '' }) => {
     return (
         <>
             <CommentTextarea value={value} onChange={onChange} placeholder="Add a comment" />
-            <CommentButton onClick={onClick}>
-                {initialValue ? 'Update' : 'Add'} Comment
-            </CommentButton>
+            <ButtonContainer>
+                {initialValue && <CancelButton onClick={onCancel}>Cancel</CancelButton>}
+                <CommentButton onClick={onClick} isUpdate={initialValue}>
+                    {initialValue ? 'Update' : 'Add'} Comment
+                </CommentButton>
+            </ButtonContainer>
         </>
     );
 };
