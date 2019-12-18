@@ -1,7 +1,9 @@
-import React, { memo, useCallback } from 'react';
+import React, { memo, useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+
+import CommentInput from 'components/post/CommentInput';
 
 const Container = styled.div`
     position: relative;
@@ -15,7 +17,9 @@ const Container = styled.div`
     align-items: flex-end;
 `;
 
-const LeftContainer = styled.div``;
+const LeftContainer = styled.div`
+    width: 100%;
+`;
 
 const Content = styled.div`
     font-size: 22px;
@@ -63,10 +67,17 @@ const DeleteButton = styled(Button)`
     color: #d93d75;
 `;
 
-const Comment = memo(({ id, content, user, createdAt, onEdit, onDelete, profile }) => {
+const Comment = memo(({ id, content, user, createdAt, updatedAt, onEdit, onDelete, profile }) => {
     const auth = useSelector(state => state.auth);
+    const [isEditing, setIsEditing] = useState(false);
     const isMyComment = auth.userId === user.id;
     const datetime = new Date(parseInt(createdAt));
+
+    useEffect(() => {
+        setIsEditing(false);
+    }, [updatedAt]);
+
+    if (isEditing) return <CommentInput initialValue={content} addComment={onEdit} id={id} />;
 
     return (
         <Container isMyComment={isMyComment}>
@@ -78,7 +89,7 @@ const Comment = memo(({ id, content, user, createdAt, onEdit, onDelete, profile 
                 <RightContainer>
                     {isMyComment ? (
                         <>
-                            <EditButton>Edit</EditButton>
+                            <EditButton onClick={() => setIsEditing(true)}>Edit</EditButton>
                             <DeleteButton onClick={() => onDelete(id)}>Delete</DeleteButton>
                         </>
                     ) : (

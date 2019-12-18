@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useLazyQuery } from '@apollo/react-hooks';
+import { useQuery } from '@apollo/react-hooks';
 import Helmet from 'react-helmet';
 import styled from 'styled-components';
 import { Redirect } from 'react-router-dom';
@@ -20,16 +20,12 @@ const NoItem = styled.div`
 
 const Posts = ({ page }) => {
     const [numPostOnPage, setNumPostOnPage] = useState(10);
-    const [getData, { called, loading, error, data }] = useLazyQuery(GET_POSTS, {
+    const { called, loading, error, data } = useQuery(GET_POSTS, {
         variables: {
             pagination: { offset: page * numPostOnPage - numPostOnPage, limit: numPostOnPage }
         },
-        fetchPolicy: 'no-cache'
+        fetchPolicy: 'cache-and-network'
     });
-
-    useEffect(() => {
-        getData();
-    }, []);
 
     if (error) return <ErrorPage />;
 

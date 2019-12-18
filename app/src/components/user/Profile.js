@@ -41,7 +41,8 @@ const NoItem = styled.div`
 
 const Profile = ({ id }) => {
     const { loading, error, data } = useQuery(GET_USER, {
-        variables: { id }
+        variables: { id },
+        fetchPolicy: 'cache-and-network'
     });
 
     if (error) return <ErrorPage />;

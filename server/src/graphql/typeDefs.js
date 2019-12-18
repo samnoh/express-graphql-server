@@ -12,6 +12,7 @@ const typeDefs = gql`
         content: String!
         user: User!
         createdAt: String!
+        updatedAt: String!
         postId: Int
     }
 

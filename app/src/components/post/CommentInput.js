@@ -24,27 +24,28 @@ const CommentTextarea = styled.textarea`
 
 const CommentButton = styled(Button)`
     background-color: #4295f7;
-    width: 160px;
+    width: 180px;
     align-self: flex-end;
 `;
 
-const CommentInput = ({ id, addComment, refetch }) => {
-    const [value, setValue] = useState('');
+const CommentInput = ({ id, addComment, initialValue = '' }) => {
+    const [value, setValue] = useState(initialValue);
 
     const onChange = useCallback(e => {
         setValue(e.target.value);
     }, []);
 
     const onClick = useCallback(() => {
-        addComment({ variables: { id, content: value } });
+        addComment(id, value);
         setValue('');
-        refetch();
     }, [value]);
 
     return (
         <>
             <CommentTextarea value={value} onChange={onChange} placeholder="Add a comment" />
-            <CommentButton onClick={onClick}>Add Comment</CommentButton>
+            <CommentButton onClick={onClick}>
+                {initialValue ? 'Update' : 'Add'} Comment
+            </CommentButton>
         </>
     );
 };

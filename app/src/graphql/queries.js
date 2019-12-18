@@ -70,6 +70,7 @@ export const GET_POST = gql`
                 id
                 content
                 createdAt
+                updatedAt
                 user {
                     id
                     username
