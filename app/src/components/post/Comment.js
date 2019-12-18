@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { memo, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
@@ -27,6 +27,7 @@ const DateTime = styled.div`
     color: #aaa;
     position: absolute;
     bottom: 12px;
+    margin-left: -0.5px;
 `;
 
 const RightContainer = styled.div`
@@ -75,7 +76,7 @@ const Comment = memo(({ id, content, user, createdAt, onEdit, onDelete }) => {
                 {isMyComment ? (
                     <>
                         <EditButton>Edit</EditButton>
-                        <DeleteButton>Delete</DeleteButton>
+                        <DeleteButton onClick={() => onDelete(id)}>Delete</DeleteButton>
                     </>
                 ) : (
                     <Username>

@@ -23,10 +23,10 @@ const Username = styled.h1`
     text-align: center;
 `;
 
-const RecentPosts = styled.h2`
+const Title = styled.h2`
     font-size: 26px;
     margin: 100px 0 40px 6px;
-    color: #333;
+    color: #444;
 `;
 
 const NoItem = styled.div`
@@ -57,7 +57,7 @@ const Profile = ({ id }) => {
             <Container>
                 <Username>{username}'s Profile</Username>
             </Container>
-            <RecentPosts>Recent Posts</RecentPosts>
+            <Title>Recent Posts</Title>
             {posts.length ? posts.map(post => <Post {...post} simple />) : <NoItem>No Post</NoItem>}
         </>
     );

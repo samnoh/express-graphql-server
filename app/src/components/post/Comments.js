@@ -3,40 +3,14 @@ import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { useMutation } from '@apollo/react-hooks';
 
-import { ADD_COMMENT } from 'graphql/queries';
-import Comment from 'components/post/Comment';
+import { ADD_COMMENT, DELETE_COMMENT } from 'graphql/queries';
 import { showNoti } from 'store/actions/noti';
-
-const Button = styled.button`
-    cursor: pointer;
-    border: none;
-    padding: 8px 20px;
-    font-size: 16px;
-    border-radius: 4px;
-    color: #fff;
-    font-weight: 700;
-`;
+import Comment from 'components/post/Comment';
+import CommentInput from 'components/post/CommentInput';
 
 const CommentTitle = styled.h2`
     font-size: 26px;
     color: #444;
-`;
-
-const CommentInput = styled.textarea`
-    outline: none;
-    width: 100%;
-    font-size: 20px;
-    border-radius: 8px;
-    padding: 22px 18px;
-    background: #f9fafc;
-    border: 1px solid #dae1e7;
-    margin: 24px 0;
-`;
-
-const CommentButton = styled(Button)`
-    background-color: #4295f7;
-    width: 160px;
-    align-self: flex-end;
 `;
 
 const NoItem = styled.div`
@@ -49,21 +23,16 @@ const NoItem = styled.div`
 
 const Comments = ({ post, id, refetch }) => {
     const dispatch = useDispatch();
-    const [value, setValue] = useState('');
-
-    const [addComment, { error, loading, data: { addComment: comment } = {} }] = useMutation(
+    const [addComment, { error, loading, data: { addComment: isAdded } = {} }] = useMutation(
         ADD_COMMENT
     );
+    const [deleteComment, { data: { deleteComment: isDeleted } = {} }] = useMutation(
+        DELETE_COMMENT
+    );
 
-    const onClick = useCallback(() => {
-        addComment({ variables: { id, content: value } });
-        setValue('');
+    const onDelete = useCallback(id => {
+        deleteComment({ variables: { id } });
         refetch();
-        dispatch(showNoti('Successfully added', 'primary', 3));
-    }, [value]);
-
-    const onChange = useCallback(e => {
-        setValue(e.target.value);
     }, []);
 
     useEffect(() => {
@@ -72,17 +41,26 @@ const Comments = ({ post, id, refetch }) => {
         }
     }, [error]);
 
+    useEffect(() => {
+        if (isAdded) {
+            dispatch(showNoti('Successfully added', 'primary', 3));
+        }
+    }, [isAdded]);
+
+    useEffect(() => {
+        if (isDeleted) {
+            dispatch(showNoti('Successfully deleted', 'primary', 3));
+        }
+    }, [isDeleted]);
+
     return (
         <>
             <CommentTitle>Comments</CommentTitle>
             {!post.comment.length && <NoItem>No Comment</NoItem>}
             {post.comment.map(c => (
-                <Comment key={c.id} {...c}></Comment>
+                <Comment key={c.id} onDelete={onDelete} {...c}></Comment>
             ))}
-            <CommentInput multiline value={value} onChange={onChange} placeholder="Add a comment" />
-            <CommentButton onClick={onClick} disabled={loading}>
-                Add Comment
-            </CommentButton>
+            <CommentInput id={id} addComment={addComment} refetch={refetch} />
         </>
     );
 };

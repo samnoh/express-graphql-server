@@ -13,7 +13,7 @@ import Comments from 'components/post/Comments';
 const Container = styled.div`
     display: flex;
     flex-direction: column;
-    min-height: calc(100vh - 276px);
+    min-height: calc(100vh - 234px);
 `;
 
 const PostDetailContainer = styled.section`
@@ -94,8 +94,7 @@ const PostDetail = ({ history, id }) => {
     const [saved, setSaved] = useState(false);
     const auth = useSelector(state => state.auth);
     const { called, loading, error, data: { post } = {}, refetch } = useQuery(GET_POST, {
-        variables: { id },
-        fetchPolicy: 'no-cache'
+        variables: { id }
     });
     const [deletePost, { data: isDeleted }] = useMutation(DELETE_POST);
 
