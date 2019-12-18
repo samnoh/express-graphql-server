@@ -28,6 +28,7 @@ const DateTime = styled.div`
     position: absolute;
     bottom: 12px;
     margin-left: -0.5px;
+    user-select: none;
 `;
 
 const RightContainer = styled.div`
@@ -35,6 +36,7 @@ const RightContainer = styled.div`
     justify-content: space-between;
     margin-bottom: -30px;
     margin-left: 12px;
+    user-select: none;
 `;
 
 const Username = styled.div`

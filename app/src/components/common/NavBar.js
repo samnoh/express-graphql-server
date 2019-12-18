@@ -12,6 +12,7 @@ const Header = styled.header`
     justify-content: space-between;
     align-items: center;
     padding: 25px;
+    user-select: none;
 `;
 
 const Title = styled(Link)`

@@ -40,6 +40,7 @@ const Title = styled.div`
             font-size: 14px;
             color: #aaa;
             margin-left: 4px;
+            user-select: none;
         }
     }
 
@@ -71,6 +72,7 @@ const Button = styled.button`
     font-weight: 700;
     outline: none;
     margin-left: 12px;
+    user-select: none;
 `;
 
 const EditButton = styled(Button)`

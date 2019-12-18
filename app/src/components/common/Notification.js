@@ -7,7 +7,7 @@ import { fadeIn } from 'styles/animation';
 import { closeNoti } from 'store/actions/noti';
 
 const NotiContainer = styled.div`
-    position: absolute;
+    position: fixed;
     top: 20px;
     margin: 0 auto;
     left: 0;
