@@ -106,7 +106,7 @@ const Editor = ({
     useEffect(() => {
         if (post) {
             history.push(`/post/${post.id}`, { notiOnNextPage: true });
-            dispatch(showNoti('Successfully updated', 'primary', 3));
+            dispatch(showNoti(`Successfully ${editor ? 'updated' : 'added'}`, 'primary', 3));
         }
     }, [post]);
 
