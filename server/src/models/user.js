@@ -42,6 +42,27 @@ class User extends Sequelize.Model {
         );
     }
 
+    static associate(models) {
+        this.hasMany(models.Post, {
+            foreignKey: {
+                name: 'userId',
+                allowNull: false
+            }
+        });
+        this.hasMany(models.Comment, {
+            foreignKey: {
+                name: 'userId',
+                allowNull: false
+            }
+        });
+        this.hasMany(models.Favourite, {
+            foreignKey: {
+                name: 'userId',
+                allowNull: false
+            }
+        });
+    }
+
     comparePassword(candidatePassword) {
         return new Promise((resolve, reject) => {
             bcrypt.compare(candidatePassword, this.password, (error, isMatch) => {

@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import Helmet from 'react-helmet';
 import { Link } from 'react-router-dom';
 
-import { GET_USER, GET_COMMENTS } from 'graphql/queries';
+import { GET_USER } from 'graphql/queries';
 import Post from 'components/post/Post';
 import Comment from 'components/post/Comment';
 import ErrorPage from 'pages/ErrorPage';

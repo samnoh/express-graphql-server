@@ -21,7 +21,7 @@ const NoItem = styled.div`
     font-size: 17px;
 `;
 
-const Comments = ({ post, id, refetch }) => {
+const Comments = ({ comment, id, refetch }) => {
     const dispatch = useDispatch();
     const [addComment, { error, data: { addComment: isAdded } = {} }] = useMutation(ADD_COMMENT);
     const [deleteComment, { data: { deleteComment: isDeleted } = {} }] = useMutation(
@@ -58,7 +58,7 @@ const Comments = ({ post, id, refetch }) => {
 
     useEffect(() => {
         if (isDeleted) {
-            dispatch(showNoti('Successfully deleted', 'primary', 3));
+            dispatch(showNoti('Successfully deleted', 'danger', 3));
         }
     }, [isDeleted]);
 
@@ -71,8 +71,8 @@ const Comments = ({ post, id, refetch }) => {
     return (
         <>
             <CommentTitle>Comments</CommentTitle>
-            {!post.comment.length && <NoItem>No Comment</NoItem>}
-            {post.comment.map(c => (
+            {!comment.length && <NoItem>No Comment</NoItem>}
+            {comment.map(c => (
                 <Comment key={c.id} onDelete={onDelete} onEdit={onEdit} {...c}></Comment>
             ))}
             <CommentInput id={id} addComment={onAdd} />

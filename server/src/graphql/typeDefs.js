@@ -34,7 +34,8 @@ const typeDefs = gql`
         postsCount: Int!
         postsByUserId(id: Int!, pagination: PaginationInput): [Post]
         comments(id: Int!): [Comment]
-        favourites: [Post]
+        favourite(id: Int!): Boolean!
+        favourites(id: Int!): [Post]
     }
 
     type Mutation {
@@ -46,7 +47,7 @@ const typeDefs = gql`
         addComment(id: Int!, content: String!): Comment!
         editComment(id: Int!, content: String!): Comment!
         deleteComment(id: Int!): Boolean!
-        addFavourite(id: Int!): Post!
+        addFavourite(id: Int!): Boolean!
         deleteFavourite(id: Int!): Boolean!
     }
 

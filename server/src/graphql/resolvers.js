@@ -4,7 +4,7 @@ import { AuthenticationError } from 'apollo-server-express';
 import db from 'models';
 import { JWT_SECRET_KEY } from 'config/secret';
 
-const { User, Post, Comment } = db;
+const { User, Post, Comment, Favourite } = db;
 
 const isLoggedIn = context => {
     if (!context.user) {
@@ -16,6 +16,7 @@ const resolvers = {
     Query: {
         checkToken: async (_, __, context) => {
             isLoggedIn(context);
+
             const user = await User.findByPk(context.user.id);
             return user;
         },
@@ -69,7 +70,6 @@ const resolvers = {
             });
             return posts;
         },
-        favourites: async () => {},
         comments: async (_, { id: userId }) => {
             const comments = await Comment.findAll({
                 limit: 5,
@@ -78,6 +78,23 @@ const resolvers = {
                 order: [['createdAt', 'DESC']]
             });
             return comments;
+        },
+        favourite: async (_, { id: postId }, context) => {
+            isLoggedIn(context);
+
+            const comments = await Favourite.findOne({
+                where: { postId, userId: context.user.id }
+            });
+
+            return comments ? true : false;
+        },
+        favourites: async (_, { id: userId }) => {
+            const favourites = await Favourite.findAll({
+                limit: 5,
+                where: { userId },
+                order: [['createdAt', 'DESC']]
+            });
+            return favourites;
         }
     },
     Mutation: {
@@ -199,9 +216,27 @@ const resolvers = {
         },
         addFavourite: async (_, { id }, context) => {
             isLoggedIn(context);
+
+            const [favourite, created] = await Favourite.findOrCreate({
+                where: { postId: id, userId: context.user.id }
+            });
+
+            if (!created) {
+                throw new AuthenticationError('The favourite already exists in your list');
+            }
+            return true;
         },
         deleteFavourite: async (_, { id }, context) => {
             isLoggedIn(context);
+
+            const deleted = await Favourite.destroy({
+                where: { postId: id, userId: context.user.id }
+            });
+
+            if (!deleted) {
+                throw new AuthenticationError('The request was not successful');
+            }
+            return true;
         }
     }
 };

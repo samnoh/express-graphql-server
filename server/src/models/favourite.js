@@ -1,20 +1,13 @@
 import Sequelize from 'sequelize';
 
-class Comment extends Sequelize.Model {
+class Favourite extends Sequelize.Model {
     static init(sequelize, DataTypes) {
         return super.init(
-            {
-                content: {
-                    type: DataTypes.TEXT,
-                    allowNull: false
-                }
-            },
+            {},
             {
                 sequelize,
-                tableName: 'comment',
-                modelName: 'comment',
-                charset: 'utf8',
-                collate: 'utf8_general_ci'
+                tableName: 'favourite',
+                modelName: 'favourite'
             }
         );
     }
@@ -31,4 +24,4 @@ class Comment extends Sequelize.Model {
     }
 }
 
-export default Comment;
+export default Favourite;

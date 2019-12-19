@@ -21,6 +21,25 @@ class Post extends Sequelize.Model {
             }
         );
     }
+
+    static associate(models) {
+        this.belongsTo(models.User, {
+            onDelete: 'CASCADE',
+            hooks: true
+        });
+        this.hasMany(models.Comment, {
+            foreignKey: {
+                name: 'postId',
+                allowNull: false
+            }
+        });
+        this.hasMany(models.Favourite, {
+            foreignKey: {
+                name: 'postId',
+                allowNull: false
+            }
+        });
+    }
 }
 
 export default Post;
