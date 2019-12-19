@@ -13,16 +13,22 @@ const typeDefs = gql`
         user: User!
         createdAt: String!
         updatedAt: String!
-        postId: Int
+        postId: Int!
     }
 
     type Post {
         id: Int!
         title: String!
         content: String
-        createdAt: String!
+        createdAt: String
         user: User
         comment: [Comment]
+    }
+
+    type Favourite {
+        id: Int!
+        createdAt: String!
+        post: Post
     }
 
     type Query {
@@ -35,7 +41,8 @@ const typeDefs = gql`
         postsByUserId(id: Int!, pagination: PaginationInput): [Post]
         comments(id: Int!): [Comment]
         favourite(id: Int!): Boolean!
-        favourites(id: Int!): [Post]
+        favourites(id: Int!): [Favourite]!
+        favouritesCount(id: Int!): Int!
     }
 
     type Mutation {

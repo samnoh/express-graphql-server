@@ -56,7 +56,7 @@ const Profile = ({ id }) => {
     return (
         <>
             <Helmet>
-                <title>{username}</title>
+                <title>Profile | {username}</title>
             </Helmet>
             <Container>
                 <Username>{username}'s Profile</Username>

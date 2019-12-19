@@ -54,14 +54,29 @@ const Username = styled.span`
     }
 `;
 
-const Post = memo(({ id, title, createdAt, simple, user }) => {
-    const datetime = new Date(parseInt(createdAt));
+const Button = styled.button`
+    cursor: pointer;
+    border: none;
+    font-size: 14px;
+    border-radius: 4px;
+    font-weight: bold;
+    outline: none;
+    margin-left: 22px;
+    background: #f9fafc;
+`;
 
+const DeleteButton = styled(Button)`
+    color: #d93d75;
+    align-self: flex-end;
+    margin-bottom: 16px;
+`;
+
+const Post = memo(({ id, title, createdAt, simple, onDelete, user }) => {
     return (
         <PostContainer>
             <Title>
                 <Link to={`/post/${id}`}>
-                    {title} <span>{datetime.toLocaleDateString('en')}</span>
+                    {title} <span>{new Date(parseInt(createdAt)).toLocaleDateString('en')}</span>
                 </Link>
             </Title>
             {!simple && (
@@ -69,6 +84,7 @@ const Post = memo(({ id, title, createdAt, simple, user }) => {
                     <Link to={`/user/${user.id}`}>{user.username}</Link>
                 </Username>
             )}
+            {onDelete && <DeleteButton onClick={() => onDelete(id)}>Delete</DeleteButton>}
         </PostContainer>
     );
 });

@@ -27,7 +27,8 @@ const PostDetail = ({ history, id }) => {
     const dispatch = useDispatch();
 
     const { called, loading, error, data: { post, favourite } = {}, refetch } = useQuery(GET_POST, {
-        variables: { id }
+        variables: { id },
+        fetchPolicy: 'cache-and-network'
     });
     const [deletePost, { data: isDeleted }] = useMutation(DELETE_POST);
 

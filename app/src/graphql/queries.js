@@ -18,6 +18,14 @@ const fragments = {
             id
             username
         }
+    `,
+    comment: gql`
+        fragment commentFragment on Comment {
+            id
+            content
+            createdAt
+            postId
+        }
     `
 };
 
@@ -42,14 +50,12 @@ export const GET_USER = gql`
             ...postFragment
         }
         comments(id: $id) {
-            id
-            content
-            createdAt
-            postId
+            ...commentFragment
         }
     }
     ${fragments.user}
     ${fragments.post}
+    ${fragments.comment}
 `;
 
 export const GET_POSTS = gql`
@@ -130,9 +136,18 @@ export const DELETE_COMMENT = gql`
     }
 `;
 
-export const GET_FAVOURITE = gql`
-    query favourite($id: Int!) {
-        favourite(id: $id)
+export const GET_FAVOURITES = gql`
+    query favourites($id: Int!) {
+        favourites(id: $id) {
+            id
+            createdAt
+            post {
+                id
+                title
+                createdAt
+            }
+        }
+        favouritesCount(id: $id)
     }
 `;
 

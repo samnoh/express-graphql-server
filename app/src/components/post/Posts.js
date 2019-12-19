@@ -20,7 +20,7 @@ const NoItem = styled.div`
 
 const Posts = ({ page }) => {
     const [numPostOnPage, setNumPostOnPage] = useState(10);
-    const { called, loading, error, data } = useQuery(GET_POSTS, {
+    const { loading, error, data } = useQuery(GET_POSTS, {
         variables: {
             pagination: { offset: page * numPostOnPage - numPostOnPage, limit: numPostOnPage }
         },
@@ -29,7 +29,7 @@ const Posts = ({ page }) => {
 
     if (error) return <ErrorPage />;
 
-    if (!called || loading) return <LoadingPage />;
+    if (loading) return <LoadingPage />;
 
     return (
         <>

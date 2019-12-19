@@ -88,13 +88,25 @@ const resolvers = {
 
             return comments ? true : false;
         },
-        favourites: async (_, { id: userId }) => {
+        favourites: async (_, { id: userId }, context) => {
+            isLoggedIn(context);
+
+            if (context.user.id !== userId) {
+                throw new AuthenticationError('No Authorization');
+            }
+
             const favourites = await Favourite.findAll({
                 limit: 5,
                 where: { userId },
+                include: [{ model: Post, as: 'post' }],
                 order: [['createdAt', 'DESC']]
             });
+
             return favourites;
+        },
+        favouritesCount: async (_, { id: userId }) => {
+            const total = await Favourite.count({ where: { userId } });
+            return total;
         }
     },
     Mutation: {
