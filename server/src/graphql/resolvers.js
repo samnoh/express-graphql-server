@@ -181,7 +181,7 @@ const resolvers = {
         },
         deletePost: async (_, { id }, context) => {
             isLoggedIn(context);
-            console.log(id);
+
             const deleted = await Post.destroy({ where: { id, userId: context.user.id } });
 
             if (!deleted) {
