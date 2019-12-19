@@ -88,7 +88,7 @@ const resolvers = {
 
             return comments ? true : false;
         },
-        favourites: async (_, { id: userId }, context) => {
+        favourites: async (_, { id: userId, pagination: { offset, limit = 5 } = {} }, context) => {
             isLoggedIn(context);
 
             if (context.user.id !== userId) {
@@ -96,7 +96,8 @@ const resolvers = {
             }
 
             const favourites = await Favourite.findAll({
-                limit: 5,
+                limit,
+                offset,
                 where: { userId },
                 include: [{ model: Post, as: 'post' }],
                 order: [['createdAt', 'DESC']]

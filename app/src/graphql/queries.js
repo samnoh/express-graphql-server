@@ -137,8 +137,8 @@ export const DELETE_COMMENT = gql`
 `;
 
 export const GET_FAVOURITES = gql`
-    query favourites($id: Int!) {
-        favourites(id: $id) {
+    query favourites($id: Int!, $pagination: PaginationInput) {
+        favourites(id: $id, pagination: $pagination) {
             id
             createdAt
             post {

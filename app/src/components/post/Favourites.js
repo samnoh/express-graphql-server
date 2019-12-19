@@ -1,14 +1,16 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import Helmet from 'react-helmet';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
+import { Redirect } from 'react-router-dom';
 
 import { showNoti } from 'store/actions/noti';
 import { GET_FAVOURITES, DELETE_FAVOURITE } from 'graphql/queries';
 import Post from './Post';
 import ErrorPage from 'pages/ErrorPage';
 import LoadingPage from 'pages/LoadingPage';
+import Pagination from './Pagination';
 
 const Title = styled.h2`
     color: #444;
@@ -24,12 +26,16 @@ const NoItem = styled.div`
     user-select: none;
 `;
 
-const Favourites = ({ id }) => {
+const Favourites = ({ id, page }) => {
     const dispatch = useDispatch();
+    const [numPostOnPage, setNumPostOnPage] = useState(10);
     const { error, loading, data: { favourites, favouritesCount } = {}, refetch } = useQuery(
         GET_FAVOURITES,
         {
-            variables: { id },
+            variables: {
+                id,
+                pagination: { offset: page * numPostOnPage - numPostOnPage, limit: numPostOnPage }
+            },
             fetchPolicy: 'cache-and-network'
         }
     );
@@ -61,6 +67,17 @@ const Favourites = ({ id }) => {
             {favourites.map(({ post }) => (
                 <Post {...post} key={post.id} simple onDelete={onDelete} />
             ))}
+            {favouritesCount && !favourites.length ? (
+                <Redirect
+                    to={`/user/${id}/favourites?page=${Math.ceil(favouritesCount / numPostOnPage)}`}
+                />
+            ) : (
+                <Pagination
+                    currPage={page ? Math.abs(page) : 1}
+                    total={favouritesCount}
+                    nPostOnPage={numPostOnPage}
+                />
+            )}
             {!favourites.length && <NoItem>No Favourite</NoItem>}
         </>
     );
