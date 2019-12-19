@@ -3,6 +3,8 @@ import { useMutation, useQuery } from '@apollo/react-hooks';
 import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
+import hljs from 'highlight.js';
+import 'highlight.js/styles/darcula.css';
 
 import { showNoti } from 'store/actions/noti';
 import { GET_POST, DELETE_POST } from 'graphql/queries';
@@ -21,6 +23,14 @@ const PostDetailContainer = styled.section`
 const Description = styled.p`
     padding: 4px;
     font-size: 17px;
+
+    .ql-syntax {
+        background: #333;
+        color: #fff;
+        padding: 10px 14px;
+        border-radius: 6px;
+        font-size: 15px;
+    }
 `;
 
 const PostDetail = ({ history, id }) => {

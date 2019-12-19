@@ -1,8 +1,11 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { useMutation } from '@apollo/react-hooks';
-import Quill from 'quill';
-import 'quill/dist/quill.bubble.css';
+import hljs from 'highlight.js';
+import 'highlight.js/styles/darcula.css';
+import 'react-quill/dist/quill.core.css';
+import 'react-quill/dist/quill.bubble.css';
+import ReactQuill from 'react-quill';
 import styled from 'styled-components';
 import { withRouter } from 'react-router-dom';
 
@@ -67,12 +70,48 @@ const QuillWrapper = styled.div`
         border-bottom-left-radius: 5px;
         border-bottom-right-radius: 5px;
         padding: 15px;
+        white-space: normal;
     }
+
     .ql-editor.ql-blank::before {
         left: 0;
         z-index: 999;
     }
 `;
+
+hljs.configure({
+    languages: ['javascript', 'python']
+});
+
+const modules = {
+    syntax: {
+        highlight: text => hljs.highlightAuto(text).value
+    },
+    toolbar: [
+        ['bold', 'italic', 'underline', 'blockquote'],
+        [{ list: 'ordered' }, { list: 'bullet' }],
+        ['link', 'image', 'video'],
+        ['clean'],
+        ['code-block']
+    ]
+};
+
+const formats = [
+    'header',
+    'font',
+    'size',
+    'bold',
+    'italic',
+    'underline',
+    'strike',
+    'blockquote',
+    'list',
+    'bullet',
+    'indent',
+    'link',
+    'video',
+    'code-block'
+];
 
 const Editor = ({
     title: initialTitle,
@@ -82,9 +121,8 @@ const Editor = ({
     history,
     location
 }) => {
+    console.log(initialContent);
     const dispatch = useDispatch();
-    const quillElement = useRef(null);
-    const quillInstance = useRef(null);
     const titleElement = useRef(null);
     const [title, setTitle] = useState(initialTitle);
     const [content, setContent] = useState(initialContent);
@@ -103,6 +141,10 @@ const Editor = ({
         fn({ variables });
     }, [fn, title, content]);
 
+    const onChange = useCallback(value => {
+        setContent(value);
+    }, []);
+
     useEffect(() => {
         if (post) {
             history.push(`/post/${post.id}`, { notiOnNextPage: true });
@@ -118,27 +160,6 @@ const Editor = ({
     }, [location.pathname]);
 
     useEffect(() => {
-        quillInstance.current = new Quill(quillElement.current, {
-            theme: 'bubble',
-            modules: {
-                toolbar: [
-                    [{ header: '1' }, { header: '2' }],
-                    ['bold', 'italic', 'underline', 'strike'],
-                    [{ list: 'ordered' }, { list: 'bullet' }],
-                    ['blockquote', 'code-block', 'link']
-                ]
-            }
-        });
-
-        const quill = quillInstance.current;
-        quill.root.innerHTML = editor ? content : '';
-
-        quill.on('text-change', (delta, oldDelta, source) => {
-            if (source === 'user') setContent(quill.root.innerHTML);
-        });
-    }, [setContent, location.pathname]);
-
-    useEffect(() => {
         if (error) {
             dispatch(showNoti(error.message, 'danger', 3));
         }
@@ -151,14 +172,20 @@ const Editor = ({
                 onChange={e => setTitle(e.target.value)}
                 name="title"
                 value={title}
-                autoFocus
                 ref={titleElement}
+                autoFocus
             />
             <SubmitButtom onClick={onSubmit} disabled={loading} tabIndex="-1">
                 +
             </SubmitButtom>
             <QuillWrapper>
-                <div ref={quillElement} />
+                <ReactQuill
+                    defaultValue={content}
+                    onChange={onChange}
+                    theme="bubble"
+                    modules={modules}
+                    formats={formats}
+                />
             </QuillWrapper>
         </Container>
     );
