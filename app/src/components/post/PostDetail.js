@@ -26,7 +26,7 @@ const Description = styled.p`
 const PostDetail = ({ history, id }) => {
     const dispatch = useDispatch();
 
-    const { called, loading, error, data: { post, favourite } = {}, refetch } = useQuery(GET_POST, {
+    const { called, loading, error, data: { post } = {}, refetch } = useQuery(GET_POST, {
         variables: { id },
         fetchPolicy: 'cache-and-network'
     });
@@ -58,12 +58,7 @@ const PostDetail = ({ history, id }) => {
     return (
         <PostDetailTemplate>
             <PostDetailContainer>
-                <PostDetailTitle
-                    {...post}
-                    favourite={favourite}
-                    onEdit={onEdit}
-                    onDelete={onDelete}
-                />
+                <PostDetailTitle {...post} onEdit={onEdit} onDelete={onDelete} />
                 <Description dangerouslySetInnerHTML={{ __html: post.content }} />
             </PostDetailContainer>
             <Comments comment={post.comment} id={id} refetch={refetch} />

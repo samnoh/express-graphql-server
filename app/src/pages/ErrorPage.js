@@ -13,7 +13,7 @@ const Title = styled.h2`
 
 const ErrorPage = ({ message }) => {
     const dispatch = useDispatch();
-    console.log(message);
+
     useEffect(() => {
         dispatch(showNoti(message ? message : 'API Error', 'danger', 10));
     });

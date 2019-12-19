@@ -2,10 +2,10 @@ import React, { useCallback, useState, useEffect, memo } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { useMutation } from '@apollo/react-hooks';
+import { useMutation, useQuery } from '@apollo/react-hooks';
 
 import { showNoti } from 'store/actions/noti';
-import { ADD_FAVOURITE, DELETE_FAVOURITE } from 'graphql/queries';
+import { ADD_FAVOURITE, DELETE_FAVOURITE, GET_FAVOURITE } from 'graphql/queries';
 
 const Title = styled.div`
     position: relative;
@@ -73,10 +73,11 @@ const FavButton = styled(Button)`
 `;
 
 const PostDetailTitle = memo(
-    ({ favourite, id, user, title, createdAt, onEdit, onDelete }) => {
+    ({ id, user, title, createdAt, onEdit, onDelete }) => {
         const dispatch = useDispatch();
         const auth = useSelector(state => state.auth);
-        const [saved, setSaved] = useState(favourite);
+        const { data: { favourite } = {} } = useQuery(GET_FAVOURITE, { variables: { id } });
+        const [saved, setSaved] = useState(false);
         const [addFavourite, { loading: addLoading, data: isAdded }] = useMutation(ADD_FAVOURITE);
         const [deleteFavourite, { loading: deleteLoading, data: isDeleted }] = useMutation(
             DELETE_FAVOURITE
@@ -84,7 +85,6 @@ const PostDetailTitle = memo(
 
         const onFavClick = useCallback(() => {
             saved ? deleteFavourite({ variables: { id } }) : addFavourite({ variables: { id } });
-            setSaved(!saved);
         }, [id, saved, setSaved]);
 
         useEffect(() => {
@@ -100,6 +100,10 @@ const PostDetailTitle = memo(
                 dispatch(showNoti('Successfully deleted', 'danger', 3));
             }
         }, [isDeleted]);
+
+        useEffect(() => {
+            setSaved(favourite);
+        }, [favourite]);
 
         return (
             <Title>

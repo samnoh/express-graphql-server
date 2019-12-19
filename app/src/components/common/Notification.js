@@ -23,6 +23,7 @@ const NotiContainer = styled.div`
     align-items: center;
     z-index: 999;
     animation: ${fadeIn} 0.3s ease-in forwards;
+    user-select: none;
 `;
 
 const Notification = ({ location }) => {

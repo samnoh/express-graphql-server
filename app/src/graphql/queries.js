@@ -83,7 +83,6 @@ export const GET_POST = gql`
                 }
             }
         }
-        favourite(id: $id)
     }
     ${fragments.post}
 `;
@@ -133,6 +132,12 @@ export const EDIT_COMMENT = gql`
 export const DELETE_COMMENT = gql`
     mutation deleteComment($id: Int!) {
         deleteComment(id: $id)
+    }
+`;
+
+export const GET_FAVOURITE = gql`
+    query favourite($id: Int!) {
+        favourite(id: $id)
     }
 `;
 
