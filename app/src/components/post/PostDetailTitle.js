@@ -117,7 +117,7 @@ const PostDetailTitle = memo(
                             onClick={onFavClick}
                             saved={saved}
                             disabled={addLoading || deleteLoading}>
-                            {saved ? 'Delete' : 'Add to'} favourites
+                            {saved ? 'Delete' : 'Add to'} Favourites
                         </FavButton>
                     )}
                     {user.id === auth.userId && (

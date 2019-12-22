@@ -3,7 +3,6 @@ import { useMutation, useQuery } from '@apollo/react-hooks';
 import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
-import hljs from 'highlight.js';
 import 'highlight.js/styles/darcula.css';
 
 import { showNoti } from 'store/actions/noti';

@@ -53,9 +53,21 @@ const NavItem = styled(NavLink)`
         border-bottom: 3px solid #2c3e50;
     }
 
+    & .button {
+        background: #61ceb3;
+        padding: 7px 18px;
+        border-radius: 8px;
+        color: #fff;
+        border: 1px solid #74ccb6;
+    }
+
     @media (hover: hover) {
         &:not(.active):hover {
             color: #a0aec0;
+        }
+
+        & .button:hover {
+            opacity: 0.85;
         }
     }
 `;
@@ -66,7 +78,7 @@ const NavBar = () => {
     const navItems = useMemo(() => {
         return [
             { name: 'Home', path: '/', loginRequired: false },
-            { name: 'New Post', path: '/post/new', loginRequired: true },
+            { name: 'Add Post', path: '/post/new', loginRequired: true, button: true },
             { name: 'Favourites', path: `/user/${auth.userId}/favourites`, loginRequired: true },
             {
                 name: `Profile (${auth.username})`,
@@ -86,8 +98,12 @@ const NavBar = () => {
                 {navItems
                     .filter(i => (auth.token ? i.loginRequired : !i.loginRequired))
                     .map(i => (
-                        <NavItem key={i.name} exact to={i.path} activeClassName="active">
-                            {i.name}
+                        <NavItem
+                            key={i.name}
+                            exact
+                            to={i.path}
+                            activeClassName={!i.button && 'active'}>
+                            <span className={i.button && 'button'}>{i.name}</span>
                         </NavItem>
                     ))}
             </NavContainer>
