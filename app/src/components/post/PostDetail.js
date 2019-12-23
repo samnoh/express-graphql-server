@@ -19,7 +19,7 @@ const PostDetailContainer = styled.section`
     flex-grow: 1;
 `;
 
-const Description = styled.p`
+const Description = styled.div`
     padding: 4px;
     font-size: 17px;
 
@@ -68,7 +68,10 @@ const PostDetail = ({ history, id }) => {
         <PostDetailTemplate>
             <PostDetailContainer>
                 <PostDetailTitle {...post} onEdit={onEdit} onDelete={onDelete} />
-                <Description dangerouslySetInnerHTML={{ __html: post.content }} />
+                <Description
+                    dangerouslySetInnerHTML={{ __html: post.content }}
+                    className="ql-editor"
+                />
             </PostDetailContainer>
             <Comments comment={post.comment} id={id} refetch={refetch} />
         </PostDetailTemplate>

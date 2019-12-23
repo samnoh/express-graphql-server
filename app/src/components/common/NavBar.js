@@ -18,7 +18,7 @@ const Header = styled.header`
 const Title = styled(Link)`
     font-size: 24px;
     color: #2c3e50;
-    margin-right: 30px;
+    margin-right: 6px;
 `;
 
 const Input = styled.input`
@@ -30,8 +30,18 @@ const Input = styled.input`
     border: 1px solid #cfd4db;
     border-radius: 32px;
     outline: none;
-    padding: 0 15px;
+    padding: 2px 14px 2px 36px;
     font-size: 16px;
+`;
+
+const TitleContainer = styled.div`
+    margin-right: 15px;
+
+    & i {
+        color: #dcdee0;
+        position: relative;
+        right: -28px;
+    }
 `;
 
 const NavContainer = styled.nav`
@@ -53,7 +63,13 @@ const NavItem = styled(NavLink)`
         border-bottom: 3px solid #2c3e50;
     }
 
-    & .button {
+    &.button {
+        cursor: initial;
+    }
+
+    &.button span {
+        cursor: pointer;
+        line-height: initial;
         background: #61ceb3;
         padding: 7px 18px;
         border-radius: 8px;
@@ -93,8 +109,11 @@ const NavBar = () => {
     return (
         <Header>
             <Title to="/">S53 Blog</Title>
-            <NavContainer>
+            <TitleContainer>
+                <i class="fas fa-search" />
                 <Input />
+            </TitleContainer>
+            <NavContainer>
                 {navItems
                     .filter(i => (auth.token ? i.loginRequired : !i.loginRequired))
                     .map(i => (
@@ -102,8 +121,9 @@ const NavBar = () => {
                             key={i.name}
                             exact
                             to={i.path}
-                            activeClassName={!i.button && 'active'}>
-                            <span className={i.button && 'button'}>{i.name}</span>
+                            activeClassName={!i.button && 'active'}
+                            className={i.button && 'button'}>
+                            <span>{i.name}</span>
                         </NavItem>
                     ))}
             </NavContainer>

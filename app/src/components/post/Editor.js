@@ -121,7 +121,6 @@ const Editor = ({
     history,
     location
 }) => {
-    console.log(initialContent);
     const dispatch = useDispatch();
     const titleElement = useRef(null);
     const [title, setTitle] = useState(initialTitle);
