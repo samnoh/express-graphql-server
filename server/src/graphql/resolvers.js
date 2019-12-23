@@ -56,9 +56,11 @@ const resolvers = {
             });
             return posts;
         },
-        postsCount: async () => {
-            const total = await Post.count({});
-            return total;
+        postsCount: async (_, { id: userId }) => {
+            if (!userId) {
+                return await Post.count({});
+            }
+            return await Post.count({ where: { userId } });
         },
         postsByUserId: async (_, { id, pagination: { offset, limit = 5 } = {} }) => {
             const posts = await Post.findAll({
@@ -78,6 +80,9 @@ const resolvers = {
                 order: [['createdAt', 'DESC']]
             });
             return comments;
+        },
+        commentsCount: async (_, { id: userId }) => {
+            return await Comment.count({ where: { userId } });
         },
         favourite: async (_, { id: postId }, context) => {
             isLoggedIn(context);

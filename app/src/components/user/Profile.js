@@ -17,12 +17,38 @@ const Container = styled.section`
     padding: 24px 0;
     background: #4e6e8e;
     color: #fff;
+    user-select: none;
+`;
+
+const Information = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #43607d;
+    width: 36%;
+    margin: 0 auto;
+    border-radius: 8px;
+`;
+
+const InfoItem = styled.div`
+    margin: 20px;
+    text-align: center;
+
+    & div {
+        color: #aaa;
+        font-size: 20px;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    font-size: 24px;
 `;
 
 const Username = styled.h1`
     font-weight: 300;
     font-size: 42px;
     text-align: center;
+    margin-bottom: 30px;
 `;
 
 const Title = styled.h2`
@@ -52,6 +78,8 @@ const Profile = ({ id }) => {
     const { username } = data.user;
     const posts = data.postsByUserId;
     const comments = data.comments;
+    const postsCount = data.postsCount;
+    const commentsCount = data.commentsCount;
 
     return (
         <>
@@ -59,7 +87,17 @@ const Profile = ({ id }) => {
                 <title>Profile | {username}</title>
             </Helmet>
             <Container>
-                <Username>{username}'s Profile</Username>
+                <Username>{username}</Username>
+                <Information>
+                    <InfoItem>
+                        <div>Posts</div>
+                        {postsCount}
+                    </InfoItem>
+                    <InfoItem>
+                        <div>Comments</div>
+                        {commentsCount}
+                    </InfoItem>
+                </Information>
             </Container>
             <Title>Recent Posts</Title>
             {posts.length ? posts.map(post => <Post {...post} simple />) : <NoItem>No Post</NoItem>}

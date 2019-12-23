@@ -41,6 +41,7 @@ export const SIGNUP = gql`
     }
 `;
 
+// Profile
 export const GET_USER = gql`
     query user($id: Int!) {
         user(id: $id) {
@@ -52,6 +53,8 @@ export const GET_USER = gql`
         comments(id: $id) {
             ...commentFragment
         }
+        postsCount(id: $id)
+        commentsCount(id: $id)
     }
     ${fragments.user}
     ${fragments.post}

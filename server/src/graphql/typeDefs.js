@@ -37,9 +37,10 @@ const typeDefs = gql`
         users(pagination: PaginationInput): [User]
         post(id: Int!): Post
         posts(pagination: PaginationInput): [Post]
-        postsCount: Int!
+        postsCount(id: Int): Int!
         postsByUserId(id: Int!, pagination: PaginationInput): [Post]
         comments(id: Int!): [Comment]
+        commentsCount(id: Int!): Int!
         favourite(id: Int!): Boolean!
         favourites(id: Int!, pagination: PaginationInput): [Favourite]!
         favouritesCount(id: Int!): Int!
