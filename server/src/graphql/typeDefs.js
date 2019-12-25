@@ -44,6 +44,7 @@ const typeDefs = gql`
         favourite(id: Int!): Boolean!
         favourites(id: Int!, pagination: PaginationInput): [Favourite]!
         favouritesCount(id: Int!): Int!
+        search(query: String!, pagination: PaginationInput): [Post]!
     }
 
     type Mutation {

@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken';
 import { AuthenticationError } from 'apollo-server-express';
+import { Op } from 'Sequelize';
 
 import db from 'models';
 import { JWT_SECRET_KEY } from 'config/secret';
@@ -94,6 +95,7 @@ const resolvers = {
             return comments ? true : false;
         },
         favourites: async (_, { id: userId, pagination: { offset, limit = 5 } = {} }, context) => {
+            if (limit > 100) return null;
             isLoggedIn(context);
 
             if (context.user.id !== userId) {
@@ -107,12 +109,27 @@ const resolvers = {
                 include: [{ model: Post, as: 'post' }],
                 order: [['createdAt', 'DESC']]
             });
-
             return favourites;
         },
         favouritesCount: async (_, { id: userId }) => {
             const total = await Favourite.count({ where: { userId } });
             return total;
+        },
+        search: async (_, { query, pagination: { offset = 0, limit = 5 } = {} }) => {
+            if (limit > 100) return null;
+
+            const posts = await Post.findAll({
+                limit,
+                offset,
+                where: {
+                    title: {
+                        [Op.substring]: query
+                    }
+                },
+                order: [['createdAt', 'DESC']],
+                include: [{ model: User, as: 'user' }]
+            });
+            return posts;
         }
     },
     Mutation: {

@@ -118,7 +118,7 @@ const NavBar = ({ history }) => {
                 setValue('');
             }
         },
-        [value]
+        [value, history]
     );
 
     return (

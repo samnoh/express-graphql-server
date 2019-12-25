@@ -164,3 +164,17 @@ export const DELETE_FAVOURITE = gql`
         deleteFavourite(id: $id)
     }
 `;
+
+export const SEARCH_POST = gql`
+    query search($query: String!, $pagination: PaginationInput) {
+        search(query: $query, pagination: $pagination) {
+            id
+            title
+            createdAt
+            user {
+                id
+                username
+            }
+        }
+    }
+`;
