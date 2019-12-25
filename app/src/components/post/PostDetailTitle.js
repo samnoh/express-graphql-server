@@ -76,7 +76,10 @@ const PostDetailTitle = memo(
     ({ id, user, title, createdAt, onEdit, onDelete }) => {
         const dispatch = useDispatch();
         const auth = useSelector(state => state.auth);
-        const { data: { favourite } = {} } = useQuery(GET_FAVOURITE, { variables: { id } });
+        const { data: { favourite } = {} } = useQuery(GET_FAVOURITE, {
+            variables: { id },
+            fetchPolicy: 'cache-and-network'
+        });
         const [saved, setSaved] = useState(false);
         const [addFavourite, { loading: addLoading, data: isAdded }] = useMutation(ADD_FAVOURITE);
         const [deleteFavourite, { loading: deleteLoading, data: isDeleted }] = useMutation(
