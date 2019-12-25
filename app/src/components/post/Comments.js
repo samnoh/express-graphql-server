@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { useMutation } from '@apollo/react-hooks';
@@ -23,50 +23,57 @@ const NoItem = styled.div`
 
 const Comments = ({ comment, id, refetch }) => {
     const dispatch = useDispatch();
-    const [addComment, { error, data: { addComment: isAdded } = {} }] = useMutation(ADD_COMMENT);
-    const [deleteComment, { data: { deleteComment: isDeleted } = {} }] = useMutation(
-        DELETE_COMMENT
+    const [addComment, { error, data: isAdded }] = useMutation(ADD_COMMENT);
+    const [deleteComment, { data: isDeleted }] = useMutation(DELETE_COMMENT);
+    const [editComment, { data: isEdited }] = useMutation(EDIT_COMMENT);
+
+    const onAdd = useCallback(
+        (id, content) => {
+            addComment({ variables: { id, content } });
+        },
+        [addComment]
     );
-    const [editComment, { data: { editComment: isEdited } = {} }] = useMutation(EDIT_COMMENT);
 
-    const onAdd = useCallback((id, content) => {
-        addComment({ variables: { id, content } });
-        refetch();
-    }, []);
+    const onDelete = useCallback(
+        id => {
+            deleteComment({ variables: { id } });
+        },
+        [deleteComment]
+    );
 
-    const onDelete = useCallback(id => {
-        deleteComment({ variables: { id } });
-        refetch();
-    }, []);
-
-    const onEdit = useCallback((id, content) => {
-        editComment({ variables: { id, content } });
-        refetch();
-    }, []);
+    const onEdit = useCallback(
+        (id, content) => {
+            editComment({ variables: { id, content } });
+        },
+        [editComment]
+    );
 
     useEffect(() => {
         if (isAdded) {
+            refetch();
             dispatch(showNoti('Successfully added', 'primary', 3));
         }
-    }, [isAdded]);
+    }, [isAdded, dispatch, refetch]);
 
     useEffect(() => {
         if (isEdited) {
+            refetch();
             dispatch(showNoti('Successfully updated', 'primary', 3));
         }
-    }, [isEdited]);
+    }, [isEdited, dispatch, refetch]);
 
     useEffect(() => {
         if (isDeleted) {
+            refetch();
             dispatch(showNoti('Successfully deleted', 'danger', 3));
         }
-    }, [isDeleted]);
+    }, [isDeleted, dispatch, refetch]);
 
     useEffect(() => {
         if (error) {
             dispatch(showNoti('Error', 'danger', 3));
         }
-    }, [error]);
+    }, [error, dispatch]);
 
     return (
         <>

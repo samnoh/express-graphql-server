@@ -33,7 +33,7 @@ const Notification = ({ location }) => {
     useEffect(() => {
         if (location.state && location.state.notiOnNextPage) delete location.state.notiOnNextPage;
         else dispatch(closeNoti());
-    }, [location.pathname]);
+    }, [location.pathname, dispatch, location.state]);
 
     if (!noti.show) return null;
 

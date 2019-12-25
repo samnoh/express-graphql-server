@@ -39,7 +39,7 @@ const Pagination = ({ currPage = 1, total, nPostOnPage }) => {
 
     const onClick = useCallback(() => {
         window.scrollTo(0, 0);
-    });
+    }, []);
 
     return (
         <Container>

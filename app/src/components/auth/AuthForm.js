@@ -53,7 +53,7 @@ const AuthForm = ({ history, signup }) => {
             dispatch(showNoti(error.message, 'danger', 3));
             setValues({ ...values, password: '', password2: '' });
         }
-    }, [dispatch, error]);
+    }, [dispatch, error, setValues, values]);
 
     const onChange = useCallback(
         e => {

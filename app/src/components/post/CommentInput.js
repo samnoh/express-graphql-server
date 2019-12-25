@@ -49,7 +49,7 @@ const CommentInput = ({ id, addComment, onCancel, initialValue = '' }) => {
     const onClick = useCallback(() => {
         addComment(id, value);
         setValue('');
-    }, [value]);
+    }, [value, id, addComment]);
 
     return (
         <>

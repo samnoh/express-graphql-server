@@ -116,19 +116,13 @@ export const DELETE_POST = gql`
 
 export const ADD_COMMENT = gql`
     mutation addComment($id: Int!, $content: String!) {
-        addComment(id: $id, content: $content) {
-            id
-            content
-        }
+        addComment(id: $id, content: $content)
     }
 `;
 
 export const EDIT_COMMENT = gql`
     mutation editComment($id: Int!, $content: String!) {
-        editComment(id: $id, content: $content) {
-            id
-            content
-        }
+        editComment(id: $id, content: $content)
     }
 `;
 

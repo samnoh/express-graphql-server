@@ -138,31 +138,34 @@ const Editor = ({
         if (editor) variables.id = id;
 
         fn({ variables });
-    }, [fn, title, content]);
+    }, [fn, title, content, editor, id]);
 
-    const onChange = useCallback(value => {
-        setContent(value);
-    }, []);
+    const onChange = useCallback(
+        value => {
+            setContent(value);
+        },
+        [setContent]
+    );
 
     useEffect(() => {
         if (post) {
             history.push(`/post/${post.id}`, { notiOnNextPage: true });
             dispatch(showNoti(`Successfully ${editor ? 'updated' : 'added'}`, 'primary', 3));
         }
-    }, [post]);
+    }, [post, dispatch, history, editor]);
 
     useEffect(() => {
         if (editor) return;
         setTitle('');
         setContent('');
         titleElement.current.focus();
-    }, [location.pathname]);
+    }, [editor, location.pathname]);
 
     useEffect(() => {
         if (error) {
             dispatch(showNoti(error.message, 'danger', 3));
         }
-    }, [error]);
+    }, [error, dispatch]);
 
     return (
         <Container>

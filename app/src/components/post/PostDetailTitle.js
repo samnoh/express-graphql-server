@@ -85,21 +85,21 @@ const PostDetailTitle = memo(
 
         const onFavClick = useCallback(() => {
             saved ? deleteFavourite({ variables: { id } }) : addFavourite({ variables: { id } });
-        }, [id, saved, setSaved]);
+        }, [id, saved, deleteFavourite, addFavourite]);
 
         useEffect(() => {
             if (isAdded) {
                 setSaved(true);
                 dispatch(showNoti('Successfully added', 'primary', 3));
             }
-        }, [isAdded]);
+        }, [isAdded, dispatch]);
 
         useEffect(() => {
             if (isDeleted) {
                 setSaved(false);
                 dispatch(showNoti('Successfully deleted', 'danger', 3));
             }
-        }, [isDeleted]);
+        }, [isDeleted, dispatch]);
 
         useEffect(() => {
             setSaved(favourite);

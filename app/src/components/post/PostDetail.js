@@ -46,7 +46,7 @@ const PostDetail = ({ history, id }) => {
             history.push('/', { notiOnNextPage: true });
             dispatch(showNoti('Successfully deleted', 'danger', 3));
         }
-    }, [isDeleted]);
+    }, [isDeleted, dispatch, history]);
 
     const onEdit = useCallback(() => {
         history.push(`/post/${id}/edit`, {
@@ -54,11 +54,11 @@ const PostDetail = ({ history, id }) => {
             title: post.title,
             content: post.content
         });
-    }, [post, id]);
+    }, [post, id, history]);
 
     const onDelete = useCallback(() => {
         deletePost({ variables: { id } });
-    }, [id]);
+    }, [id, deletePost]);
 
     if (error) return <ErrorPage />;
 

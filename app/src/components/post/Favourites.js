@@ -28,7 +28,7 @@ const NoItem = styled.div`
 
 const Favourites = ({ id, page }) => {
     const dispatch = useDispatch();
-    const [numPostOnPage, setNumPostOnPage] = useState(10);
+    const [numPostOnPage] = useState(10);
     const { error, loading, data: { favourites, favouritesCount } = {}, refetch } = useQuery(
         GET_FAVOURITES,
         {
@@ -39,20 +39,21 @@ const Favourites = ({ id, page }) => {
             fetchPolicy: 'cache-and-network'
         }
     );
-    const [deleteFavourite, { loading: deleteLoading, data: isDeleted }] = useMutation(
-        DELETE_FAVOURITE
-    );
+    const [deleteFavourite, { data: isDeleted }] = useMutation(DELETE_FAVOURITE);
 
-    const onDelete = useCallback(id => {
-        deleteFavourite({ variables: { id } });
-    }, []);
+    const onDelete = useCallback(
+        id => {
+            deleteFavourite({ variables: { id } });
+        },
+        [deleteFavourite]
+    );
 
     useEffect(() => {
         if (isDeleted) {
             refetch();
             dispatch(showNoti('Successfully deleted', 'danger', 3));
         }
-    }, [isDeleted]);
+    }, [isDeleted, refetch, dispatch]);
 
     if (error) return <ErrorPage message={error.message} />;
 

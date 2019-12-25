@@ -110,7 +110,7 @@ const NavBar = () => {
         <Header>
             <Title to="/">S53 Blog</Title>
             <TitleContainer>
-                <i class="fas fa-search" />
+                <i className="fas fa-search" />
                 <Input />
             </TitleContainer>
             <NavContainer>
@@ -121,7 +121,7 @@ const NavBar = () => {
                             key={i.name}
                             exact
                             to={i.path}
-                            activeClassName={!i.button && 'active'}
+                            activeClassName={!i.button ? 'active' : ''}
                             className={i.button && 'button'}>
                             <span>{i.name}</span>
                         </NavItem>
