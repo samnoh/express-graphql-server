@@ -100,11 +100,15 @@ const Profile = ({ id }) => {
                 </Information>
             </Container>
             <Title>Recent Posts</Title>
-            {posts.length ? posts.map(post => <Post {...post} simple />) : <NoItem>No Post</NoItem>}
+            {posts.length ? (
+                posts.map(post => <Post key={post.id} {...post} simple />)
+            ) : (
+                <NoItem>No Post</NoItem>
+            )}
             <Title>Recent Comments</Title>
             {comments.length ? (
                 comments.map(comment => (
-                    <Link to={`/post/${comment.postId}`}>
+                    <Link to={`/post/${comment.postId}`} key={comment.id}>
                         <Comment {...comment} user={{ id }} profile />
                     </Link>
                 ))

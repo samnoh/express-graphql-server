@@ -9,6 +9,7 @@ const UserPage = lazy(() => import('pages/UserPage'));
 const LoginPage = lazy(() => import('pages/LoginPage'));
 const LogoutPage = lazy(() => import('pages/LogoutPage'));
 const SignupPage = lazy(() => import('pages/SignupPage'));
+const SearchPage = lazy(() => import('pages/SearchPage'));
 const FavouritesPage = lazy(() => import('pages/FavouritesPage'));
 const NotFoundPage = lazy(() => import('pages/NotFoundPage'));
 
@@ -44,6 +45,7 @@ const App = () => {
                     <Route path="/login" component={LoginPage} />
                     <Route path="/logout" component={LogoutPage} />
                     <Route path="/signup" component={SignupPage} />
+                    <Route path="/search" component={SearchPage} />
                     <Route component={NotFoundPage} />
                 </Switch>
             </Suspense>

@@ -197,12 +197,17 @@ const resolvers = {
         addComment: async (_, { id: postId, content }, context) => {
             isLoggedIn(context);
 
-            const comment = await Comment.create({
-                content,
-                postId,
-                userId: context.user.id
-            });
-            return comment;
+            try {
+                await Comment.create({
+                    content,
+                    postId,
+                    userId: context.user.id
+                });
+                return true;
+            } catch (error) {
+                console.error(error);
+                return false;
+            }
         },
         editComment: async (_, { id, content }, context) => {
             isLoggedIn(context);
@@ -212,15 +217,7 @@ const resolvers = {
                 { where: { id, userId: context.user.id } }
             );
 
-            if (!updated) {
-                throw new AuthenticationError('The request was not successful');
-            }
-
-            const updatedComment = await Comment.findOne({
-                where: { id },
-                include: [{ model: User, as: 'user' }]
-            });
-            return updatedComment;
+            return updated ? true : false;
         },
         deleteComment: async (_, { id }, context) => {
             isLoggedIn(context);

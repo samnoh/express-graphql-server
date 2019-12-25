@@ -1,5 +1,5 @@
-import React, { useMemo } from 'react';
-import { NavLink, Link } from 'react-router-dom';
+import React, { useState, useMemo, useCallback } from 'react';
+import { NavLink, Link, withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { useSelector } from 'react-redux';
@@ -88,8 +88,9 @@ const NavItem = styled(NavLink)`
     }
 `;
 
-const NavBar = () => {
+const NavBar = ({ history }) => {
     const auth = useSelector(state => state.auth);
+    const [value, setValue] = useState('');
 
     const navItems = useMemo(() => {
         return [
@@ -106,12 +107,26 @@ const NavBar = () => {
         ];
     }, [auth]);
 
+    const onChange = useCallback(e => {
+        setValue(e.target.value);
+    }, []);
+
+    const onSubmit = useCallback(
+        e => {
+            if (e.key === 'Enter') {
+                history.push(`/search?q=${value}`);
+                setValue('');
+            }
+        },
+        [value]
+    );
+
     return (
         <Header>
             <Title to="/">S53 Blog</Title>
             <TitleContainer>
                 <i className="fas fa-search" />
-                <Input />
+                <Input value={value} onChange={onChange} onKeyDown={onSubmit} />
             </TitleContainer>
             <NavContainer>
                 {navItems
@@ -131,4 +146,4 @@ const NavBar = () => {
     );
 };
 
-export default NavBar;
+export default withRouter(NavBar);

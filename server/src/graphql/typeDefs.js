@@ -52,8 +52,8 @@ const typeDefs = gql`
         addPost(title: String!, content: String): Post!
         editPost(id: Int!, title: String!, content: String): Post!
         deletePost(id: Int!): Boolean!
-        addComment(id: Int!, content: String!): Comment!
-        editComment(id: Int!, content: String!): Comment!
+        addComment(id: Int!, content: String!): Boolean!
+        editComment(id: Int!, content: String!): Boolean!
         deleteComment(id: Int!): Boolean!
         addFavourite(id: Int!): Boolean!
         deleteFavourite(id: Int!): Boolean!
