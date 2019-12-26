@@ -4,12 +4,14 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 import CommentInput from 'components/post/CommentInput';
+import palette from 'styles/palette';
+import { ButtonInline } from 'styles';
 
 const Container = styled.div`
     position: relative;
     margin: 24px 0 0;
-    background: #f9fafc;
-    border: 1px solid ${props => (props.isMyComment ? '#4295f7' : '#dae1e7')};
+    background: ${palette.gray[0]};
+    border: 1px solid ${props => (props.isMyComment ? palette.blue[2] : palette.gray[3])};
     border-radius: 8px;
     padding: 22px 18px 40px;
     display: flex;
@@ -28,7 +30,7 @@ const Content = styled.div`
 
 const DateTime = styled.div`
     font-size: 14px;
-    color: #aaa;
+    color: ${palette.gray[5]};
     position: absolute;
     bottom: 12px;
     margin-left: -0.5px;
@@ -45,26 +47,7 @@ const RightContainer = styled.div`
 
 const Username = styled.div`
     font-size: 14px;
-    color: #aaa;
-`;
-
-const Button = styled.button`
-    cursor: pointer;
-    border: none;
-    font-size: 14px;
-    border-radius: 4px;
-    font-weight: bold;
-    outline: none;
-    margin-left: 22px;
-    background: #f9fafc;
-`;
-
-const EditButton = styled(Button)`
-    color: #4295f7;
-`;
-
-const DeleteButton = styled(Button)`
-    color: #d93d75;
+    color: ${palette.gray[5]};
 `;
 
 const Comment = memo(({ id, content, user, createdAt, updatedAt, onEdit, onDelete, profile }) => {
@@ -96,8 +79,14 @@ const Comment = memo(({ id, content, user, createdAt, updatedAt, onEdit, onDelet
                 <RightContainer>
                     {isMyComment ? (
                         <>
-                            <EditButton onClick={() => setIsEditing(true)}>Edit</EditButton>
-                            <DeleteButton onClick={() => onDelete(id)}>Delete</DeleteButton>
+                            <ButtonInline
+                                color={palette.gray[5]}
+                                onClick={() => setIsEditing(true)}>
+                                Edit
+                            </ButtonInline>
+                            <ButtonInline color={palette.red[4]} onClick={() => onDelete(id)}>
+                                Delete
+                            </ButtonInline>
                         </>
                     ) : (
                         <Username>

@@ -1,19 +1,12 @@
 import React, { useState, useCallback } from 'react';
 import styled from 'styled-components';
 
+import palette from 'styles/palette';
+import { Button, ButtonOutline } from 'styles';
+
 const ButtonContainer = styled.div`
     display: flex;
     justify-content: flex-end;
-`;
-
-const Button = styled.button`
-    cursor: pointer;
-    border: none;
-    padding: 8px 20px;
-    font-size: 16px;
-    border-radius: 4px;
-    color: #fff;
-    font-weight: 700;
 `;
 
 const CommentTextarea = styled.textarea`
@@ -55,10 +48,10 @@ const CommentInput = ({ id, addComment, onCancel, initialValue = '' }) => {
         <>
             <CommentTextarea value={value} onChange={onChange} placeholder="Add a comment" />
             <ButtonContainer>
-                {initialValue && <CancelButton onClick={onCancel}>Cancel</CancelButton>}
-                <CommentButton onClick={onClick} isUpdate={initialValue}>
+                {initialValue && <ButtonOutline onClick={onCancel}>Cancel</ButtonOutline>}
+                <Button backgroundColor={palette.blue[5]} onClick={onClick} isUpdate={initialValue}>
                     {initialValue ? 'Update' : 'Add'} Comment
-                </CommentButton>
+                </Button>
             </ButtonContainer>
         </>
     );

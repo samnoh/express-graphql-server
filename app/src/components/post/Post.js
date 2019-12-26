@@ -2,6 +2,9 @@ import React, { memo } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
+import { ButtonInline } from 'styles';
+import palette from 'styles/palette';
+
 const PostContainer = styled.section`
     color: #242424;
     display: flex;
@@ -9,7 +12,7 @@ const PostContainer = styled.section`
     align-items: center;
     margin-bottom: 48px;
     padding: 0 6px;
-    border-bottom: 1px solid #eaecef;
+    border-bottom: 1px solid ${palette.gray[2]};
 `;
 
 const Title = styled.h2`
@@ -28,7 +31,7 @@ const Title = styled.h2`
         font-size: 15px;
         vertical-align: middle;
         margin-left: 8px;
-        color: #888;
+        color: ${palette.gray[5]};
     }
 
     @media (hover: hover) {
@@ -41,7 +44,7 @@ const Title = styled.h2`
 const Username = styled.span`
     text-align: right;
     display: block;
-    color: #888;
+    color: ${palette.gray[5]};
     font-weight: 300;
     align-self: flex-end;
     margin-bottom: 20px;
@@ -52,23 +55,6 @@ const Username = styled.span`
             opacity: 0.4;
         }
     }
-`;
-
-const Button = styled.button`
-    cursor: pointer;
-    border: none;
-    font-size: 14px;
-    border-radius: 4px;
-    font-weight: bold;
-    outline: none;
-    margin-left: 22px;
-    background: #f9fafc;
-`;
-
-const DeleteButton = styled(Button)`
-    color: #d93d75;
-    align-self: flex-end;
-    margin-bottom: 16px;
 `;
 
 const Post = memo(({ id, title, createdAt, simple, onDelete, user }) => {
@@ -84,7 +70,14 @@ const Post = memo(({ id, title, createdAt, simple, onDelete, user }) => {
                     <Link to={`/user/${user.id}`}>{user.username}</Link>
                 </Username>
             )}
-            {onDelete && <DeleteButton onClick={() => onDelete(id)}>Delete</DeleteButton>}
+            {onDelete && (
+                <ButtonInline
+                    color={palette.red[4]}
+                    style={{ alignSelf: 'flex-end', marginBottom: '16px' }}
+                    onClick={() => onDelete(id)}>
+                    Delete
+                </ButtonInline>
+            )}
         </PostContainer>
     );
 });

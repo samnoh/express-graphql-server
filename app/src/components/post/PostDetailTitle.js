@@ -5,6 +5,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useMutation, useQuery } from '@apollo/react-hooks';
 
 import { showNoti } from 'store/actions/noti';
+import { Button } from 'styles';
+import palette from 'styles/palette';
 import { ADD_FAVOURITE, DELETE_FAVOURITE, GET_FAVOURITE } from 'graphql/queries';
 
 const Title = styled.div`
@@ -41,35 +43,10 @@ const Title = styled.div`
     }
 `;
 
-const Button = styled.button`
-    cursor: pointer;
-    border: none;
-    padding: 8px 20px;
-    font-size: 16px;
-    border-radius: 4px;
-    color: #fff;
-    font-weight: 700;
-    outline: none;
-    margin-left: 12px;
-    user-select: none;
-`;
-
 const ButtonContainer = styled.div`
     position: absolute;
     right: 0;
     bottom: -46px;
-`;
-
-const EditButton = styled(Button)`
-    background-color: #4295f7;
-`;
-
-const DeleteButton = styled(Button)`
-    background-color: #d93d75;
-`;
-
-const FavButton = styled(Button)`
-    background-color: ${props => (props.saved ? '#D93D75' : '#61ceb3')};
 `;
 
 const PostDetailTitle = memo(
@@ -116,17 +93,21 @@ const PostDetailTitle = memo(
                 <Link to={`/user/${user.id}`}>{user.username}</Link>
                 <ButtonContainer>
                     {auth.userId && (
-                        <FavButton
+                        <Button
                             onClick={onFavClick}
-                            saved={saved}
+                            backgroundColor={saved ? palette.red[6] : palette.green[5]}
                             disabled={addLoading || deleteLoading}>
                             {saved ? 'Delete' : 'Add to'} Favourites
-                        </FavButton>
+                        </Button>
                     )}
                     {user.id === auth.userId && (
                         <>
-                            <EditButton onClick={onEdit}>Edit</EditButton>
-                            <DeleteButton onClick={onDelete}>Delete</DeleteButton>
+                            <Button backgroundColor={palette.blue[5]} onClick={onEdit}>
+                                Edit
+                            </Button>
+                            <Button backgroundColor={palette.red[6]} onClick={onDelete}>
+                                Delete
+                            </Button>
                         </>
                     )}
                 </ButtonContainer>

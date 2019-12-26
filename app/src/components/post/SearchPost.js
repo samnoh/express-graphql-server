@@ -6,6 +6,8 @@ import { SEARCH_POST } from 'graphql/queries';
 import ErrorPage from 'pages/ErrorPage';
 import LoadingPage from 'pages/LoadingPage';
 import Post from 'components/post/Post';
+import { Button } from 'styles';
+import palette from 'styles/palette';
 
 const NoItem = styled.div`
     color: #aaa;
@@ -17,23 +19,6 @@ const NoItem = styled.div`
 
 const ButtonContainer = styled.div`
     text-align: center;
-`;
-
-const Button = styled.button`
-    cursor: pointer;
-    border: none;
-    padding: 8px 20px;
-    font-size: 16px;
-    border-radius: 4px;
-    color: #fff;
-    font-weight: 700;
-    outline: none;
-    margin: 60px 0;
-    user-select: none;
-`;
-
-const FetchMoreButton = styled(Button)`
-    background: ${props => (props.disabled ? '#D93D75' : '#74ccb6')};
 `;
 
 const LIMIT = 5;
@@ -73,9 +58,13 @@ const SearchPost = ({ query }) => {
             ))}
             <ButtonContainer>
                 {noMoreItem ? (
-                    <FetchMoreButton disabled>No More Results</FetchMoreButton>
+                    <Button backgroundColor={palette.gray[6]} disabled>
+                        No More Results
+                    </Button>
                 ) : (
-                    <FetchMoreButton onClick={onClick}>Search More</FetchMoreButton>
+                    <Button backgroundColor={palette.blue[5]} onClick={onClick}>
+                        Search More
+                    </Button>
                 )}
             </ButtonContainer>
         </>

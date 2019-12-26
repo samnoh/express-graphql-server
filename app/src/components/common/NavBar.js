@@ -2,11 +2,13 @@ import React, { useState, useMemo, useCallback } from 'react';
 import { NavLink, Link, withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 
+import palette from 'styles/palette';
+import { ButtonOutline } from 'styles';
 import { useSelector } from 'react-redux';
 
 const Header = styled.header`
     height: 58px;
-    border-bottom: 1px solid #eaecef;
+    border-bottom: 1px solid ${palette.gray[2]};
     background: white;
     display: flex;
     justify-content: space-between;
@@ -17,17 +19,17 @@ const Header = styled.header`
 
 const Title = styled(Link)`
     font-size: 24px;
-    color: #2c3e50;
+    color: ${palette.gray[8]};
     margin-right: 6px;
 `;
 
 const Input = styled.input`
     cursor: text;
-    color: #4e6e8e;
+    color: ${palette.gray[7]};
     width: 200px;
     height: 32px;
     margin: 13px 0;
-    border: 1px solid #cfd4db;
+    border: 1px solid ${palette.gray[4]};
     border-radius: 32px;
     outline: none;
     padding: 2px 14px 2px 36px;
@@ -38,7 +40,7 @@ const TitleContainer = styled.div`
     margin-right: 15px;
 
     & i {
-        color: #dcdee0;
+        color: ${palette.gray[3]};
         position: relative;
         right: -28px;
     }
@@ -52,7 +54,7 @@ const NavContainer = styled.nav`
 
 const NavItem = styled(NavLink)`
     font-weight: 300;
-    color: #4e6e8e;
+    color: ${palette.gray[7]};
     font-size: 18px;
     margin-left: 45px;
     display: inline-block;
@@ -60,30 +62,12 @@ const NavItem = styled(NavLink)`
     padding: 0 4px;
 
     &.active {
-        border-bottom: 3px solid #2c3e50;
-    }
-
-    &.button {
-        cursor: initial;
-    }
-
-    &.button span {
-        cursor: pointer;
-        line-height: initial;
-        background: #61ceb3;
-        padding: 7px 18px;
-        border-radius: 8px;
-        color: #fff;
-        border: 1px solid #74ccb6;
+        border-bottom: 3px solid ${palette.blue[4]};
     }
 
     @media (hover: hover) {
         &:not(.active):hover {
-            color: #a0aec0;
-        }
-
-        & .button:hover {
-            opacity: 0.85;
+            color: ${palette.gray[5]};
         }
     }
 `;
@@ -131,16 +115,17 @@ const NavBar = ({ history }) => {
             <NavContainer>
                 {navItems
                     .filter(i => (auth.token ? i.loginRequired : !i.loginRequired))
-                    .map(i => (
-                        <NavItem
-                            key={i.name}
-                            exact
-                            to={i.path}
-                            activeClassName={!i.button ? 'active' : ''}
-                            className={i.button && 'button'}>
-                            <span>{i.name}</span>
-                        </NavItem>
-                    ))}
+                    .map(i =>
+                        i.button ? (
+                            <Link to={i.path}>
+                                <ButtonOutline>{i.name}</ButtonOutline>
+                            </Link>
+                        ) : (
+                            <NavItem key={i.name} exact to={i.path} activeClassName="active">
+                                <span>{i.name}</span>
+                            </NavItem>
+                        )
+                    )}
             </NavContainer>
         </Header>
     );
