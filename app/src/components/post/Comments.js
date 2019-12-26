@@ -7,19 +7,7 @@ import { ADD_COMMENT, EDIT_COMMENT, DELETE_COMMENT } from 'graphql/queries';
 import { showNoti } from 'store/actions/noti';
 import Comment from 'components/post/Comment';
 import CommentInput from 'components/post/CommentInput';
-
-const CommentTitle = styled.h2`
-    font-size: 26px;
-    color: #444;
-`;
-
-const NoItem = styled.div`
-    color: #aaa;
-    margin: 60px 0;
-    text-align: center;
-    user-select: none;
-    font-size: 17px;
-`;
+import { Title, NoItem } from 'styles';
 
 const Comments = ({ comment, id, refetch }) => {
     const dispatch = useDispatch();
@@ -77,7 +65,7 @@ const Comments = ({ comment, id, refetch }) => {
 
     return (
         <>
-            <CommentTitle>Comments</CommentTitle>
+            <Title marginBottom="10px">Comments</Title>
             {!comment.length && <NoItem>No Comment</NoItem>}
             {comment.map(c => (
                 <Comment key={c.id} onDelete={onDelete} onEdit={onEdit} {...c}></Comment>

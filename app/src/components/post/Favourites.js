@@ -2,7 +2,6 @@ import React, { useCallback, useEffect, useState } from 'react';
 import Helmet from 'react-helmet';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import { useDispatch } from 'react-redux';
-import styled from 'styled-components';
 import { Redirect } from 'react-router-dom';
 
 import { showNoti } from 'store/actions/noti';
@@ -11,20 +10,7 @@ import Post from './Post';
 import ErrorPage from 'pages/ErrorPage';
 import LoadingPage from 'pages/LoadingPage';
 import Pagination from './Pagination';
-
-const Title = styled.h2`
-    color: #444;
-    font-size: 26px;
-    margin-bottom: 40px;
-`;
-
-const NoItem = styled.div`
-    font-size: 24px;
-    padding: 62px 0 120px;
-    text-align: center;
-    color: #aaa;
-    user-select: none;
-`;
+import { Title, NoItem } from 'styles';
 
 const Favourites = ({ id, page }) => {
     const dispatch = useDispatch();

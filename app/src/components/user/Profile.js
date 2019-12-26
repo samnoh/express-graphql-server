@@ -9,22 +9,24 @@ import Post from 'components/post/Post';
 import Comment from 'components/post/Comment';
 import ErrorPage from 'pages/ErrorPage';
 import LoadingPage from 'pages/LoadingPage';
+import { Title, NoItem } from 'styles';
+import palette from 'styles/palette';
 
 const Container = styled.section`
     margin: 0 auto;
     border: 1px solid lightgray;
     border-radius: 8px;
     padding: 24px 0;
-    background: #4e6e8e;
+    background: ${palette.gray[6]};
     color: #fff;
     user-select: none;
+    margin-bottom: 60px;
 `;
 
 const Information = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    background: #43607d;
     width: 36%;
     margin: 0 auto;
     border-radius: 8px;
@@ -35,7 +37,7 @@ const InfoItem = styled.div`
     text-align: center;
 
     & div {
-        color: #aaa;
+        color: ${palette.gray[2]};
         font-size: 20px;
         font-weight: bold;
         margin-bottom: 10px;
@@ -49,20 +51,6 @@ const Username = styled.h1`
     font-size: 42px;
     text-align: center;
     margin-bottom: 30px;
-`;
-
-const Title = styled.h2`
-    font-size: 26px;
-    margin: 100px 0 40px 6px;
-    color: #444;
-`;
-
-const NoItem = styled.div`
-    font-size: 24px;
-    padding: 62px 0 120px;
-    text-align: center;
-    color: #aaa;
-    user-select: none;
 `;
 
 const Profile = ({ id }) => {
