@@ -113,7 +113,7 @@ const NavBar = ({ history }) => {
 
     const onSubmit = useCallback(
         e => {
-            if (e.key === 'Enter') {
+            if (e.key === 'Enter' && value) {
                 history.push(`/search?q=${value}`);
                 setValue('');
             }

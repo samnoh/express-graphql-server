@@ -33,7 +33,7 @@ const Button = styled.button`
 `;
 
 const FetchMoreButton = styled(Button)`
-    background: #74ccb6;
+    background: ${props => (props.disabled ? '#D93D75' : '#74ccb6')};
 `;
 
 const LIMIT = 5;
@@ -62,7 +62,7 @@ const SearchPost = ({ query }) => {
 
     if (loading) return <LoadingPage />;
 
-    if (error) return <ErrorPage />;
+    if (!query || error) return <ErrorPage message="No Result" />;
 
     if (!search.length) return <NoItem>No Result</NoItem>;
 
@@ -73,7 +73,7 @@ const SearchPost = ({ query }) => {
             ))}
             <ButtonContainer>
                 {noMoreItem ? (
-                    <FetchMoreButton disabled>No More Result</FetchMoreButton>
+                    <FetchMoreButton disabled>No More Results</FetchMoreButton>
                 ) : (
                     <FetchMoreButton onClick={onClick}>Search More</FetchMoreButton>
                 )}

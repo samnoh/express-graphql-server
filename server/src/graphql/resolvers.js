@@ -117,6 +117,7 @@ const resolvers = {
         },
         search: async (_, { query, pagination: { offset = 0, limit = 5 } = {} }) => {
             if (limit > 100) return null;
+            if (!query) return [];
 
             const posts = await Post.findAll({
                 limit,
