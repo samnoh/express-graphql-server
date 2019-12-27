@@ -1,16 +1,18 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import { palette } from 'styles';
+
 const FooterContainer = styled.footer`
     height: 80px;
     background: #fff;
-    border-top: 1px solid #eaecef;
+    border-top: 1px solid ${palette.gray[1]};
     display: flex;
     padding: 28px;
     justify-content: space-between;
     align-items: center;
     font-size: 15px;
-    color: #cfd4db;
+    color: ${palette.gray[4]};
 `;
 
 const Footer = () => {

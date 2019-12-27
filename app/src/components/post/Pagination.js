@@ -2,6 +2,8 @@ import React, { useMemo, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
+import { palette } from 'styles';
+
 const Container = styled.div`
     display: flex;
     width: 400px;
@@ -12,11 +14,11 @@ const Container = styled.div`
 const PageNum = styled(Link)`
     display: block;
     padding: 10px;
-    color: #888;
+    color: ${palette.gray[4]};
     user-select: none;
 
     &.active {
-        color: black;
+        color: ${palette.gray[8]};
         font-weight: 600;
     }
 `;

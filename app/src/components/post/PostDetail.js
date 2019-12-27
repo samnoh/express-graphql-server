@@ -12,7 +12,7 @@ import LoadingPage from 'pages/LoadingPage';
 import Comments from 'components/post/Comments';
 import PostDetailTemplate from 'components/post/PostDetailTemplate';
 import PostDetailTitle from 'components/post/PostDetailTitle';
-import palette from 'styles/palette';
+import { palette } from 'styles';
 
 const PostDetailContainer = styled.section`
     padding-bottom: 40px;

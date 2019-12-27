@@ -16,6 +16,7 @@ const PageContainer = styled.div`
     ${media.mobile`
         height: calc(100vh - 69px);
     `};
+
     h1 {
         font-weight: 400;
         font-size: 40px;
@@ -24,6 +25,7 @@ const PageContainer = styled.div`
             font-size: 28px;
         `};
     }
+
     img {
         width: 500px;
         margin-bottom: 35px;

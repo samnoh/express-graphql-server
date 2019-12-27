@@ -4,8 +4,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 import CommentInput from 'components/post/CommentInput';
-import palette from 'styles/palette';
-import { ButtonInline } from 'styles';
+import { ButtonInline, palette } from 'styles';
 
 const Container = styled.div`
     position: relative;

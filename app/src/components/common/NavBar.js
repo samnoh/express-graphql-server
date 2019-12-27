@@ -1,10 +1,9 @@
 import React, { useState, useMemo, useCallback } from 'react';
 import { NavLink, Link, withRouter } from 'react-router-dom';
 import styled from 'styled-components';
-
-import palette from 'styles/palette';
-import { ButtonOutline } from 'styles';
 import { useSelector } from 'react-redux';
+
+import { ButtonOutline, palette } from 'styles';
 
 const Header = styled.header`
     height: 58px;
@@ -62,7 +61,7 @@ const NavItem = styled(NavLink)`
     padding: 0 4px;
 
     &.active {
-        border-bottom: 3px solid ${palette.blue[4]};
+        border-bottom: 3px solid ${palette.gray[3]};
     }
 
     @media (hover: hover) {

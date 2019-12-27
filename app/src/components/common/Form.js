@@ -1,6 +1,7 @@
 import React from 'react';
-
 import styled from 'styled-components';
+
+import { palette } from 'styles';
 
 const FormContainer = styled.form`
     width: 400px;
@@ -14,14 +15,14 @@ const Input = styled.input`
     margin-bottom: 40px;
     width: 100%;
     border: none;
-    background-color: #f5f6f7;
+    background-color: ${palette.gray[1]};
     box-shadow: inset 0px 2px 3px rgba(0, 0, 0, 0.03);
     outline: none;
-    color: #2c3e50;
+    color: ${palette.gray[8]};
 `;
 
 const Label = styled.label`
-    color: #444;
+    color: ${palette.gray[8]};
     font-weight: 600;
     margin-left: 2px;
     margin-bottom: 8px;
@@ -34,8 +35,8 @@ const SubmitButton = styled.button`
     border: none;
     width: 100%;
     height: 43px;
-    background-color: #4295f7;
-    color: white;
+    background-color: ${palette.blue[5]};
+    color: ${palette.gray[1]};
     border-radius: 5px;
 `;
 

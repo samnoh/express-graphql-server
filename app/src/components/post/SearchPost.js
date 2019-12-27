@@ -6,8 +6,7 @@ import { SEARCH_POST } from 'graphql/queries';
 import ErrorPage from 'pages/ErrorPage';
 import LoadingPage from 'pages/LoadingPage';
 import Post from 'components/post/Post';
-import { Button } from 'styles';
-import palette from 'styles/palette';
+import { Button, palette } from 'styles';
 
 const NoItem = styled.div`
     color: ${palette.gray[5]};

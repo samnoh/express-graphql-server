@@ -5,9 +5,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useMutation, useQuery } from '@apollo/react-hooks';
 
 import { showNoti } from 'store/actions/noti';
-import { Button } from 'styles';
-import palette from 'styles/palette';
 import { ADD_FAVOURITE, DELETE_FAVOURITE, GET_FAVOURITE } from 'graphql/queries';
+import { Button, palette } from 'styles';
 
 const Title = styled.div`
     position: relative;

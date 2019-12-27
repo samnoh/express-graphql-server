@@ -3,9 +3,7 @@ import styled from 'styled-components';
 import Helmet from 'react-helmet';
 
 import Notification from 'components/common/Notification';
-import media from 'styles/media';
-import palette from 'styles/palette';
-import { Title } from 'styles';
+import { Title, palette, media } from 'styles';
 
 const LoginContainer = styled.div`
     display: flex;

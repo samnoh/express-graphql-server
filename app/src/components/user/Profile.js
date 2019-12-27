@@ -9,8 +9,7 @@ import Post from 'components/post/Post';
 import Comment from 'components/post/Comment';
 import ErrorPage from 'pages/ErrorPage';
 import LoadingPage from 'pages/LoadingPage';
-import { Title, NoItem } from 'styles';
-import palette from 'styles/palette';
+import { Title, NoItem, palette } from 'styles';
 
 const Container = styled.section`
     margin: 0 auto;

@@ -1,6 +1,7 @@
 import React, { lazy, Suspense } from 'react';
-import { createGlobalStyle } from 'styled-components';
 import { Switch, Route } from 'react-router-dom';
+
+import { GlobalStyle } from 'styles';
 
 const PostsPage = lazy(() => import('pages/PostsPage'));
 const PostPage = lazy(() => import('pages/PostPage'));
@@ -12,23 +13,6 @@ const SignupPage = lazy(() => import('pages/SignupPage'));
 const SearchPage = lazy(() => import('pages/SearchPage'));
 const FavouritesPage = lazy(() => import('pages/FavouritesPage'));
 const NotFoundPage = lazy(() => import('pages/NotFoundPage'));
-
-const GlobalStyle = createGlobalStyle`
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
-
-    body {
-        font-family: 'Roboto', sans-serif;
-    }
-
-    a {
-        text-decoration: none;
-        color: inherit;
-    }
-`;
 
 const App = () => {
     return (

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { withRouter } from 'react-router-dom';
 
-import { fadeIn } from 'styles/animation';
+import { fadeIn } from 'styles';
 import { closeNoti } from 'store/actions/noti';
 
 const NotiContainer = styled.div`

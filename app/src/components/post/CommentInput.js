@@ -1,8 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import styled from 'styled-components';
 
-import palette from 'styles/palette';
-import { Button, ButtonOutline } from 'styles';
+import { Button, ButtonOutline, palette } from 'styles';
 
 const ButtonContainer = styled.div`
     display: flex;

@@ -2,8 +2,7 @@ import React, { memo } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-import { ButtonInline } from 'styles';
-import palette from 'styles/palette';
+import { ButtonInline, palette } from 'styles';
 
 const PostContainer = styled.section`
     color: ${palette.gray[8]};

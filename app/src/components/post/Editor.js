@@ -11,7 +11,7 @@ import { withRouter } from 'react-router-dom';
 
 import { ADD_POST, EDIT_POST } from 'graphql/queries';
 import { showNoti } from 'store/actions/noti';
-import palette from 'styles/palette';
+import { palette } from 'styles';
 
 const Container = styled.section`
     position: relative;
