@@ -50,7 +50,7 @@ const SearchPost = ({ query, userSearch }) => {
                 };
             }
         });
-    }, [fetchMore, search]);
+    }, [fetchMore, search, key]);
 
     useEffect(() => {
         setNoMoreItem(false);
