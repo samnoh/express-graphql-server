@@ -117,7 +117,7 @@ const NavBar = ({ history }) => {
                     .filter(i => (auth.token ? i.loginRequired : !i.loginRequired))
                     .map(i =>
                         i.button ? (
-                            <Link to={i.path}>
+                            <Link key={i.name} to={i.path}>
                                 <ButtonOutline>{i.name}</ButtonOutline>
                             </Link>
                         ) : (

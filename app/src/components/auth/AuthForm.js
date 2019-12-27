@@ -51,9 +51,9 @@ const AuthForm = ({ history, signup }) => {
         if (error) {
             dispatch(removeToken());
             dispatch(showNoti(error.message, 'danger', 3));
-            setValues({ ...values, password: '', password2: '' });
+            setValues(values => ({ ...values, password: '', password2: '' }));
         }
-    }, [dispatch, error, setValues, values]);
+    }, [dispatch, error, setValues]);
 
     const onChange = useCallback(
         e => {

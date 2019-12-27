@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import styled from 'styled-components';
 import { useMutation } from '@apollo/react-hooks';
 
 import { ADD_COMMENT, EDIT_COMMENT, DELETE_COMMENT } from 'graphql/queries';

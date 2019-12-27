@@ -18,7 +18,7 @@ const Container = styled.section`
     border-radius: 8px;
     padding: 24px 0;
     background: ${palette.gray[6]};
-    color: #fff;
+    color: ${palette.gray[0]};
     user-select: none;
     margin-bottom: 60px;
 `;

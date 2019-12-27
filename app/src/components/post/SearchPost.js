@@ -10,7 +10,7 @@ import { Button } from 'styles';
 import palette from 'styles/palette';
 
 const NoItem = styled.div`
-    color: #aaa;
+    color: ${palette.gray[5]};
     margin: 60px 0;
     text-align: center;
     user-select: none;

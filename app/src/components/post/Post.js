@@ -6,7 +6,7 @@ import { ButtonInline } from 'styles';
 import palette from 'styles/palette';
 
 const PostContainer = styled.section`
-    color: #242424;
+    color: ${palette.gray[8]};
     display: flex;
     justify-content: space-between;
     align-items: center;

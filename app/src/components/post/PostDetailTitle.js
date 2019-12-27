@@ -15,7 +15,7 @@ const Title = styled.div`
     justify-content: space-between;
     align-items: center;
     padding-bottom: 18px;
-    border-bottom: 1px solid #eaecef;
+    border-bottom: 1px solid ${palette.gray[1]};
     margin-bottom: 15px;
     margin-bottom: 58px;
 
@@ -25,7 +25,7 @@ const Title = styled.div`
 
         & span {
             font-size: 14px;
-            color: #aaa;
+            color: ${palette.gray[5]};
             margin-left: 4px;
             user-select: none;
         }
@@ -35,7 +35,7 @@ const Title = styled.div`
         font-weight: 300;
         font-size: 24px;
         margin-left: 8px;
-        color: #888;
+        color: ${palette.gray[5]};
         text-align: right;
         vertical-align: bottom;
         align-self: flex-end;

@@ -4,6 +4,8 @@ import Helmet from 'react-helmet';
 
 import Notification from 'components/common/Notification';
 import media from 'styles/media';
+import palette from 'styles/palette';
+import { Title } from 'styles';
 
 const LoginContainer = styled.div`
     display: flex;
@@ -26,7 +28,7 @@ const LeftSide = styled.div`
         position: absolute;
         bottom: 15px;
         left: 25px;
-        color: #666;
+        color: ${palette.gray[6]};
 
         a {
             text-decoration: underline;
@@ -43,23 +45,16 @@ const FormContainer = styled.div`
     flex-direction: column;
 `;
 
-const Title = styled.h2`
-    font-weight: 600;
-    font-size: 26px;
-    margin-bottom: 25px;
-    color: #444;
-`;
-
 const Message = styled.div`
     font-size: 15px;
     top: 25px;
     right: 25px;
     position: absolute;
-    color: #444;
+    color: ${palette.gray[7]};
     text-align: right;
 
     & a {
-        color: #4295f7;
+        color: ${palette.blue[5]};
     }
 `;
 

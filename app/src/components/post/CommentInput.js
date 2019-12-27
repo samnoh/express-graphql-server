@@ -20,18 +20,6 @@ const CommentTextarea = styled.textarea`
     margin: 24px 0 12px;
 `;
 
-const CommentButton = styled(Button)`
-    background-color: ${props => (props.isUpdate ? '#4295f7' : '#61ceb3')};
-    width: 180px;
-    margin-left: 12px;
-`;
-
-const CancelButton = styled(Button)`
-    border: 1px solid #444;
-    color: #444;
-    width: 180px;
-`;
-
 const CommentInput = ({ id, addComment, onCancel, initialValue = '' }) => {
     const [value, setValue] = useState(initialValue);
 

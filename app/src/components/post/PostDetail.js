@@ -12,6 +12,7 @@ import LoadingPage from 'pages/LoadingPage';
 import Comments from 'components/post/Comments';
 import PostDetailTemplate from 'components/post/PostDetailTemplate';
 import PostDetailTitle from 'components/post/PostDetailTitle';
+import palette from 'styles/palette';
 
 const PostDetailContainer = styled.section`
     padding-bottom: 40px;
@@ -24,8 +25,8 @@ const Description = styled.div`
     font-size: 17px;
 
     .ql-syntax {
-        background: #333;
-        color: #fff;
+        background: ${palette.gray[9]};
+        color: ${palette.gray[1]};
         padding: 10px 14px;
         border-radius: 6px;
         font-size: 15px;

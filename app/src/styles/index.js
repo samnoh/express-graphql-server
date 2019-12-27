@@ -32,6 +32,7 @@ export const ButtonOutline = styled(button)`
 `;
 
 export const ButtonInline = styled(button)`
+    font-size: 14px;
     padding: 0;
     color: ${props => props.color || palette.gray[9]};
     background-color: transparent;
