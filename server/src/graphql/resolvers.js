@@ -63,11 +63,22 @@ const resolvers = {
             }
             return await Post.count({ where: { userId } });
         },
-        postsByUserId: async (_, { id, pagination: { offset, limit = 5 } = {} }) => {
+        postsByUserId: async (_, { id, username, pagination: { offset, limit = 5 } = {} }) => {
+            if (limit > 100) return null;
+            if (!id && !username) return [];
+
+            let user = {};
+            if (!id) {
+                user = await User.findOne({ where: { username } });
+                if (!user) return [];
+            } else {
+                user.id = id;
+            }
+
             const posts = await Post.findAll({
                 offset,
                 limit,
-                where: { userId: id },
+                where: { userId: user.id },
                 include: [{ model: User, as: 'user' }],
                 order: [['createdAt', 'DESC']]
             });

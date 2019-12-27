@@ -71,6 +71,15 @@ export const GET_POSTS = gql`
     ${fragments.post}
 `;
 
+export const GET_POSTS_BY_USER_ID = gql`
+    query postsByUserId($username: String!, $pagination: PaginationInput) {
+        postsByUserId(username: $username, pagination: $pagination) {
+            ...postFragment
+        }
+    }
+    ${fragments.post}
+`;
+
 export const GET_POST = gql`
     query post($id: Int!) {
         post(id: $id) {

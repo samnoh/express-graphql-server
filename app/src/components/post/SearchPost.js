@@ -2,11 +2,11 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import styled from 'styled-components';
 
-import { SEARCH_POST } from 'graphql/queries';
+import { GET_POSTS_BY_USER_ID, SEARCH_POST } from 'graphql/queries';
 import ErrorPage from 'pages/ErrorPage';
 import LoadingPage from 'pages/LoadingPage';
 import Post from 'components/post/Post';
-import { Button, palette } from 'styles';
+import { Button, ButtonOutline, palette } from 'styles';
 
 const NoItem = styled.div`
     color: ${palette.gray[5]};
@@ -22,20 +22,32 @@ const ButtonContainer = styled.div`
 
 const LIMIT = 5;
 
-const SearchPost = ({ query }) => {
+const SearchPost = ({ query, userSearch }) => {
     const [noMoreItem, setNoMoreItem] = useState(false);
-    const { loading, error, data: { search } = {}, fetchMore } = useQuery(SEARCH_POST, {
-        variables: { query, pagination: { limit: LIMIT } }
-    });
+    const key = userSearch ? 'postsByUserId' : 'search';
+    const { loading, error, data: { [key]: search } = {}, fetchMore } = useQuery(
+        userSearch ? GET_POSTS_BY_USER_ID : SEARCH_POST,
+        {
+            variables: {
+                [userSearch ? 'username' : 'query']: query,
+                pagination: { limit: LIMIT }
+            }
+        }
+    );
 
     const onClick = useCallback(() => {
         fetchMore({
             variables: { pagination: { limit: LIMIT, offset: search.length } },
             updateQuery: (prev, { fetchMoreResult }) => {
                 if (!fetchMoreResult) return prev;
+                if (fetchMoreResult[key].length < LIMIT) setNoMoreItem(true);
 
-                if (fetchMoreResult.search.length < LIMIT) setNoMoreItem(true);
-                return { ...prev, ...{ search: [...prev.search, ...fetchMoreResult.search] } };
+                return {
+                    ...prev,
+                    ...{
+                        [key]: [...prev[key], ...fetchMoreResult[key]]
+                    }
+                };
             }
         });
     }, [fetchMore, search]);
@@ -56,10 +68,10 @@ const SearchPost = ({ query }) => {
                 <Post key={post.id} {...post} />
             ))}
             <ButtonContainer>
-                {noMoreItem ? (
-                    <Button backgroundColor={palette.gray[6]} disabled>
+                {noMoreItem || search.length < 5 ? (
+                    <ButtonOutline noHover disabled>
                         No More Results
-                    </Button>
+                    </ButtonOutline>
                 ) : (
                     <Button backgroundColor={palette.blue[5]} onClick={onClick}>
                         Search More

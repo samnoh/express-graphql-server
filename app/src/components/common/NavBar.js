@@ -19,13 +19,13 @@ const Header = styled.header`
 const Title = styled(Link)`
     font-size: 24px;
     color: ${palette.gray[8]};
-    margin-right: 6px;
+    margin-right: 20px;
 `;
 
 const Input = styled.input`
     cursor: text;
     color: ${palette.gray[7]};
-    width: 200px;
+    width: 190px;
     height: 32px;
     margin: 13px 0;
     border: 1px solid ${palette.gray[4]};
@@ -33,6 +33,11 @@ const Input = styled.input`
     outline: none;
     padding: 2px 14px 2px 36px;
     font-size: 16px;
+    transition: all 0.2s ease-in-out;
+
+    &:focus {
+        width: 240px;
+    }
 `;
 
 const TitleContainer = styled.div`

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import palette from './palette';
 
 const button = styled.button`
-    cursor: pointer;
+    cursor: ${props => (props.noHover ? 'initial' : 'pointer')};
     border: none;
     padding: 8px 20px;
     font-size: 16px;
@@ -15,7 +15,7 @@ const button = styled.button`
 
     @media (hover: hover) {
         &:hover {
-            opacity: 0.8;
+            opacity: ${props => (props.noHover ? 1 : 0.8)};
         }
     }
 `;
