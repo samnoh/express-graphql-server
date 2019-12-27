@@ -2,7 +2,9 @@
 
 ## Features
 
--   Sign in & Sign up
--   CRUD posts
--   CRUD comments
--   CRUD favourites
+-   Sign in & sign up
+-   Posts
+-   Comments
+-   Favourites
+-   Likes
+-   Search for posts by title or username
