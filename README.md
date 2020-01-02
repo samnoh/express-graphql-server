@@ -7,5 +7,7 @@
 -   Comments
 -   Favourites
 -   Likes
--   Search for posts by title or username
+-   Search for posts by title, content or username
+-   `title:keyword` (default)
+-   `content:keyword`
     -   `user:username`
