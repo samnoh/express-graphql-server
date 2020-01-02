@@ -6,21 +6,11 @@ import { GET_POSTS_BY_USER_ID, SEARCH_POST } from 'graphql/queries';
 import ErrorPage from 'pages/ErrorPage';
 import LoadingPage from 'pages/LoadingPage';
 import Post from 'components/post/Post';
-import { Button, ButtonOutline, palette } from 'styles';
-
-const NoItem = styled.div`
-    color: ${palette.gray[5]};
-    margin: 60px 0;
-    text-align: center;
-    user-select: none;
-    font-size: 20px;
-`;
+import { Button, ButtonOutline, palette, NoItem } from 'styles';
 
 const ButtonContainer = styled.div`
     text-align: center;
 `;
-
-const LIMIT = 5;
 
 const GRAPHQL_SEARCH_QUERY = {
     // default
@@ -45,6 +35,8 @@ const GRAPHQL_SEARCH_QUERY = {
         variable: 'username'
     }
 };
+
+const LIMIT = 5;
 
 const SearchPost = ({ query, option }) => {
     const [noMoreItem, setNoMoreItem] = useState(false);

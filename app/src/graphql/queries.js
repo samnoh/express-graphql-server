@@ -24,7 +24,12 @@ const fragments = {
             id
             content
             createdAt
+            updatedAt
             postId
+            user {
+                id
+                username
+            }
         }
     `
 };
@@ -84,16 +89,6 @@ export const GET_POST = gql`
     query post($id: Int!) {
         post(id: $id) {
             ...postFragment
-            comment {
-                id
-                content
-                createdAt
-                updatedAt
-                user {
-                    id
-                    username
-                }
-            }
         }
     }
     ${fragments.post}
@@ -121,6 +116,15 @@ export const DELETE_POST = gql`
     mutation deletePost($id: Int!) {
         deletePost(id: $id)
     }
+`;
+
+export const GET_COMMENT = gql`
+    query commentsByPostId($id: Int!, $pagination: PaginationInput) {
+        commentsByPostId(id: $id, pagination: $pagination) {
+            ...commentFragment
+        }
+    }
+    ${fragments.comment}
 `;
 
 export const ADD_COMMENT = gql`

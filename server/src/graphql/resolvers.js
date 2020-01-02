@@ -39,11 +39,6 @@ const resolvers = {
             const post = await Post.findByPk(id, {
                 include: [{ model: User, as: 'user' }]
             });
-            const comment = await Comment.findAll({
-                where: { postId: id },
-                include: [{ model: User, as: 'user' }]
-            });
-            post.comment = comment;
             return post;
         },
         posts: async (_, { pagination: { offset, limit = 20 } = {} }) => {
@@ -90,6 +85,17 @@ const resolvers = {
                 where: { userId },
                 include: [{ model: User, as: 'user' }],
                 order: [['createdAt', 'DESC']]
+            });
+            return comments;
+        },
+        commentsByPostId: async (_, { id: postId, pagination: { offset, limit = 5 } = {} }) => {
+            if (limit > 100) return null;
+
+            const comments = await Comment.findAll({
+                limit,
+                offset,
+                where: { postId },
+                include: [{ model: User, as: 'user' }]
             });
             return comments;
         },

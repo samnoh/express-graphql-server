@@ -10,10 +10,10 @@ const typeDefs = gql`
     type Comment {
         id: Int!
         content: String!
-        user: User!
         createdAt: String!
         updatedAt: String!
         postId: Int!
+        user: User!
     }
 
     type Post {
@@ -22,7 +22,6 @@ const typeDefs = gql`
         content: String
         createdAt: String
         user: User
-        comment: [Comment]
     }
 
     type Favourite {
@@ -34,12 +33,13 @@ const typeDefs = gql`
     type Query {
         checkToken: User!
         user(id: Int!): User!
-        users(pagination: PaginationInput): [User]
+        users(pagination: PaginationInput): [User]!
         post(id: Int!): Post
-        posts(pagination: PaginationInput): [Post]
+        posts(pagination: PaginationInput): [Post]!
         postsCount(id: Int): Int!
-        postsByUserId(id: Int, username: String, pagination: PaginationInput): [Post]
-        comments(id: Int!): [Comment]
+        postsByUserId(id: Int, username: String, pagination: PaginationInput): [Post]!
+        comments(id: Int!): [Comment]!
+        commentsByPostId(id: Int!, pagination: PaginationInput): [Comment]!
         commentsCount(id: Int!): Int!
         favourite(id: Int!): Boolean!
         favourites(id: Int!, pagination: PaginationInput): [Favourite]!

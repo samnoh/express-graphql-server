@@ -63,7 +63,7 @@ const PostDetail = ({ history, id }) => {
 
     if (error) return <ErrorPage />;
 
-    if (!called || loading) return <LoadingPage />;
+    if (loading) return <LoadingPage />;
 
     return (
         <PostDetailTemplate>
@@ -74,7 +74,7 @@ const PostDetail = ({ history, id }) => {
                     className="ql-editor"
                 />
             </PostDetailContainer>
-            <Comments comment={post.comment} id={id} refetch={refetch} />
+            <Comments id={id} refetch={refetch} />
         </PostDetailTemplate>
     );
 };

@@ -10,8 +10,11 @@ const button = styled.button`
     border-radius: 4px;
     font-weight: 700;
     outline: none;
-    margin-left: 12px;
     user-select: none;
+
+    & + & {
+        margin-left: 12px;
+    }
 
     @media (hover: hover) {
         &:hover {
