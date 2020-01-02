@@ -126,7 +126,7 @@ const resolvers = {
             const total = await Favourite.count({ where: { userId } });
             return total;
         },
-        search: async (_, { query, pagination: { offset = 0, limit = 5 } = {} }) => {
+        search: async (_, { query, content, pagination: { offset = 0, limit = 5 } = {} }) => {
             if (limit > 100) return null;
             if (!query) return [];
 
@@ -134,7 +134,7 @@ const resolvers = {
                 limit,
                 offset,
                 where: {
-                    title: {
+                    [content ? 'content' : 'title']: {
                         [Op.substring]: query
                     }
                 },

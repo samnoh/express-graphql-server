@@ -175,8 +175,8 @@ export const DELETE_FAVOURITE = gql`
 `;
 
 export const SEARCH_POST = gql`
-    query search($query: String!, $pagination: PaginationInput) {
-        search(query: $query, pagination: $pagination) {
+    query search($query: String!, $content: Boolean, $pagination: PaginationInput) {
+        search(query: $query, content: $content, pagination: $pagination) {
             id
             title
             createdAt

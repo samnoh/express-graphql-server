@@ -23,6 +23,7 @@ const ButtonContainer = styled.div`
 const LIMIT = 5;
 
 const GRAPHQL_SEARCH_QUERY = {
+    // default
     search: {
         graphql: SEARCH_POST,
         key: 'search',
@@ -34,9 +35,9 @@ const GRAPHQL_SEARCH_QUERY = {
         variable: 'query'
     },
     content: {
-        graphql: '',
-        key: '',
-        variable: ''
+        graphql: SEARCH_POST,
+        key: 'search',
+        variable: 'query'
     },
     user: {
         graphql: GET_POSTS_BY_USER_ID,
@@ -51,6 +52,7 @@ const SearchPost = ({ query, option }) => {
     const { loading, error, data: { [key]: search } = {}, fetchMore } = useQuery(graphql, {
         variables: {
             [variable]: query,
+            [option === 'content' && 'content']: true,
             pagination: { limit: LIMIT }
         }
     });
