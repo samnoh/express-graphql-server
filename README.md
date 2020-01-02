@@ -8,6 +8,6 @@
 -   Favourites
 -   Likes
 -   Search for posts by title, content or username
--   `title:keyword` (default)
--   `content:keyword`
+    -   `title:keyword` (default)
+    -   `content:keyword`
     -   `user:username`
