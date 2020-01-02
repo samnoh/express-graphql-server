@@ -8,7 +8,7 @@ import { showNoti } from 'store/actions/noti';
 import LoadingPage from 'pages/LoadingPage';
 import Comment from 'components/post/Comment';
 import CommentInput from 'components/post/CommentInput';
-import { Title, NoItem, Button, ButtonOutline } from 'styles';
+import { Title, NoItem, Button } from 'styles';
 
 const LIMIT = 5;
 
@@ -68,7 +68,7 @@ const Comments = ({ id }) => {
 
     useEffect(() => {
         if (isAdded) {
-            refetch();
+            noMoreItem ? onClick() : refetch();
             setNoMoreItem(false);
             dispatch(showNoti('Successfully added', 'primary', 3));
         }
