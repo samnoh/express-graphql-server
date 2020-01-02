@@ -12,7 +12,7 @@ const button = styled.button`
     outline: none;
     user-select: none;
 
-    & + & {
+    & + button {
         margin-left: 12px;
     }
 
