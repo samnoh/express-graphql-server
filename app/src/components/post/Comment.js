@@ -72,7 +72,9 @@ const Comment = memo(({ id, content, user, createdAt, updatedAt, onEdit, onDelet
         <Container isMyComment={isMyComment}>
             <LeftContainer>
                 <Content>{content}</Content>
-                <DateTime>{datetime.toLocaleDateString('en')}</DateTime>
+                <DateTime>
+                    {datetime.toLocaleDateString('en')} {createdAt !== updatedAt && '(Edited)'}
+                </DateTime>
             </LeftContainer>
             {!profile && (
                 <RightContainer>

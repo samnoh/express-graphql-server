@@ -6,7 +6,7 @@ import { GET_POSTS_BY_USER_ID, SEARCH_POST } from 'graphql/queries';
 import ErrorPage from 'pages/ErrorPage';
 import LoadingPage from 'pages/LoadingPage';
 import Post from 'components/post/Post';
-import { Button, ButtonOutline, palette, NoItem } from 'styles';
+import { Button, palette, NoItem } from 'styles';
 
 const ButtonContainer = styled.div`
     text-align: center;
@@ -81,11 +81,7 @@ const SearchPost = ({ query, option }) => {
                 <Post key={post.id} {...post} />
             ))}
             <ButtonContainer>
-                {noMoreItem || search.length < 5 ? (
-                    <ButtonOutline noHover disabled>
-                        No More Results
-                    </ButtonOutline>
-                ) : (
+                {noMoreItem || search.length < 5 ? null : (
                     <Button backgroundColor={palette.blue[5]} onClick={onClick}>
                         Search More
                     </Button>
