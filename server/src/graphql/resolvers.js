@@ -7,6 +7,10 @@ import { JWT_SECRET_KEY } from 'config/secret';
 
 const { User, Post, Comment, Favourite } = db;
 
+const passwordRegExp = new RegExp(
+    '^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[.#?!@$%^&*-+]).{8,}$'
+);
+
 const isLoggedIn = context => {
     if (!context.user) {
         throw new AuthenticationError('You must be logged in');
@@ -152,7 +156,7 @@ const resolvers = {
     },
     Mutation: {
         signup: async (_, { user: { username, password, password2 } }) => {
-            if (password !== password2) {
+            if (password !== password2 || !passwordRegExp.test(password)) {
                 throw new AuthenticationError('Password was not confirmed');
             }
 

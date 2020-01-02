@@ -3,15 +3,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { withRouter } from 'react-router-dom';
 
-import { fadeIn } from 'styles';
+import { fadeIn, moveUp } from 'styles';
 import { closeNoti } from 'store/actions/noti';
 
 const NotiContainer = styled.div`
     position: fixed;
-    top: 20px;
-    margin: 0 auto;
-    left: 0;
-    right: 0;
+    bottom: 30px;
+    right: 30px;
     width: 300px;
     min-height: 60px;
     background-color: ${props => props.background};
@@ -22,7 +20,7 @@ const NotiContainer = styled.div`
     justify-content: center;
     align-items: center;
     z-index: 999;
-    animation: ${fadeIn} 0.3s ease-in forwards;
+    animation: ${fadeIn} 0.3s ease-in-out forwards, ${moveUp} 0.4s ease-in-out forwards;
     user-select: none;
 `;
 

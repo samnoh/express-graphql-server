@@ -26,6 +26,10 @@ const inputAttrs = [
     }
 ];
 
+const passwordRegExp = new RegExp(
+    '^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[.#?!@$%^&*-+]).{8,}$'
+);
+
 const AuthForm = ({ history, signup }) => {
     const auth = useSelector(state => state.auth);
     const dispatch = useDispatch();
@@ -65,8 +69,22 @@ const AuthForm = ({ history, signup }) => {
     const onSubmit = useCallback(
         e => {
             e.preventDefault();
-            fn({ variables: { user: values } });
             e.target.password.focus();
+
+            // if signin page and password is valid
+            if (!signup || passwordRegExp.test(values.password)) {
+                fn({ variables: { user: values } });
+                return;
+            }
+
+            dispatch(
+                showNoti(
+                    'Password should contain at least one upper case, lower case, one digit and one special character (.#?!@$%^&*-+)',
+                    'danger',
+                    6
+                )
+            );
+            setValues(values => ({ ...values, password: '', password2: '' }));
         },
         [fn, values]
     );

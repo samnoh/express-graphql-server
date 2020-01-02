@@ -17,3 +17,12 @@ export const fadeIn = keyframes`
         opacity: 1;
     }
 `;
+
+export const moveUp = keyframes`
+    from {
+        transform: translateY(70px);
+    }
+    to {
+        transform: translateY(0);
+    }
+`;

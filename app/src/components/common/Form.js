@@ -48,11 +48,10 @@ const Form = ({ onSubmit, onChange, inputAttrs, values, buttonText, loading }) =
                     {item.label && <Label htmlFor={item.name}>{item.label}</Label>}
                     <Input
                         placeholder={item.placeholder}
-                        type={item.type}
-                        name={item.name}
                         value={values[item.name]}
                         id={item.name}
                         onChange={onChange}
+                        {...item}
                     />
                 </div>
             ))}

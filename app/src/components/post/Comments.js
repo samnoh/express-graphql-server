@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useQuery } from '@apollo/react-hooks';
 import { useMutation } from '@apollo/react-hooks';
 
@@ -14,6 +14,7 @@ const LIMIT = 5;
 
 const Comments = ({ id }) => {
     const dispatch = useDispatch();
+    const auth = useSelector(state => state.auth);
     const { loading, data: { commentsByPostId: comments } = {}, fetchMore, refetch } = useQuery(
         GET_COMMENT,
         {
@@ -110,7 +111,7 @@ const Comments = ({ id }) => {
                     Load More
                 </Button>
             )}
-            <CommentInput id={id} addComment={onAdd} />
+            {auth.token && <CommentInput id={id} addComment={onAdd} />}
         </>
     );
 };

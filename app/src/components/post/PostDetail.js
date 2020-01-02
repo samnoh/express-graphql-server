@@ -17,7 +17,7 @@ import { palette } from 'styles';
 const PostDetailContainer = styled.section`
     padding-bottom: 40px;
     margin-bottom: 40px;
-    flex-grow: 1;
+    min-height: 280px;
 `;
 
 const Description = styled.div`
