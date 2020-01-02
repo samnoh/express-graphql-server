@@ -22,19 +22,38 @@ const ButtonContainer = styled.div`
 
 const LIMIT = 5;
 
-const SearchPost = ({ query, userSearch }) => {
-    const [noMoreItem, setNoMoreItem] = useState(false);
-    const key = userSearch ? 'postsByUserId' : 'search';
-    const { loading, error, data: { [key]: search } = {}, fetchMore } = useQuery(
-        userSearch ? GET_POSTS_BY_USER_ID : SEARCH_POST,
-        {
-            variables: {
-                [userSearch ? 'username' : 'query']: query,
-                pagination: { limit: LIMIT }
-            }
-        }
-    );
+const GRAPHQL_SEARCH_QUERY = {
+    search: {
+        graphql: SEARCH_POST,
+        key: 'search',
+        variable: 'query'
+    },
+    title: {
+        graphql: SEARCH_POST,
+        key: 'search',
+        variable: 'query'
+    },
+    content: {
+        graphql: '',
+        key: '',
+        variable: ''
+    },
+    user: {
+        graphql: GET_POSTS_BY_USER_ID,
+        key: 'postsByUserId',
+        variable: 'username'
+    }
+};
 
+const SearchPost = ({ query, option }) => {
+    const [noMoreItem, setNoMoreItem] = useState(false);
+    const { graphql, key, variable } = GRAPHQL_SEARCH_QUERY[option ? option : 'search'];
+    const { loading, error, data: { [key]: search } = {}, fetchMore } = useQuery(graphql, {
+        variables: {
+            [variable]: query,
+            pagination: { limit: LIMIT }
+        }
+    });
     const onClick = useCallback(() => {
         fetchMore({
             variables: { pagination: { limit: LIMIT, offset: search.length } },
@@ -58,7 +77,7 @@ const SearchPost = ({ query, userSearch }) => {
 
     if (loading) return <LoadingPage />;
 
-    if (!query || error) return <ErrorPage message="No Result" />;
+    if (error) return <ErrorPage message="No Result" />;
 
     if (!search.length) return <NoItem>No Result</NoItem>;
 

@@ -9,17 +9,30 @@ const Title = styled.h1`
     margin-bottom: 40px;
 `;
 
+const handleOption = query => {
+    const prefix = ['title:', 'content:', 'user:', ''];
+
+    let index;
+    for (let i = 0; i < prefix.length; i++) {
+        if (new RegExp(`^${prefix[i]}`).test(query)) {
+            index = i;
+            break;
+        }
+    }
+    const regex = new RegExp(`${prefix[index]}`, 'g');
+    return { option: prefix[index].slice(0, -1), query: query.replace(regex, '') };
+};
+
 const SearchPage = ({ location }) => {
     const query = qs.parse(location.search, { ignoreQueryPrefix: true });
-    const userSearch = query.q.includes('user:');
-    const q = userSearch ? query.q.replace(/user:/g, '') : query.q;
+    const valid_query = handleOption(query.q);
 
     return (
         <PageTemplate>
             <Title>
-                Result for {userSearch && 'user'} "{q}"
+                Result for {valid_query.option ? valid_query.option : 'title'} "{valid_query.query}"
             </Title>
-            <SearchPost query={q} userSearch={userSearch} />
+            <SearchPost query={valid_query.query} option={valid_query.option} />
         </PageTemplate>
     );
 };

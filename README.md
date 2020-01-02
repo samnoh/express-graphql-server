@@ -8,3 +8,4 @@
 -   Favourites
 -   Likes
 -   Search for posts by title or username
+    -   `user:username`

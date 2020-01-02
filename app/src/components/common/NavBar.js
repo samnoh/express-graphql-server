@@ -25,28 +25,64 @@ const Title = styled(Link)`
 const Input = styled.input`
     cursor: text;
     color: ${palette.gray[7]};
-    width: 190px;
+    width: 240px;
     height: 32px;
-    margin: 13px 0;
     border: 1px solid ${palette.gray[4]};
     border-radius: 32px;
     outline: none;
     padding: 2px 14px 2px 36px;
     font-size: 16px;
-    transition: all 0.2s ease-in-out;
-
-    &:focus {
-        width: 240px;
-    }
+    margin-right: 10px;
 `;
 
 const TitleContainer = styled.div`
-    margin-right: 15px;
+    margin-right: 14px;
 
-    & i {
+    & > i {
         color: ${palette.gray[3]};
         position: relative;
         right: -28px;
+    }
+`;
+
+const InfoButton = styled.div`
+    display: inline;
+    position: relative;
+
+    & i {
+        cursor: pointer;
+        color: ${palette.gray[3]};
+    }
+    & .popover {
+        display: none;
+    }
+
+    &:hover .popover {
+        display: block;
+        position: absolute;
+        color: ${palette.gray[2]};
+        top: 30px;
+        left: -66px;
+        background: ${palette.gray[8]};
+        width: 150px;
+        min-height: 20px;
+        opacity: 0.95;
+        padding: 10px;
+        border-radius: 8px;
+        text-align: center;
+
+        &::after {
+            content: ' ';
+            z-index: 1;
+            position: absolute;
+            top: -6px;
+            left: 67px;
+            background: ${palette.gray[8]};
+            width: 14px;
+            height: 14px;
+            opacity: 0.95;
+            transform: rotate(45deg);
+        }
     }
 `;
 
@@ -115,6 +151,16 @@ const NavBar = ({ history }) => {
             <TitleContainer>
                 <i className="fas fa-search" />
                 <Input value={value} onChange={onChange} onKeyDown={onSubmit} />
+                <InfoButton>
+                    <i className="fas fa-info-circle" />
+                    <div className="popover">
+                        user:username
+                        <br />
+                        title:keyword
+                        <br />
+                        content:keyword
+                    </div>
+                </InfoButton>
             </TitleContainer>
             <NavContainer>
                 {navItems
