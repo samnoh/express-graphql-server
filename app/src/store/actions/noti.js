@@ -1,3 +1,5 @@
+import { palette } from 'styles';
+
 export const SHOW_NOTI = 'SHOW_NOTI';
 export const CLOSE_NOTI = 'CLOSE_NOTI';
 
@@ -6,9 +8,9 @@ const timers = [];
 const getColor = theme => {
     switch (theme) {
         case 'primary':
-            return { background: '#4295f7', color: '#E2E3E5' };
+            return { background: palette.blue[6], color: palette.gray[1] };
         case 'danger':
-            return { background: '#D93D75', color: '#E2E3E5' };
+            return { background: palette.red[6], color: palette.gray[1] };
         default:
             return theme;
     }

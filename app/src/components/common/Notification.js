@@ -12,9 +12,10 @@ const NotiContainer = styled.div`
     right: 30px;
     width: 300px;
     min-height: 60px;
+    font-size: 18px;
     background-color: ${props => props.background};
     color: ${props => props.color};
-    border-radius: 18px;
+    border-radius: 8px;
     padding: 10px;
     display: flex;
     justify-content: center;
