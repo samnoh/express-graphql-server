@@ -37,7 +37,7 @@ const Description = styled.div`
 const PostDetail = ({ history, id }) => {
     const dispatch = useDispatch();
 
-    const { called, loading, error, data: { post } = {}, refetch } = useQuery(GET_POST, {
+    const { loading, error, data: { post } = {}, refetch } = useQuery(GET_POST, {
         variables: { id },
         fetchPolicy: 'cache-and-network'
     });

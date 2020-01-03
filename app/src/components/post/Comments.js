@@ -69,7 +69,7 @@ const Comments = ({ id }) => {
 
     useEffect(() => {
         if (isAdded) {
-            noMoreItem ? onClick() : refetch();
+            refetch();
             setNoMoreItem(false);
             dispatch(showNoti('Successfully added', 'primary', 3));
         }

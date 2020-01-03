@@ -14,16 +14,7 @@ import Dropdown from 'components/common/Dropdown';
 import { Title, NoItem } from 'styles';
 import { capitalize } from 'utils';
 
-const DropdownMenu = [
-    {
-        name: 'Newest',
-        'data-value': 'newest'
-    },
-    {
-        name: 'Oldest',
-        'data-value': 'oldest'
-    }
-];
+const DropdownMenu = ['newest', 'oldest'];
 
 const Posts = ({ page }) => {
     const [numPostOnPage] = useState(10);
@@ -48,7 +39,8 @@ const Posts = ({ page }) => {
             <div style={{ height: '80px' }}>
                 <Dropdown
                     title={
-                        <Title style={{ display: 'inline-block' }}>{`${capitalize(
+                        <Title
+                            style={{ display: 'inline-block', marginBottom: '0' }}>{`${capitalize(
                             postsFilter
                         )} Posts`}</Title>
                     }

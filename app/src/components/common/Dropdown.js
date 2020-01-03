@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 
 import { fadeIn, palette } from 'styles';
+import { capitalize } from 'utils';
 
 const DropdownButton = styled.div`
     cursor: pointer;
@@ -26,7 +27,7 @@ const DropdownContainer = styled.div`
     opacity: 0.95;
     overflow: hidden;
     z-index: 999;
-    animation: ${fadeIn} 0.4s forwards;
+    animation: ${fadeIn} 0.3s forwards;
 `;
 
 const DropdownItem = styled.div`
@@ -54,9 +55,12 @@ const Dropdown = ({ title, action, list, value }) => {
         [setOpen]
     );
 
-    const onClickItem = useCallback(e => {
-        dispatch(action(e.target.dataset.value));
-    }, []);
+    const onClickItem = useCallback(
+        e => {
+            dispatch(action(e.target.dataset.value));
+        },
+        [dispatch, action]
+    );
 
     useEffect(() => {
         const resetDropdown = () => {
@@ -79,11 +83,11 @@ const Dropdown = ({ title, action, list, value }) => {
                 <DropdownContainer>
                     {list.map(l => (
                         <DropdownItem
-                            key={l.name}
+                            key={l}
                             className={value === l['data-value'] ? 'active' : null}
                             onClick={onClickItem}
-                            {...l}>
-                            {l.name}
+                            data-value={l}>
+                            {capitalize(l)}
                         </DropdownItem>
                     ))}
                 </DropdownContainer>

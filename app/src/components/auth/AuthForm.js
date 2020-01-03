@@ -86,7 +86,7 @@ const AuthForm = ({ history, signup }) => {
             );
             setValues(values => ({ ...values, password: '', password2: '' }));
         },
-        [fn, values]
+        [fn, values, dispatch, signup]
     );
 
     return (
