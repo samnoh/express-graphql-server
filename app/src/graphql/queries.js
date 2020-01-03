@@ -67,8 +67,8 @@ export const GET_USER = gql`
 `;
 
 export const GET_POSTS = gql`
-    query posts($pagination: PaginationInput) {
-        posts(pagination: $pagination) {
+    query posts($option: queryOptionInput, $pagination: PaginationInput) {
+        posts(option: $option, pagination: $pagination) {
             ...postFragment
         }
         postsCount

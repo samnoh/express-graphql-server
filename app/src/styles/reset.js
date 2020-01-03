@@ -15,6 +15,10 @@ const GlobalStyle = createGlobalStyle`
         text-decoration: none;
         color: inherit;
     }
+
+    ol, ul {
+        list-style: none;
+    }
 `;
 
 export default GlobalStyle;

@@ -45,14 +45,14 @@ const resolvers = {
             });
             return post;
         },
-        posts: async (_, { pagination: { offset, limit = 20 } = {} }) => {
+        posts: async (_, { option, pagination: { offset, limit = 20 } = {} }) => {
             if (limit > 100) return null;
 
             const posts = await Post.findAll({
                 offset,
                 limit,
                 include: [{ model: User, as: 'user' }],
-                order: [['createdAt', 'DESC']]
+                order: option && option.order === 'newest' && [['createdAt', 'DESC']]
             });
             return posts;
         },

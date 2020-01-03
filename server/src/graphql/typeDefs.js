@@ -35,7 +35,7 @@ const typeDefs = gql`
         user(id: Int!): User!
         users(pagination: PaginationInput): [User]!
         post(id: Int!): Post
-        posts(pagination: PaginationInput): [Post]!
+        posts(option: queryOptionInput, pagination: PaginationInput): [Post]!
         postsCount(id: Int): Int!
         postsByUserId(id: Int, username: String, pagination: PaginationInput): [Post]!
         comments(id: Int!): [Comment]!
@@ -69,6 +69,10 @@ const typeDefs = gql`
     input PaginationInput {
         offset: Int
         limit: Int
+    }
+
+    input queryOptionInput {
+        order: String
     }
 `;
 
