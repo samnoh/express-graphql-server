@@ -2,13 +2,16 @@ import React, { useState, useCallback, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 
-import { Title, fadeIn, palette } from 'styles';
+import { fadeIn, palette } from 'styles';
 
-const DropdownButton = styled(Title)`
+const DropdownButton = styled.div`
     cursor: pointer;
+    display: inline-block;
+    user-select: none;
 
     & i {
         color: ${palette.gray[4]};
+        vertical-align: text-top;
     }
 `;
 
@@ -70,7 +73,7 @@ const Dropdown = ({ title, action, list, value }) => {
     return (
         <>
             <DropdownButton onClick={onClickButton} style={{ marginBottom: '0' }}>
-                {title} <i className={`fas fa-chevron-${open ? 'down' : 'right'} fa-sm`}></i>
+                {title} <i className={`fas fa-chevron-${open ? 'down' : 'right'} fa-lg`}></i>
             </DropdownButton>
             {open && (
                 <DropdownContainer>

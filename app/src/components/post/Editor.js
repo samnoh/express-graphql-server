@@ -13,7 +13,7 @@ import { ADD_POST, EDIT_POST } from 'graphql/queries';
 import { showNoti } from 'store/actions/noti';
 import { palette } from 'styles';
 
-const Container = styled.section`
+const Container = styled.div`
     position: relative;
 `;
 

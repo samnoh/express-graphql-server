@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 import { ButtonInline, palette } from 'styles';
 
-const PostContainer = styled.section`
+const PostContainer = styled.div`
     color: ${palette.gray[8]};
     display: flex;
     justify-content: space-between;

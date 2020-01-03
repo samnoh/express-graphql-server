@@ -15,7 +15,7 @@ import PostDetailTemplate from 'components/post/PostDetailTemplate';
 import PostDetailTitle from 'components/post/PostDetailTitle';
 import { palette } from 'styles';
 
-const PostDetailContainer = styled.section`
+const PostDetailContainer = styled.div`
     padding-bottom: 40px;
     margin-bottom: 40px;
     min-height: 280px;

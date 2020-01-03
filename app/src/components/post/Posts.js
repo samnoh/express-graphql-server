@@ -11,7 +11,7 @@ import Pagination from './Pagination';
 import ErrorPage from 'pages/ErrorPage';
 import LoadingPage from 'pages/LoadingPage';
 import Dropdown from 'components/common/Dropdown';
-import { NoItem } from 'styles';
+import { Title, NoItem } from 'styles';
 import { capitalize } from 'utils';
 
 const DropdownMenu = [
@@ -47,7 +47,11 @@ const Posts = ({ page }) => {
             </Helmet>
             <div style={{ height: '80px' }}>
                 <Dropdown
-                    title={`${capitalize(postsFilter)} Posts`}
+                    title={
+                        <Title style={{ display: 'inline-block' }}>{`${capitalize(
+                            postsFilter
+                        )} Posts`}</Title>
+                    }
                     list={DropdownMenu}
                     action={setPostsFilter}
                     value={postsFilter}

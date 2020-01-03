@@ -11,7 +11,7 @@ import ErrorPage from 'pages/ErrorPage';
 import LoadingPage from 'pages/LoadingPage';
 import { Title, NoItem, palette } from 'styles';
 
-const Container = styled.section`
+const Container = styled.div`
     margin: 0 auto;
     border: 1px solid lightgray;
     border-radius: 8px;
