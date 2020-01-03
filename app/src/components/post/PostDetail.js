@@ -9,6 +9,7 @@ import { showNoti } from 'store/actions/noti';
 import { GET_POST, DELETE_POST } from 'graphql/queries';
 import ErrorPage from 'pages/ErrorPage';
 import LoadingPage from 'pages/LoadingPage';
+import TopProgressBar from 'components/common/TopProgressBar';
 import Comments from 'components/post/Comments';
 import PostDetailTemplate from 'components/post/PostDetailTemplate';
 import PostDetailTitle from 'components/post/PostDetailTitle';
@@ -66,16 +67,19 @@ const PostDetail = ({ history, id }) => {
     if (loading) return <LoadingPage />;
 
     return (
-        <PostDetailTemplate>
-            <PostDetailContainer>
-                <PostDetailTitle {...post} onEdit={onEdit} onDelete={onDelete} />
-                <Description
-                    dangerouslySetInnerHTML={{ __html: post.content }}
-                    className="ql-editor"
-                />
-            </PostDetailContainer>
-            <Comments id={id} refetch={refetch} />
-        </PostDetailTemplate>
+        <>
+            <TopProgressBar />
+            <PostDetailTemplate>
+                <PostDetailContainer>
+                    <PostDetailTitle {...post} onEdit={onEdit} onDelete={onDelete} />
+                    <Description
+                        dangerouslySetInnerHTML={{ __html: post.content }}
+                        className="ql-editor"
+                    />
+                </PostDetailContainer>
+                <Comments id={id} refetch={refetch} />
+            </PostDetailTemplate>
+        </>
     );
 };
 
