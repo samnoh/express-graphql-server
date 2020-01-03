@@ -9,6 +9,7 @@ import verifyAuth from 'middlewares/auth';
 import db from 'models';
 
 const app = express();
+
 db.sequelize.sync();
 
 app.set('port', PORT);

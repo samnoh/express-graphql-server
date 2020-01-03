@@ -15,7 +15,7 @@ const verifyAuth = ({ req }) => {
 
     return jwt.verify(token, JWT_SECRET_KEY, async (error, payload) => {
         if (error) {
-            throw new AuthenticationError('Your token is invalid');
+            return { cookies: req.cookies };
         }
 
         const user = await User.findByPk(payload.userId);
