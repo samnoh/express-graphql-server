@@ -225,7 +225,7 @@ const NavBar = ({ history }) => {
 
     const onClick = useCallback(() => {
         setMenuOpen(isMenuOpen => !isMenuOpen);
-    }, [setMenuOpen, isMenuOpen]);
+    }, [setMenuOpen]);
 
     useEffect(() => {
         document.body.style.overflow = isMenuOpen ? 'hidden' : 'initial';
@@ -264,8 +264,8 @@ const NavBar = ({ history }) => {
                         .filter(i => (auth.token ? i.loginRequired : !i.loginRequired))
                         .map(i =>
                             i.button ? (
-                                <div style={{ alignSelf: 'center' }}>
-                                    <Link key={i.name} to={i.path}>
+                                <div style={{ alignSelf: 'center' }} key={i.name}>
+                                    <Link to={i.path}>
                                         <ButtonOutline>{i.name}</ButtonOutline>
                                     </Link>
                                 </div>
