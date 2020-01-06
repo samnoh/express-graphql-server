@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { fadeIn, palette, media } from 'styles';
 import { capitalize } from 'utils';
 
-const DropdonwContainer = styled.div`
+const Container = styled.div`
     position: relative;
     margin-bottom: 35px;
 
@@ -84,7 +84,7 @@ const Dropdown = ({ title, action, list, value }) => {
     }, [setOpen]);
 
     return (
-        <DropdonwContainer>
+        <Container>
             <DropdownButton onClick={onClickButton} style={{ marginBottom: '0' }}>
                 {title} <i className={`fas fa-chevron-${open ? 'down' : 'right'} fa-lg`}></i>
             </DropdownButton>
@@ -101,7 +101,7 @@ const Dropdown = ({ title, action, list, value }) => {
                     ))}
                 </DropdownContainer>
             )}
-        </DropdonwContainer>
+        </Container>
     );
 };
 

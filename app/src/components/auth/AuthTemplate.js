@@ -35,12 +35,16 @@ const LeftSide = styled.div`
 `;
 
 const FormContainer = styled.div`
-    padding: 50px;
     flex-grow: 1;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    margin: 14px;
+
+    ${media.tablet`
+        margin: 0;
+    `};
 `;
 
 const Message = styled.div`

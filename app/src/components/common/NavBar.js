@@ -41,7 +41,7 @@ const Title = styled(Link)`
     margin-right: 16px;
 
     ${media.tablet`
-        font-size: 16px;
+        font-size: 22px;
     `};
 `;
 
@@ -99,10 +99,10 @@ const InfoButton = styled.div`
         padding: 10px;
         border-radius: 8px;
         text-align: center;
+        z-index: 9999;
 
         &::after {
             content: ' ';
-            z-index: 1;
             position: absolute;
             top: -6px;
             left: 67px;
@@ -159,7 +159,7 @@ const NavItem = styled(NavLink)`
     font-weight: 300;
     color: ${palette.gray[7]};
     font-size: 18px;
-    margin-left: 18px;
+    margin-left: 19px;
     display: inline-block;
     line-height: 57px;
     padding: 0 4px;
@@ -228,8 +228,7 @@ const NavBar = ({ history }) => {
     }, [setMenuOpen, isMenuOpen]);
 
     useEffect(() => {
-        if (isMenuOpen) document.body.style.overflow = 'hidden';
-        else document.body.style.overflow = 'initial';
+        document.body.style.overflow = isMenuOpen ? 'hidden' : 'initial';
     }, [isMenuOpen]);
 
     useEffect(() => {

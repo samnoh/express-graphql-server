@@ -54,7 +54,7 @@ export const Title = styled.h2`
 
     ${media.tablet`
         font-size: ${props => props.fontSize || '20px'};
-        margin-bottom: ${props => props.marginBottom || '20px'};
+        margin-bottom: ${props => props.marginBottom || '24px'};
     `};
 `;
 
