@@ -5,7 +5,7 @@
 -   [x] JWT authentication
 -   [x] Login
 -   [x] Create account
--   [x] See Profile
+-   [x] See profile
 -   [x] Add post to favourites
 -   [x] List posts
 -   [x] See post
