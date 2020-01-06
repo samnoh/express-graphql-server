@@ -22,6 +22,7 @@ const PostDetailContainer = styled.div`
 `;
 
 const Description = styled.div`
+    margin-top: 54px;
     padding: 4px;
     font-size: 17px;
 
