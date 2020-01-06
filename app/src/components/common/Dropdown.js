@@ -2,8 +2,17 @@ import React, { useState, useCallback, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 
-import { fadeIn, palette } from 'styles';
+import { fadeIn, palette, media } from 'styles';
 import { capitalize } from 'utils';
+
+const DropdonwContainer = styled.div`
+    position: relative;
+    margin-bottom: 35px;
+
+    ${media.tablet`
+        margin-bottom: 25px;
+    `};
+`;
 
 const DropdownButton = styled.div`
     cursor: pointer;
@@ -17,8 +26,8 @@ const DropdownButton = styled.div`
 `;
 
 const DropdownContainer = styled.div`
-    position: relative;
-    top: 10px;
+    position: absolute;
+    top: 40px;
     width: 150px;
     background: ${palette.gray[8]};
     text-align: center;
@@ -75,7 +84,7 @@ const Dropdown = ({ title, action, list, value }) => {
     }, [setOpen]);
 
     return (
-        <>
+        <DropdonwContainer>
             <DropdownButton onClick={onClickButton} style={{ marginBottom: '0' }}>
                 {title} <i className={`fas fa-chevron-${open ? 'down' : 'right'} fa-lg`}></i>
             </DropdownButton>
@@ -92,7 +101,7 @@ const Dropdown = ({ title, action, list, value }) => {
                     ))}
                 </DropdownContainer>
             )}
-        </>
+        </DropdonwContainer>
     );
 };
 

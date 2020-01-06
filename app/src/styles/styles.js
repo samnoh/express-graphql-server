@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 import palette from './palette';
+import media from './media';
 
 const button = styled.button`
     cursor: ${props => (props.noHover ? 'initial' : 'pointer')};
@@ -21,6 +22,11 @@ const button = styled.button`
             opacity: ${props => (props.noHover ? 1 : 0.8)};
         }
     }
+
+    ${media.tablet`
+        font-size: 14px;
+        padding: 6px 12px;
+    `};
 `;
 
 export const Button = styled(button)`
@@ -45,6 +51,11 @@ export const Title = styled.h2`
     font-size: ${props => props.fontSize || '26px'};
     margin-bottom: ${props => props.marginBottom || '50px'};
     color: ${palette.gray[8]};
+
+    ${media.tablet`
+        font-size: ${props => props.fontSize || '20px'};
+        margin-bottom: ${props => props.marginBottom || '20px'};
+    `};
 `;
 
 export const NoItem = styled.div`
@@ -53,4 +64,8 @@ export const NoItem = styled.div`
     text-align: center;
     color: ${palette.gray[4]};
     user-select: none;
+
+    ${media.tablet`
+        font-size: 18px;
+    `};
 `;

@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import styled from 'styled-components';
 
-import { Button, ButtonOutline, palette } from 'styles';
+import { Button, ButtonOutline, palette, media } from 'styles';
 
 const ButtonContainer = styled.div`
     display: flex;
@@ -17,6 +17,10 @@ const CommentTextarea = styled.textarea`
     background: #f9fafc;
     border: 1px solid #dae1e7;
     margin: 24px 0 12px;
+
+    ${media.tablet`
+        font-size: 15px;
+    `};
 `;
 
 const CommentInput = ({ id, addComment, onCancel, initialValue = '' }) => {

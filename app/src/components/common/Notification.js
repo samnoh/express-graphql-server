@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { withRouter } from 'react-router-dom';
 
-import { fadeIn, moveUp } from 'styles';
+import { fadeIn, moveUp, media } from 'styles';
 import { closeNoti } from 'store/actions/noti';
 
 const NotiContainer = styled.div`
@@ -23,6 +23,12 @@ const NotiContainer = styled.div`
     z-index: 999;
     animation: ${fadeIn} 0.3s ease-in-out forwards, ${moveUp} 0.4s ease-in-out forwards;
     user-select: none;
+
+    ${media.tablet`
+        left: 0;
+        right: 0;
+        margin: 0 auto;
+    `};
 `;
 
 const Notification = ({ location }) => {

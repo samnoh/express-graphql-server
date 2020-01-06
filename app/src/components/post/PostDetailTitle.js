@@ -6,9 +6,9 @@ import { useMutation, useQuery } from '@apollo/react-hooks';
 
 import { showNoti } from 'store/actions/noti';
 import { ADD_FAVOURITE, DELETE_FAVOURITE, GET_FAVOURITE } from 'graphql/queries';
-import { Button, palette } from 'styles';
+import { Button, palette, media } from 'styles';
 
-const Title = styled.div`
+const TitleContainer = styled.div`
     position: relative;
     display: flex;
     justify-content: space-between;
@@ -16,7 +16,6 @@ const Title = styled.div`
     padding-bottom: 18px;
     border-bottom: 1px solid ${palette.gray[1]};
     margin-bottom: 15px;
-    margin-bottom: 58px;
 
     & h1 {
         font-weight: 300;
@@ -28,6 +27,10 @@ const Title = styled.div`
             margin-left: 4px;
             user-select: none;
         }
+
+        ${media.tablet`
+            font-size:28px
+        `};
     }
 
     & a {
@@ -39,6 +42,10 @@ const Title = styled.div`
         vertical-align: bottom;
         align-self: flex-end;
         margin-left: 25px;
+
+        ${media.tablet`
+            font-size:16px
+        `};
     }
 `;
 
@@ -85,7 +92,7 @@ const PostDetailTitle = memo(
         }, [favourite]);
 
         return (
-            <Title>
+            <TitleContainer>
                 <h1>
                     {title} <span>{new Date(parseInt(createdAt)).toLocaleDateString('en')}</span>
                 </h1>
@@ -110,7 +117,7 @@ const PostDetailTitle = memo(
                         </>
                     )}
                 </ButtonContainer>
-            </Title>
+            </TitleContainer>
         );
     },
     (currProps, nextProps) => {

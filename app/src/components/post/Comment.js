@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 import CommentInput from 'components/post/CommentInput';
-import { ButtonInline, palette } from 'styles';
+import { ButtonInline, palette, media } from 'styles';
 
 const Container = styled.div`
     position: relative;
@@ -25,6 +25,10 @@ const LeftContainer = styled.div`
 const Content = styled.div`
     font-size: 22px;
     white-space: pre-line;
+
+    ${media.tablet`
+        font-size: 18px;
+    `};
 `;
 
 const DateTime = styled.div`

@@ -36,19 +36,16 @@ const Posts = ({ page }) => {
             <Helmet>
                 <title>Posts</title>
             </Helmet>
-            <div style={{ height: '80px' }}>
-                <Dropdown
-                    title={
-                        <Title
-                            style={{ display: 'inline-block', marginBottom: '0' }}>{`${capitalize(
-                            postsFilter
-                        )} Posts`}</Title>
-                    }
-                    list={DropdownMenu}
-                    action={setPostsFilter}
-                    value={postsFilter}
-                />
-            </div>
+            <Dropdown
+                title={
+                    <Title style={{ display: 'inline-block', marginBottom: '0' }}>{`${capitalize(
+                        postsFilter
+                    )} Posts`}</Title>
+                }
+                list={DropdownMenu}
+                action={setPostsFilter}
+                value={postsFilter}
+            />
             {data.posts.map(post => (
                 <Post {...post} key={post.id} />
             ))}

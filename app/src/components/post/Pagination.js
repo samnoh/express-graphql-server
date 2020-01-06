@@ -2,13 +2,17 @@ import React, { useMemo, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { palette } from 'styles';
+import { palette, media } from 'styles';
 
 const Container = styled.div`
     display: flex;
     width: 400px;
     margin: 0 auto;
     justify-content: space-around;
+
+    ${media.tablet`
+        width: 90%;
+    `};
 `;
 
 const PageNum = styled(Link)`

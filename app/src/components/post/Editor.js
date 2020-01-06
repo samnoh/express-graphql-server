@@ -11,7 +11,7 @@ import { withRouter } from 'react-router-dom';
 
 import { ADD_POST, EDIT_POST } from 'graphql/queries';
 import { showNoti } from 'store/actions/noti';
-import { palette } from 'styles';
+import { palette, media } from 'styles';
 
 const Container = styled.div`
     position: relative;
@@ -33,6 +33,10 @@ const TitleInput = styled.input`
     &::placeholder {
         color: #eaecef;
     }
+
+    ${media.tablet`
+        font-size: 24px;
+    `};
 `;
 
 const SubmitButtom = styled.button`
@@ -59,6 +63,11 @@ const SubmitButtom = styled.button`
             color: ${palette.gray[0]};
         }
     }
+
+    ${media.tablet`
+        height: 49px;
+        width: 49px;
+    `};
 `;
 
 const QuillWrapper = styled.div`

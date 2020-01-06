@@ -2,7 +2,7 @@ import React, { memo } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-import { ButtonInline, palette } from 'styles';
+import { ButtonInline, palette, media } from 'styles';
 
 const PostContainer = styled.div`
     color: ${palette.gray[8]};
@@ -31,6 +31,10 @@ const Title = styled.h2`
         vertical-align: middle;
         margin-left: 8px;
         color: ${palette.gray[5]};
+
+        ${media.tablet`
+            font-size: 14px;
+        `};
     }
 
     @media (hover: hover) {
@@ -38,6 +42,10 @@ const Title = styled.h2`
             opacity: 0.4;
         }
     }
+
+    ${media.tablet`
+        font-size: 26px;
+    `};
 `;
 
 const Username = styled.span`
@@ -54,6 +62,10 @@ const Username = styled.span`
             opacity: 0.4;
         }
     }
+
+    ${media.tablet`
+        font-size: 14px;
+    `};
 `;
 
 const Post = memo(({ id, title, createdAt, simple, onDelete, user }) => {
