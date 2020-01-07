@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+
 import styled from 'styled-components';
 
 import { fadeIn, palette, media } from 'styles';
@@ -53,7 +53,6 @@ const DropdownItem = styled.div`
 `;
 
 const Dropdown = ({ title, action, list, value }) => {
-    const dispatch = useDispatch();
     const [open, setOpen] = useState(false);
 
     const onClickButton = useCallback(
@@ -62,13 +61,6 @@ const Dropdown = ({ title, action, list, value }) => {
             setOpen(open => !open);
         },
         [setOpen]
-    );
-
-    const onClickItem = useCallback(
-        e => {
-            dispatch(action(e.target.dataset.value));
-        },
-        [dispatch, action]
     );
 
     useEffect(() => {
@@ -94,7 +86,7 @@ const Dropdown = ({ title, action, list, value }) => {
                         <DropdownItem
                             key={l}
                             className={value === l['data-value'] ? 'active' : null}
-                            onClick={onClickItem}
+                            onClick={action}
                             data-value={l}>
                             {capitalize(l)}
                         </DropdownItem>

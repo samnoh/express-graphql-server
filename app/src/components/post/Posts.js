@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useState, useCallback } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { useQuery } from '@apollo/react-hooks';
 import Helmet from 'react-helmet';
-import { Redirect } from 'react-router-dom';
+import { Redirect, withRouter } from 'react-router-dom';
 
 import { setPostsFilter } from 'store/actions/query';
 import { GET_POSTS } from 'graphql/queries';
@@ -16,7 +16,8 @@ import { capitalize } from 'utils';
 
 const DropdownMenu = ['newest', 'oldest'];
 
-const Posts = ({ page }) => {
+const Posts = ({ page, history }) => {
+    const dispatch = useDispatch();
     const [numPostOnPage] = useState(10);
     const { postsFilter } = useSelector(state => state.query);
     const { loading, error, data } = useQuery(GET_POSTS, {
@@ -26,6 +27,11 @@ const Posts = ({ page }) => {
         },
         fetchPolicy: 'cache-and-network'
     });
+
+    const action = useCallback(e => {
+        history.replace('/');
+        dispatch(setPostsFilter(e.target.dataset.value));
+    }, []);
 
     if (error) return <ErrorPage />;
 
@@ -43,7 +49,7 @@ const Posts = ({ page }) => {
                     )} Posts`}</Title>
                 }
                 list={DropdownMenu}
-                action={setPostsFilter}
+                action={action}
                 value={postsFilter}
             />
             {data.posts.map(post => (
@@ -63,4 +69,4 @@ const Posts = ({ page }) => {
     );
 };
 
-export default Posts;
+export default withRouter(Posts);
