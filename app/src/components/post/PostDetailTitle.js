@@ -7,6 +7,7 @@ import { useMutation, useQuery } from '@apollo/react-hooks';
 import { showNoti } from 'store/actions/noti';
 import { ADD_FAVOURITE, DELETE_FAVOURITE, GET_FAVOURITE } from 'graphql/queries';
 import { Button, palette, media } from 'styles';
+import { getTime } from 'utils';
 
 const TitleContainer = styled.div`
     position: relative;
@@ -94,7 +95,7 @@ const PostDetailTitle = memo(
         return (
             <TitleContainer>
                 <h1>
-                    {title} <span>{new Date(parseInt(createdAt)).toLocaleDateString('en')}</span>
+                    {title} <span>{getTime(createdAt)}</span>
                 </h1>
                 <Link to={`/user/${user.id}`}>{user.username}</Link>
                 <ButtonContainer>

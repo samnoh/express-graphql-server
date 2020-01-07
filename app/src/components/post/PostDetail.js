@@ -32,6 +32,7 @@ const Description = styled.div`
         padding: 10px 14px;
         border-radius: 6px;
         font-size: 15px;
+        overflow: auto;
     }
 `;
 

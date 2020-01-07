@@ -2,7 +2,7 @@ import React, { lazy, Suspense } from 'react';
 import { Switch, Route } from 'react-router-dom';
 
 import { GlobalStyle } from 'styles';
-import ErrorPage from 'pages/ErrorPage';
+import LoadingPage from 'pages/LoadingPage';
 
 const PostsPage = lazy(() => import('pages/PostsPage'));
 const PostPage = lazy(() => import('pages/PostPage'));
@@ -19,7 +19,7 @@ const App = () => {
     return (
         <>
             <GlobalStyle />
-            <Suspense fallback={ErrorPage}>
+            <Suspense fallback={<LoadingPage />}>
                 <Switch>
                     <Route exact path="/" component={PostsPage} />
                     <Route path="/post/new" component={EditorPage} />

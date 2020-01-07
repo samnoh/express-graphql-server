@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 import { ButtonInline, palette, media } from 'styles';
+import { getTime } from 'utils';
 
 const PostContainer = styled.div`
     color: ${palette.gray[8]};
@@ -73,7 +74,7 @@ const Post = memo(({ id, title, createdAt, simple, onDelete, user }) => {
         <PostContainer>
             <Title>
                 <Link to={`/post/${id}`}>
-                    {title} <span>{new Date(parseInt(createdAt)).toLocaleDateString('en')}</span>
+                    {title} <span>{getTime(createdAt)}</span>
                 </Link>
             </Title>
             {!simple && (

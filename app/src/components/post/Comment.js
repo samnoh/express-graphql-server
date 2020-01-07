@@ -5,6 +5,7 @@ import styled from 'styled-components';
 
 import CommentInput from 'components/post/CommentInput';
 import { ButtonInline, palette, media } from 'styles';
+import { getTime } from 'utils';
 
 const Container = styled.div`
     position: relative;
@@ -57,7 +58,6 @@ const Comment = memo(({ id, content, user, createdAt, updatedAt, onEdit, onDelet
     const auth = useSelector(state => state.auth);
     const [isEditing, setIsEditing] = useState(false);
     const isMyComment = auth.userId === user.id;
-    const datetime = new Date(parseInt(createdAt));
 
     const onCancel = useCallback(() => {
         setIsEditing(false);
@@ -77,7 +77,7 @@ const Comment = memo(({ id, content, user, createdAt, updatedAt, onEdit, onDelet
             <LeftContainer>
                 <Content>{content}</Content>
                 <DateTime>
-                    {datetime.toLocaleDateString('en')} {createdAt !== updatedAt && '(Edited)'}
+                    {getTime(createdAt)} {createdAt !== updatedAt && '(Edited)'}
                 </DateTime>
             </LeftContainer>
             {!profile && (
