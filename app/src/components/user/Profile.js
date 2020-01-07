@@ -10,6 +10,7 @@ import Comment from 'components/post/Comment';
 import ErrorPage from 'pages/ErrorPage';
 import LoadingPage from 'pages/LoadingPage';
 import { Title, NoItem, palette, media } from 'styles';
+import { getTime } from 'utils';
 
 const Container = styled.div`
     margin: 0 auto;
@@ -33,6 +34,7 @@ const Information = styled.div`
     width: 36%;
     margin: 0 auto;
     border-radius: 8px;
+    padding-top: 10px;
 `;
 
 const InfoItem = styled.div`
@@ -78,7 +80,7 @@ const Profile = ({ id }) => {
 
     if (loading) return <LoadingPage />;
 
-    const { username } = data.user;
+    const { username, createdAt } = data.user;
     const posts = data.postsByUserId;
     const comments = data.comments;
     const postsCount = data.postsCount;
@@ -99,6 +101,10 @@ const Profile = ({ id }) => {
                     <InfoItem>
                         <div>Comments</div>
                         {commentsCount}
+                    </InfoItem>
+                    <InfoItem>
+                        <div>Since</div>
+                        {getTime(createdAt)}
                     </InfoItem>
                 </Information>
             </Container>

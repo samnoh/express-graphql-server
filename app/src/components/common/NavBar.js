@@ -144,7 +144,6 @@ const NavContainer = styled.nav`
         height: 100%;
         background: ${palette.gray[7]};
         z-index: 999;
-        overflow-y: scroll;
         text-align: center;
 
         ${props =>

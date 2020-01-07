@@ -5,6 +5,7 @@ const typeDefs = gql`
         id: Int!
         username: String!
         role: String
+        createdAt: String
     }
 
     type Comment {

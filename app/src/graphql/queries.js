@@ -17,6 +17,7 @@ const fragments = {
         fragment userFragment on User {
             id
             username
+            createdAt
         }
     `,
     comment: gql`
