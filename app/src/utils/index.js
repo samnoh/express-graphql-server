@@ -3,8 +3,8 @@ export const capitalize = text => {
     return firstLetter.toUpperCase() + rest.join('');
 };
 
-// plurize(2, 'mango', ',es') -> two mangoes
-export const plurize = (number, text, option) => {
+// pluralize(2, 'cherr', 'y,ies') -> cherries
+export const pluralize = (number, text, option) => {
     const [single, plural] = option ? option.split(',') : [];
     return parseInt(number) === 1 ? text + (single ? single : '') : text + (plural ? plural : 's');
 };
@@ -27,7 +27,7 @@ export const getTime = time => {
             let currTime = parseInt(diff / times[i - 1].ms);
             if (currTime < 0) currTime = 0;
             const unit = times[i].unit;
-            return diff < times[3].ms ? `${currTime} ${plurize(currTime, unit)} ago` : unit;
+            return diff < times[3].ms ? `${currTime} ${pluralize(currTime, unit)} ago` : unit;
         }
     }
     return new Date(_time).toLocaleDateString('en');
