@@ -10,7 +10,7 @@ import Comment from 'components/post/Comment';
 import ErrorPage from 'pages/ErrorPage';
 import LoadingPage from 'pages/LoadingPage';
 import { Title, NoItem, palette, media } from 'styles';
-import { getTime } from 'utils';
+import { getDate } from 'utils';
 
 const Container = styled.div`
     margin: 0 auto;
@@ -104,7 +104,7 @@ const Profile = ({ id }) => {
                     </InfoItem>
                     <InfoItem>
                         <div>Since</div>
-                        {getTime(createdAt)}
+                        {getDate(createdAt)}
                     </InfoItem>
                 </Information>
             </Container>

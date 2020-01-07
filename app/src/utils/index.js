@@ -20,15 +20,20 @@ const times = [
 
 export const getTime = time => {
     const _time = parseInt(time),
-        diff = new Date().getTime() - _time;
+        diff = new Date().getTime() - _time,
+        isNumberAgo = diff < times[3].ms;
 
     for (let i = 1; i < times.length; i++) {
         if (diff < times[i].ms) {
             let currTime = parseInt(diff / times[i - 1].ms);
             if (currTime < 0) currTime = 0;
             const unit = times[i].unit;
-            return diff < times[3].ms ? `${currTime} ${pluralize(currTime, unit)} ago` : unit;
+            return isNumberAgo ? `${currTime} ${pluralize(currTime, unit)} ago` : unit;
         }
     }
     return new Date(_time).toLocaleDateString('en');
+};
+
+export const getDate = time => {
+    return new Date(parseInt(time)).toLocaleDateString('en');
 };
